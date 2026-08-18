@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">FrostByte Launcher</string>
+    <string name="tagline">Minecraft Java Edition. Beyond the Stars.</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_versions">Versions</string>
+    <string name="nav_profiles">Profiles</string>
+    <string name="nav_mods">Mods</string>
+    <string name="nav_shaders">Shaders</string>
+    <string name="nav_resource_packs">Resource Packs</string>
+    <string name="nav_worlds">Worlds</string>
+    <string name="nav_controls">Controls</string>
+    <string name="nav_accounts">Accounts</string>
+    <string name="nav_downloads">Downloads</string>
+    <string name="nav_performance">Performance</string>
+    <string name="nav_storage">Storage</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="play">PLAY</string>
+    <string name="welcome_back">Welcome back</string>
+</resources>

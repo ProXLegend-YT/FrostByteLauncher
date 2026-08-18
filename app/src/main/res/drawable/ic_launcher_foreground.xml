@@ -1,0 +1,59 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer accretion ring, sweeping gold-to-blue like the reference mark -->
+    <path
+        android:strokeColor="#FFCE8A"
+        android:strokeWidth="2.6"
+        android:strokeAlpha="0.9"
+        android:pathData="M54,12 A42,42 0 1 1 53.9,12" />
+    <path
+        android:strokeColor="#7EC8FF"
+        android:strokeWidth="1.6"
+        android:strokeAlpha="0.6"
+        android:pathData="M54,20 A34,34 0 1 1 53.9,20" />
+
+    <!-- Inner event-horizon disc -->
+    <path
+        android:fillColor="#04040C"
+        android:pathData="M54,30 A24,24 0 1 1 53.9,30 Z" />
+
+    <!-- Faceted ice "F" monogram, angular strokes echoing the reference logo -->
+    <path
+        android:fillColor="#EAF6FF"
+        android:pathData="
+            M38,26
+            L74,26
+            L74,38
+            L50,38
+            L50,48
+            L68,48
+            L68,60
+            L50,60
+            L50,84
+            L38,84
+            Z" />
+
+    <!-- Faceted highlight overlay for a crystalline / glass look -->
+    <path
+        android:fillColor="#4FD1FF"
+        android:fillAlpha="0.35"
+        android:pathData="
+            M38,26
+            L56,26
+            L44,48
+            L38,48
+            Z" />
+    <path
+        android:fillColor="#C9A6FF"
+        android:fillAlpha="0.25"
+        android:pathData="
+            M50,60
+            L68,60
+            L58,84
+            L50,84
+            Z" />
+</vector>

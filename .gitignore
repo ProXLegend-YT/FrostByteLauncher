@@ -1,0 +1,19 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Keystores - NEVER commit signing keys
+*.keystore
+*.jks
+release.keystore
+
+# Generated wrapper jar is fine to keep out until first `gradle wrapper` run,
+# but once committed by a contributor it should stay tracked - see
+# gradle/wrapper/README_WRAPPER_JAR.txt

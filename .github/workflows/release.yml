@@ -1,0 +1,105 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Generate Gradle wrapper jar (if missing)
+        run: |
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            gradle wrapper --gradle-version 8.9
+          fi
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Restore Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Verify no release-blocking placeholders remain
+        # Fails the release build loudly rather than shipping a build that
+        # silently can't sign in (see docs/KNOWN_GAPS.md - this is the same
+        # gap documented there, enforced here so it can't be missed).
+        # NOTE: this is a plain text match against the current source, not a
+        # robust check - if MicrosoftAuthConfig.kt is refactored (renamed
+        # field, different default expression), update this grep pattern to
+        # match, or it will silently stop catching the blank-key case.
+        run: |
+          if grep -q 'val default = MicrosoftAuthConfig(clientId = "")' app/src/main/java/com/frostbyte/launcher/core/auth/MicrosoftAuthConfig.kt; then
+            echo "::error::MicrosoftAuthConfig.default.clientId is still blank - register a real Azure AD app before releasing. See docs/KNOWN_GAPS.md."
+            exit 1
+          fi
+
+      - name: Unit tests
+        run: ./gradlew testReleaseUnitTest
+
+      - name: Upload unit test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-unit-test-results
+          path: app/build/reports/tests/testReleaseUnitTest/
+          if-no-files-found: warn
+
+      - name: Lint
+        run: ./gradlew lintRelease
+
+      - name: Upload lint report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-lint-report
+          path: app/build/reports/lint-results-release.html
+          if-no-files-found: warn
+
+      - name: Decode signing keystore
+        # SIGNING_KEYSTORE_BASE64 and the passwords/alias below must be added
+        # as repository secrets (Settings -> Secrets and variables -> Actions).
+        # Never commit the keystore file or its passwords to the repo.
+        run: |
+          echo "${{ secrets.SIGNING_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
+
+      - name: Build signed release APK
+        env:
+          KEYSTORE_FILE: ${{ github.workspace }}/release.keystore
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleRelease
+
+      - name: Compute SHA256 checksum
+        run: |
+          cd app/build/outputs/apk/release
+          sha256sum *.apk > checksums.sha256.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/apk/release/checksums.sha256.txt
+          generate_release_notes: true
+
+      - name: Clean up keystore
+        if: always()
+        run: rm -f release.keystore
