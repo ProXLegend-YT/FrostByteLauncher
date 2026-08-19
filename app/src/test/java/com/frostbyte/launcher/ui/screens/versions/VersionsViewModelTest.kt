@@ -71,7 +71,6 @@ class VersionsViewModelTest {
             downloadScheduler = scheduler,
             fileManager = FakeGameDirectoryProvider(tempDir)
         )
-        advanceUntilIdle() // let the init{}-triggered refresh() finish
     }
 
     @After
@@ -92,6 +91,7 @@ class VersionsViewModelTest {
             javaVersion = null,
             assetIndex = null
         )
+        advanceUntilIdle() // let the init{}-triggered refresh() finish
         val version = viewModel.uiState.first { it.versions.isNotEmpty() }.versions.first()
 
         viewModel.downloadClientJar(version)
@@ -113,6 +113,7 @@ class VersionsViewModelTest {
     @Test
     fun `downloadClientJar surfaces an error and does not enqueue on resolve failure`() = runTest(testDispatcher) {
         mojangService.detailError = IOException("network down")
+        advanceUntilIdle() // let the init{}-triggered refresh() finish
         val version = viewModel.uiState.first { it.versions.isNotEmpty() }.versions.first()
 
         viewModel.downloadClientJar(version)
