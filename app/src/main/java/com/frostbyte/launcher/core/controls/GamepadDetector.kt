@@ -30,9 +30,9 @@ class GamepadDetector(private val inputManager: InputManager) : GamepadProvider 
 
     override fun listConnectedGamepads(): List<ConnectedGamepad> {
         return inputManager.inputDeviceIds
-            .mapNotNull { id -> inputManager.getInputDevice(id) }
-            .filter { it.isGamepad() }
-            .map { ConnectedGamepad(deviceId = it.id, name = it.name) }
+            .mapNotNull { id: Int -> inputManager.getInputDevice(id) }
+            .filter { device -> device.isGamepad() }
+            .map { device -> ConnectedGamepad(deviceId = device.id, name = device.name) }
     }
 
     private fun InputDevice.isGamepad(): Boolean {
