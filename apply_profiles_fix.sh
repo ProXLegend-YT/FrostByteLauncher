@@ -1,3 +1,11 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "Syncing repo..."
+git pull --rebase origin main
+
+echo "Writing ProfilesScreen.kt..."
+cat > app/src/main/java/com/frostbyte/launcher/ui/screens/profiles/ProfilesScreen.kt << 'FILE_EOF'
 package com.frostbyte.launcher.ui.screens.profiles
 
 import androidx.compose.foundation.layout.Arrangement
@@ -254,3 +262,11 @@ private fun CreateProfileDialog(
         }
     )
 }
+FILE_EOF
+
+echo "Committing and pushing..."
+git add -A
+git commit -m "Apply Scaffold innerPadding in ProfilesScreen (fix lint error)"
+git push
+
+echo "Done!"
