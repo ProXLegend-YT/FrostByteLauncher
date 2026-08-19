@@ -38,7 +38,9 @@ class ControlsViewModelTest {
     @Test
     fun `initial state reflects the default layout and default key bindings`() = runTest(testDispatcher) {
         val vm = viewModel()
-        val state = vm.uiState.first()
+        // uiState.value starts as the stateIn() placeholder (empty keyBindings) until
+        // the combine() upstream actually emits, so wait for the real emission.
+        val state = vm.uiState.first { it.keyBindings.isNotEmpty() }
 
         assertEquals(TouchControlLayout.default(), state.touchLayout)
         assertEquals(MinecraftAction.FORWARD.defaultKey, state.keyBindings[MinecraftAction.FORWARD])
