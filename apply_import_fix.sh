@@ -1,3 +1,11 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "Syncing repo..."
+git pull --rebase origin main
+
+echo "Writing FrostByteNavScaffold.kt..."
+cat > app/src/main/java/com/frostbyte/launcher/ui/navigation/FrostByteNavScaffold.kt << 'FILE_EOF'
 package com.frostbyte.launcher.ui.navigation
 
 import androidx.compose.foundation.layout.Row
@@ -109,3 +117,11 @@ fun FrostByteNavScaffold(
         }
     }
 }
+FILE_EOF
+
+echo "Committing and pushing..."
+git add -A
+git commit -m "Fix missing getValue import in FrostByteNavScaffold"
+git push
+
+echo "Done!"
