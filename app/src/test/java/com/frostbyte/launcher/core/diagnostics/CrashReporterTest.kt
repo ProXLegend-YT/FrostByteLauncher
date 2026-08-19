@@ -69,7 +69,7 @@ class CrashReporterTest {
     fun `listSavedReports returns newest first`() {
         val first = reporter.buildReport(Thread.currentThread(), RuntimeException("first"))
         reporter.saveReport(first)
-        Thread.sleep(10) // ensure a distinct lastModified timestamp
+        Thread.sleep(10) // filenames now have ms resolution, so this reliably crosses a boundary
         val second = reporter.buildReport(Thread.currentThread(), RuntimeException("second"))
         reporter.saveReport(second)
 
@@ -95,6 +95,7 @@ class CrashReporterTest {
     fun `deleteAllReports clears every saved report`() {
         repeat(3) {
             reporter.saveReport(reporter.buildReport(Thread.currentThread(), RuntimeException("err $it")))
+            Thread.sleep(5) // ensure each report gets a distinct millisecond-resolution filename
         }
         assertEquals(3, reporter.listSavedReports().size)
 
