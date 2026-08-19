@@ -29,8 +29,13 @@ interface GamepadProvider {
 class GamepadDetector(private val inputManager: InputManager) : GamepadProvider {
 
     override fun listConnectedGamepads(): List<ConnectedGamepad> {
+        // inputDeviceIds returns a plain IntArray, which has no mapNotNull
+        // overload in the Kotlin stdlib (only Array<T>/Iterable/Sequence do)
+        // - toList() converts it to a real List<Int> first so the rest of
+        // the chain resolves correctly.
         return inputManager.inputDeviceIds
-            .mapNotNull { id: Int -> inputManager.getInputDevice(id) }
+            .toList()
+            .mapNotNull { id -> inputManager.getInputDevice(id) }
             .filter { device -> device.isGamepad() }
             .map { device -> ConnectedGamepad(deviceId = device.id, name = device.name) }
     }
