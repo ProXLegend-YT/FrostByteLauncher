@@ -41,11 +41,14 @@ class ProfilesViewModelTest {
 
     @Test
     fun `openCreateDialog and dismissCreateDialog toggle dialog state`() = runTest(testDispatcher) {
+        // uiState.value stays at the stateIn() placeholder until the combine()
+        // upstream emits at least once, so wait for the real emission rather
+        // than reading .value synchronously right after a transientState update.
         viewModel.openCreateDialog()
-        assertTrue(viewModel.uiState.first().isCreateDialogOpen)
+        assertTrue(viewModel.uiState.first { it.isCreateDialogOpen }.isCreateDialogOpen)
 
         viewModel.dismissCreateDialog()
-        assertFalse(viewModel.uiState.first().isCreateDialogOpen)
+        assertFalse(viewModel.uiState.first { !it.isCreateDialogOpen }.isCreateDialogOpen)
     }
 
     @Test
@@ -54,7 +57,7 @@ class ProfilesViewModelTest {
         viewModel.createProfile("Survival", "1.21.1", Loader.FABRIC, ramGb = 4)
         advanceUntilIdle()
 
-        val state = viewModel.uiState.first()
+        val state = viewModel.uiState.first { it.profiles.isNotEmpty() }
         assertFalse(state.isCreateDialogOpen)
         assertEquals(1, state.profiles.size)
         assertEquals("Survival", state.profiles.first().name)
@@ -67,7 +70,7 @@ class ProfilesViewModelTest {
         viewModel.createProfile("   ", "1.21.1", Loader.FABRIC, ramGb = 4)
         advanceUntilIdle()
 
-        val state = viewModel.uiState.first()
+        val state = viewModel.uiState.first { it.errorMessage != null }
         assertTrue(state.isCreateDialogOpen)
         assertNotNull(state.errorMessage)
         assertEquals(0, state.profiles.size)
@@ -77,9 +80,9 @@ class ProfilesViewModelTest {
     fun `dismissError clears the error message`() = runTest(testDispatcher) {
         viewModel.createProfile("", "1.21.1", Loader.FABRIC, ramGb = 4)
         advanceUntilIdle()
-        assertNotNull(viewModel.uiState.first().errorMessage)
+        assertNotNull(viewModel.uiState.first { it.errorMessage != null }.errorMessage)
 
         viewModel.dismissError()
-        assertEquals(null, viewModel.uiState.first().errorMessage)
+        assertEquals(null, viewModel.uiState.first { it.errorMessage == null }.errorMessage)
     }
 }

@@ -27,9 +27,14 @@ data class CrashReport(
 class CrashReporter(private val reportsDir: File) {
 
     private var previousHandler: Thread.UncaughtExceptionHandler? = null
+    // previousHandler == null is a legitimate state (no handler was set
+    // before us), so it can't double as the "already installed" flag -
+    // that was the actual bug: on a JVM with no default handler, the guard
+    // below never tripped and a second install() call wrapped itself again.
+    private var isInstalled = false
 
     fun install() {
-        if (previousHandler != null) return // already installed
+        if (isInstalled) return
         previousHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             try {
@@ -42,11 +47,13 @@ class CrashReporter(private val reportsDir: File) {
             }
             previousHandler?.uncaughtException(thread, throwable)
         }
+        isInstalled = true
     }
 
     fun uninstall() {
         Thread.setDefaultUncaughtExceptionHandler(previousHandler)
         previousHandler = null
+        isInstalled = false
     }
 
     fun buildReport(thread: Thread, throwable: Throwable): CrashReport {
@@ -63,7 +70,10 @@ class CrashReporter(private val reportsDir: File) {
 
     fun saveReport(report: CrashReport) {
         reportsDir.mkdirs()
-        val timestamp = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US).format(Date(report.timestampEpochMillis))
+        // Millisecond resolution (not just seconds) so two reports saved in
+        // quick succession - e.g. a crash loop, or two saves in the same test -
+        // never collide on filename and silently overwrite one another.
+        val timestamp = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS", Locale.US).format(Date(report.timestampEpochMillis))
         val file = File(reportsDir, "crash_$timestamp.txt")
         file.writeText(formatReport(report))
     }
