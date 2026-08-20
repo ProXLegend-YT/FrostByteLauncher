@@ -1,3 +1,11 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "Syncing repo..."
+git pull --rebase origin main
+
+echo "Writing HomeScreen.kt..."
+cat > app/src/main/java/com/frostbyte/launcher/ui/screens/home/HomeScreen.kt << 'FILE_EOF'
 package com.frostbyte.launcher.ui.screens.home
 
 import androidx.compose.foundation.background
@@ -311,3 +319,11 @@ private fun RecentProfileRow(profile: Profile) {
         }
     }
 }
+FILE_EOF
+
+echo "Committing and pushing..."
+git add -A
+git commit -m "Redesign Home screen to match reference: Welcome Back hero, real RAM bar, 4-card quick-access grid"
+git push
+
+echo "Done!"
