@@ -1,6 +1,12 @@
 package com.frostbyte.launcher.ui.screens.profiles
 
+import com.frostbyte.launcher.core.auth.AuthRepository
+import com.frostbyte.launcher.core.auth.FakeSessionStore
+import com.frostbyte.launcher.core.auth.MicrosoftAuthConfig
 import com.frostbyte.launcher.core.common.Loader
+import com.frostbyte.launcher.core.network.service.FakeMicrosoftAuthService
+import com.frostbyte.launcher.core.network.service.FakeMinecraftAuthService
+import com.frostbyte.launcher.core.network.service.FakeXboxAuthService
 import com.frostbyte.launcher.core.storage.repository.FakeProfileDao
 import com.frostbyte.launcher.core.storage.repository.ProfileRepository
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +32,15 @@ class ProfilesViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = ProfilesViewModel(ProfileRepository(FakeProfileDao()))
+        val authRepository = AuthRepository(
+            microsoftAuthService = FakeMicrosoftAuthService(),
+            xboxAuthService = FakeXboxAuthService(),
+            minecraftAuthService = FakeMinecraftAuthService(),
+            sessionStore = FakeSessionStore(),
+            config = MicrosoftAuthConfig(clientId = "test-client-id"),
+            ioDispatcher = testDispatcher
+        )
+        viewModel = ProfilesViewModel(ProfileRepository(FakeProfileDao()), authRepository)
     }
 
     @After

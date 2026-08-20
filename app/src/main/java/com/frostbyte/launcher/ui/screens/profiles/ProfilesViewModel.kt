@@ -2,6 +2,7 @@ package com.frostbyte.launcher.ui.screens.profiles
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.frostbyte.launcher.core.auth.AuthRepository
 import com.frostbyte.launcher.core.common.FrostByteResult
 import com.frostbyte.launcher.core.common.Loader
 import com.frostbyte.launcher.core.storage.repository.Profile
@@ -18,16 +19,26 @@ import kotlinx.coroutines.launch
 data class ProfilesUiState(
     val profiles: List<Profile> = emptyList(),
     val isCreateDialogOpen: Boolean = false,
-    val errorMessage: String? = null
-)
+    val errorMessage: String? = null,
+    val selectedProfileId: Long? = null,
+    val launchBlockedReason: String? = null
+) {
+    val selectedProfile: Profile?
+        get() = profiles.firstOrNull { it.id == selectedProfileId } ?: profiles.firstOrNull()
+}
 
 /** UI-only state not derived from the database (dialog visibility, transient errors). */
 private data class TransientUiState(
     val isCreateDialogOpen: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val selectedProfileId: Long? = null,
+    val launchBlockedReason: String? = null
 )
 
-class ProfilesViewModel(private val repository: ProfileRepository) : ViewModel() {
+class ProfilesViewModel(
+    private val repository: ProfileRepository,
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val transientState = MutableStateFlow(TransientUiState())
 
@@ -38,13 +49,19 @@ class ProfilesViewModel(private val repository: ProfileRepository) : ViewModel()
         ProfilesUiState(
             profiles = profiles,
             isCreateDialogOpen = transient.isCreateDialogOpen,
-            errorMessage = transient.errorMessage
+            errorMessage = transient.errorMessage,
+            selectedProfileId = transient.selectedProfileId,
+            launchBlockedReason = transient.launchBlockedReason
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = ProfilesUiState()
     )
+
+    fun selectProfile(profileId: Long) {
+        transientState.update { it.copy(selectedProfileId = profileId, launchBlockedReason = null) }
+    }
 
     fun openCreateDialog() {
         transientState.update { it.copy(isCreateDialogOpen = true, errorMessage = null) }
@@ -84,5 +101,27 @@ class ProfilesViewModel(private val repository: ProfileRepository) : ViewModel()
 
     fun dismissError() {
         transientState.update { it.copy(errorMessage = null) }
+    }
+
+    /**
+     * Same honest-blocker pattern as HomeViewModel.onPlayClicked() - reports
+     * the real reason launching isn't possible yet rather than simulating
+     * success. Kept in sync with Home's logic deliberately rather than
+     * inventing a different story for this screen.
+     */
+    fun onPlayClicked(profile: Profile) {
+        viewModelScope.launch {
+            val session = authRepository.currentSession()
+            val reason = if (session == null) {
+                "No Microsoft account signed in. Go to Accounts to sign in."
+            } else {
+                "Signed in as ${session.minecraftUsername}, but launching isn't wired up yet."
+            }
+            transientState.update { it.copy(launchBlockedReason = reason) }
+        }
+    }
+
+    fun dismissLaunchBlocked() {
+        transientState.update { it.copy(launchBlockedReason = null) }
     }
 }

@@ -1,3 +1,142 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "Syncing repo..."
+git pull --rebase origin main
+
+echo "Writing ProfilesViewModel.kt..."
+cat > app/src/main/java/com/frostbyte/launcher/ui/screens/profiles/ProfilesViewModel.kt << 'FILE_EOF'
+package com.frostbyte.launcher.ui.screens.profiles
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.frostbyte.launcher.core.auth.AuthRepository
+import com.frostbyte.launcher.core.common.FrostByteResult
+import com.frostbyte.launcher.core.common.Loader
+import com.frostbyte.launcher.core.storage.repository.Profile
+import com.frostbyte.launcher.core.storage.repository.ProfileDraft
+import com.frostbyte.launcher.core.storage.repository.ProfileRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+data class ProfilesUiState(
+    val profiles: List<Profile> = emptyList(),
+    val isCreateDialogOpen: Boolean = false,
+    val errorMessage: String? = null,
+    val selectedProfileId: Long? = null,
+    val launchBlockedReason: String? = null
+) {
+    val selectedProfile: Profile?
+        get() = profiles.firstOrNull { it.id == selectedProfileId } ?: profiles.firstOrNull()
+}
+
+/** UI-only state not derived from the database (dialog visibility, transient errors). */
+private data class TransientUiState(
+    val isCreateDialogOpen: Boolean = false,
+    val errorMessage: String? = null,
+    val selectedProfileId: Long? = null,
+    val launchBlockedReason: String? = null
+)
+
+class ProfilesViewModel(
+    private val repository: ProfileRepository,
+    private val authRepository: AuthRepository
+) : ViewModel() {
+
+    private val transientState = MutableStateFlow(TransientUiState())
+
+    val uiState: StateFlow<ProfilesUiState> = combine(
+        repository.observeProfiles(),
+        transientState
+    ) { profiles, transient ->
+        ProfilesUiState(
+            profiles = profiles,
+            isCreateDialogOpen = transient.isCreateDialogOpen,
+            errorMessage = transient.errorMessage,
+            selectedProfileId = transient.selectedProfileId,
+            launchBlockedReason = transient.launchBlockedReason
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = ProfilesUiState()
+    )
+
+    fun selectProfile(profileId: Long) {
+        transientState.update { it.copy(selectedProfileId = profileId, launchBlockedReason = null) }
+    }
+
+    fun openCreateDialog() {
+        transientState.update { it.copy(isCreateDialogOpen = true, errorMessage = null) }
+    }
+
+    fun dismissCreateDialog() {
+        transientState.update { it.copy(isCreateDialogOpen = false) }
+    }
+
+    fun createProfile(name: String, minecraftVersion: String, loader: Loader, ramGb: Int) {
+        viewModelScope.launch {
+            val result = repository.createProfile(
+                ProfileDraft(
+                    name = name,
+                    minecraftVersion = minecraftVersion,
+                    loader = loader,
+                    ramAllocationMb = ramGb * 1024,
+                    gameDirectory = "profiles/${name.lowercase().replace(" ", "_")}"
+                )
+            )
+            when (result) {
+                is FrostByteResult.Success ->
+                    transientState.update { it.copy(isCreateDialogOpen = false, errorMessage = null) }
+                is FrostByteResult.Failure ->
+                    transientState.update { it.copy(errorMessage = result.message) }
+            }
+        }
+    }
+
+    fun deleteProfile(profile: Profile) {
+        viewModelScope.launch { repository.deleteProfile(profile) }
+    }
+
+    fun setAsDefault(profile: Profile) {
+        viewModelScope.launch { repository.setAsDefault(profile.id) }
+    }
+
+    fun dismissError() {
+        transientState.update { it.copy(errorMessage = null) }
+    }
+
+    /**
+     * Same honest-blocker pattern as HomeViewModel.onPlayClicked() - reports
+     * the real reason launching isn't possible yet rather than simulating
+     * success. Kept in sync with Home's logic deliberately rather than
+     * inventing a different story for this screen.
+     */
+    fun onPlayClicked(profile: Profile) {
+        viewModelScope.launch {
+            val session = authRepository.currentSession()
+            val reason = if (session == null) {
+                "No Microsoft account signed in. Go to Accounts to sign in."
+            } else {
+                "Signed in as ${session.minecraftUsername}, but launching isn't wired up yet."
+            }
+            transientState.update { it.copy(launchBlockedReason = reason) }
+        }
+    }
+
+    fun dismissLaunchBlocked() {
+        transientState.update { it.copy(launchBlockedReason = null) }
+    }
+}
+FILE_EOF
+
+echo "Writing ProfilesScreen.kt..."
+cat > app/src/main/java/com/frostbyte/launcher/ui/screens/profiles/ProfilesScreen.kt << 'FILE_EOF'
 package com.frostbyte.launcher.ui.screens.profiles
 
 import androidx.compose.foundation.border
@@ -385,3 +524,117 @@ private fun CreateProfileDialog(
         }
     )
 }
+FILE_EOF
+
+echo "Writing ProfilesViewModelTest.kt..."
+cat > app/src/test/java/com/frostbyte/launcher/ui/screens/profiles/ProfilesViewModelTest.kt << 'FILE_EOF'
+package com.frostbyte.launcher.ui.screens.profiles
+
+import com.frostbyte.launcher.core.auth.AuthRepository
+import com.frostbyte.launcher.core.auth.FakeSessionStore
+import com.frostbyte.launcher.core.auth.MicrosoftAuthConfig
+import com.frostbyte.launcher.core.common.Loader
+import com.frostbyte.launcher.core.network.service.FakeMicrosoftAuthService
+import com.frostbyte.launcher.core.network.service.FakeMinecraftAuthService
+import com.frostbyte.launcher.core.network.service.FakeXboxAuthService
+import com.frostbyte.launcher.core.storage.repository.FakeProfileDao
+import com.frostbyte.launcher.core.storage.repository.ProfileRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Test
+
+class ProfilesViewModelTest {
+
+    private val testDispatcher = StandardTestDispatcher()
+    private lateinit var viewModel: ProfilesViewModel
+
+    @Before
+    fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+        val authRepository = AuthRepository(
+            microsoftAuthService = FakeMicrosoftAuthService(),
+            xboxAuthService = FakeXboxAuthService(),
+            minecraftAuthService = FakeMinecraftAuthService(),
+            sessionStore = FakeSessionStore(),
+            config = MicrosoftAuthConfig(clientId = "test-client-id"),
+            ioDispatcher = testDispatcher
+        )
+        viewModel = ProfilesViewModel(ProfileRepository(FakeProfileDao()), authRepository)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+    @Test
+    fun `dialog starts closed`() = runTest(testDispatcher) {
+        assertFalse(viewModel.uiState.first().isCreateDialogOpen)
+    }
+
+    @Test
+    fun `openCreateDialog and dismissCreateDialog toggle dialog state`() = runTest(testDispatcher) {
+        // uiState.value stays at the stateIn() placeholder until the combine()
+        // upstream emits at least once, so wait for the real emission rather
+        // than reading .value synchronously right after a transientState update.
+        viewModel.openCreateDialog()
+        assertTrue(viewModel.uiState.first { it.isCreateDialogOpen }.isCreateDialogOpen)
+
+        viewModel.dismissCreateDialog()
+        assertFalse(viewModel.uiState.first { !it.isCreateDialogOpen }.isCreateDialogOpen)
+    }
+
+    @Test
+    fun `createProfile with valid input adds profile and closes dialog`() = runTest(testDispatcher) {
+        viewModel.openCreateDialog()
+        viewModel.createProfile("Survival", "1.21.1", Loader.FABRIC, ramGb = 4)
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.first { it.profiles.isNotEmpty() }
+        assertFalse(state.isCreateDialogOpen)
+        assertEquals(1, state.profiles.size)
+        assertEquals("Survival", state.profiles.first().name)
+        assertEquals(4096, state.profiles.first().ramAllocationMb)
+    }
+
+    @Test
+    fun `createProfile with blank name surfaces error and keeps dialog open`() = runTest(testDispatcher) {
+        viewModel.openCreateDialog()
+        viewModel.createProfile("   ", "1.21.1", Loader.FABRIC, ramGb = 4)
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.first { it.errorMessage != null }
+        assertTrue(state.isCreateDialogOpen)
+        assertNotNull(state.errorMessage)
+        assertEquals(0, state.profiles.size)
+    }
+
+    @Test
+    fun `dismissError clears the error message`() = runTest(testDispatcher) {
+        viewModel.createProfile("", "1.21.1", Loader.FABRIC, ramGb = 4)
+        advanceUntilIdle()
+        assertNotNull(viewModel.uiState.first { it.errorMessage != null }.errorMessage)
+
+        viewModel.dismissError()
+        assertEquals(null, viewModel.uiState.first { it.errorMessage == null }.errorMessage)
+    }
+}
+FILE_EOF
+
+echo "Committing and pushing..."
+git add -A
+git commit -m "Redesign Profiles screen to match Installations reference: tappable cards, detail panel, honest Play button wired to real auth state"
+git push
+
+echo "Done!"
