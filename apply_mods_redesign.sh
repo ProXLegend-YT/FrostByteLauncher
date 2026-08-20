@@ -1,3 +1,11 @@
+#!/data/data/com.termux/files/usr/bin/bash
+set -e
+
+echo "Syncing repo..."
+git pull --rebase origin main
+
+echo "Writing ContentBrowserScreen.kt..."
+cat > app/src/main/java/com/frostbyte/launcher/ui/content/ContentBrowserScreen.kt << 'FILE_EOF'
 package com.frostbyte.launcher.ui.content
 
 import androidx.compose.foundation.background
@@ -194,3 +202,11 @@ private fun formatDownloadCount(count: Int): String = when {
     count >= 1_000 -> "%.1fk".format(count / 1_000f)
     else -> count.toString()
 }
+FILE_EOF
+
+echo "Committing and pushing..."
+git add -A
+git commit -m "Restyle shared ContentBrowserScreen (Mods/Shaders/Resource Packs): search bar, icon placeholders, formatted download counts"
+git push
+
+echo "Done!"
