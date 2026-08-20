@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -25,7 +23,6 @@ import com.frostbyte.launcher.ui.common.frostByteViewModel
 import com.frostbyte.launcher.ui.components.GlassCard
 import com.frostbyte.launcher.ui.space.SpaceRenderer
 import com.frostbyte.launcher.ui.theme.IceBlue
-import com.frostbyte.launcher.ui.theme.SpaceQuality
 import com.frostbyte.launcher.ui.theme.TextSecondary
 
 @Composable
@@ -54,58 +51,6 @@ fun SettingsScreen(
             }
 
             item {
-                SettingsSection(title = "Visuals") {
-                    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                        Column {
-                            Text(
-                                "Space rendering quality",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                            Text(
-                                if (settings.spaceQualityOverride == null) {
-                                    "Auto - recommended for this device: ${uiState.recommendedSpaceQuality.label()}"
-                                } else {
-                                    "Manually set. Auto would recommend ${uiState.recommendedSpaceQuality.label()}."
-                                },
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = TextSecondary
-                            )
-                        }
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            FilterChip(
-                                selected = settings.spaceQualityOverride == null,
-                                onClick = { viewModel.setSpaceQualityOverride(null) },
-                                label = { Text("Auto") }
-                            )
-                            SpaceQuality.entries.forEach { quality ->
-                                FilterChip(
-                                    selected = settings.spaceQualityOverride == quality,
-                                    onClick = { viewModel.setSpaceQualityOverride(quality) },
-                                    label = { Text(quality.label()) }
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            item {
-                SettingsSection(title = "Accessibility") {
-                    ToggleRow(
-                        title = "Reduce motion",
-                        subtitle = if (settings.reducedMotionOverride == null) {
-                            "Following system setting"
-                        } else {
-                            "Manually overridden"
-                        },
-                        checked = settings.reducedMotionOverride ?: false,
-                        onCheckedChange = { viewModel.setReducedMotionOverride(it) }
-                    )
-                }
-            }
-
-            item {
                 SettingsSection(title = "Privacy") {
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         ToggleRow(
@@ -126,8 +71,6 @@ fun SettingsScreen(
         }
     }
 }
-
-private fun SpaceQuality.label(): String = name.lowercase().replaceFirstChar(Char::uppercase)
 
 @Composable
 private fun SettingsSection(title: String, content: @Composable () -> Unit) {
@@ -170,3 +113,4 @@ private fun ToggleRow(
         )
     }
 }
+
