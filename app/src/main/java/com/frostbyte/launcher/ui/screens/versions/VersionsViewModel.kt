@@ -25,7 +25,9 @@ private data class TransientState(
     val errorMessage: String? = null,
     val filter: VersionFilter = VersionFilter.RELEASE,
     val hasSyncedOnce: Boolean = false,
-    val resolvingDownloadForVersionId: String? = null
+    val resolvingDownloadForVersionId: String? = null,
+    val searchQuery: String = "",
+    val selectedVersionId: String? = null
 )
 
 data class VersionsUiState(
@@ -34,14 +36,27 @@ data class VersionsUiState(
     val errorMessage: String? = null,
     val filter: VersionFilter = VersionFilter.RELEASE,
     val hasSyncedOnce: Boolean = false,
-    val resolvingDownloadForVersionId: String? = null
+    val resolvingDownloadForVersionId: String? = null,
+    val searchQuery: String = "",
+    val selectedVersionId: String? = null
 ) {
     val filteredVersions: List<MinecraftVersion>
-        get() = when (filter) {
-            VersionFilter.ALL -> versions
-            VersionFilter.RELEASE -> versions.filter { it.type == MinecraftVersionType.RELEASE }
-            VersionFilter.SNAPSHOT -> versions.filter { it.type == MinecraftVersionType.SNAPSHOT }
+        get() {
+            val byType = when (filter) {
+                VersionFilter.ALL -> versions
+                VersionFilter.RELEASE -> versions.filter { it.type == MinecraftVersionType.RELEASE }
+                VersionFilter.SNAPSHOT -> versions.filter { it.type == MinecraftVersionType.SNAPSHOT }
+            }
+            return if (searchQuery.isBlank()) {
+                byType
+            } else {
+                byType.filter { it.id.contains(searchQuery, ignoreCase = true) }
+            }
         }
+
+    /** The version currently shown in the detail panel, defaulting to the first visible result. */
+    val selectedVersion: MinecraftVersion?
+        get() = filteredVersions.firstOrNull { it.id == selectedVersionId } ?: filteredVersions.firstOrNull()
 }
 
 /**
@@ -71,7 +86,9 @@ class VersionsViewModel(
             errorMessage = transient.errorMessage,
             filter = transient.filter,
             hasSyncedOnce = transient.hasSyncedOnce,
-            resolvingDownloadForVersionId = transient.resolvingDownloadForVersionId
+            resolvingDownloadForVersionId = transient.resolvingDownloadForVersionId,
+            searchQuery = transient.searchQuery,
+            selectedVersionId = transient.selectedVersionId
         )
     }.stateIn(
         scope = viewModelScope,
@@ -98,6 +115,14 @@ class VersionsViewModel(
 
     fun setFilter(filter: VersionFilter) {
         transientState.update { it.copy(filter = filter) }
+    }
+
+    fun setSearchQuery(query: String) {
+        transientState.update { it.copy(searchQuery = query) }
+    }
+
+    fun selectVersion(versionId: String) {
+        transientState.update { it.copy(selectedVersionId = versionId) }
     }
 
     fun dismissError() {
