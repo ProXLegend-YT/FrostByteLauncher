@@ -44,7 +44,7 @@
 				android:id="@+id/mainTouchCharInput"
 				android:layout_width="1dp"
 				android:layout_height="1dp"
-				android:background="@android:color/darker_gray"
+				android:background="@drawable/frostbyte_bg"
 				android:ems="10"
 				android:imeOptions="flagNoFullscreen|flagNoExtractUi|flagNoPersonalizedLearning|actionDone"
 				android:inputType="textFilter|textImeMultiLine|textAutoComplete|textAutoCorrect"

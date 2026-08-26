@@ -80,14 +80,14 @@ android {
     }
 
     defaultConfig {
-        applicationId "git.artdeell.mjlaunch"
+        applicationId "com.frostbyte.launcher"
         minSdkVersion 21
         targetSdkVersion 36
         versionCode getDateSeconds()
         versionName getVersionName()
         multiDexEnabled false //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
-        resValue 'string', 'group_id', 'git.artdeell'
+        resValue 'string', 'group_id', 'com.frostbyte'
     }
 
     flavorDimensions  = ["runtime"]
@@ -110,8 +110,8 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', 'git.artdeell.mjlaunch.debug'
-            resValue 'string', 'storageProviderAuthorities', 'git.artdeell.mjlaunch.scoped.gamefolder.debug'
+            resValue 'string', 'application_package', 'com.frostbyte.launcher.debug'
+            resValue 'string', 'storageProviderAuthorities', 'com.frostbyte.launcher.scoped.gamefolder.debug'
         }
         proguard {
             initWith debug

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:src="@drawable/frostbyte_space_bg"
+            android:gravity="center"
+            android:tileMode="disabled" />
+    </item>
+    <item android:drawable="#33000000" />
+</layer-list>
