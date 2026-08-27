@@ -130,8 +130,6 @@ android {
             resValue 'string', 'application_package', 'com.frostbyte.launcher'
         }
     }
-        }
-    }
 
     ndkVersion "29.0.14206865"
 
