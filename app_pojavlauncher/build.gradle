@@ -27,7 +27,7 @@ def getVersionName = {
     }else {
         def branchName = currentBranch.getName()
         def commitAbbreviation = latestCommit.abbreviatedId
-        return "iris-${dateToday}-${commitAbbreviation}-${branchName}"
+        return "frostbyte-${dateToday}-${commitAbbreviation}-${branchName}"
     }
 }
 
@@ -50,7 +50,7 @@ configurations {
 }
 
 android {
-    namespace 'git.artdeell.mojo'
+    namespace 'com.frostbyte.launcher'
 
     compileSdk = 36
 
@@ -60,22 +60,16 @@ android {
 
     signingConfigs {
         customDebug {
-            storeFile file("debug.keystore")
+            storeFile file("frostbyte_debug.keystore")
             storePassword "android"
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
-        googlePlayBuild {
-            storeFile file("mojo_upload_next.jks")
-            storePassword System.getenv("UPLOAD_KEYSTORE_PASSWORD")
-            keyAlias "key0"
-            keyPassword System.getenv("UPLOAD_KEYSTORE_PASSWORD")
-        }
-        publicBuild {
-            storeFile file("mojo_release_next.jks")
-            storePassword System.getenv("MOJOPUB_KEYSTORE_PASSWORD")
-            keyAlias "key0"
-            keyPassword System.getenv("MOJOPUB_KEYSTORE_PASSWORD")
+        frostbyteRelease {
+            storeFile file("frostbyte_release.jks")
+            storePassword System.getenv("FROSTBYTE_KEYSTORE_PASSWORD")
+            keyAlias System.getenv("FROSTBYTE_KEY_ALIAS") ?: "frostbyte"
+            keyPassword System.getenv("FROSTBYTE_KEY_PASSWORD")
         }
     }
 
@@ -131,18 +125,11 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue 'string', 'storageProviderAuthorities', 'git.artdeell.mjlaunch.scoped.gamefolder'
-            resValue 'string', 'application_package', 'git.artdeell.mjlaunch'
+            signingConfig signingConfigs.frostbyteRelease
+            resValue 'string', 'storageProviderAuthorities', 'com.frostbyte.launcher.scoped.gamefolder'
+            resValue 'string', 'application_package', 'com.frostbyte.launcher'
         }
-        gplay {
-            initWith release
-            signingConfig signingConfigs.googlePlayBuild
-            matchingFallbacks += List.of("release")
-        }
-        pubRelease {
-            initWith release
-            signingConfig signingConfigs.publicBuild
-            matchingFallbacks += List.of("release")
+    }
         }
     }
 

@@ -1,5 +1,5 @@
-# Remove MojoLauncher account data
-MojoLauncher uses two types of accounts:
+# Remove FrostByte Launcher account data
+FrostByte Launcher uses two types of accounts:
 - Local accounts
 - Microsoft accounts
 <br>

@@ -31,12 +31,15 @@ Out of scope:
 
 ## Handling of Sensitive Data
 
-Per the project requirements (see `docs/`):
 - Passwords are never stored.
-- Authentication tokens are stored only via Android Keystore-backed secure
-  storage and are never logged.
-- Diagnostic exports explicitly exclude passwords, tokens, and private keys.
-- Telemetry is off by default; crash reporting is opt-in only.
+- Authentication tokens (Microsoft/Xbox/Mojang, ely.by) are handled by
+  `app_pojavlauncher`'s existing authenticator flow.
+- Diagnostic/log exports should exclude passwords, tokens, and private keys.
 
-If you find a place where this repository violates any of the above,
-that's a security bug — please report it via the process above.
+Note: `docs/` in this repository describes a separate, unfinished Compose-based
+rewrite (`app/`) that is not currently part of the shipping build (see
+`settings.gradle` - only `app_pojavlauncher` and `forge_installer` are
+included). Its documented security practices apply to that prototype, not
+necessarily to `app_pojavlauncher`. If you find a discrepancy between this
+policy and `app_pojavlauncher`'s actual behavior, that's the security bug to
+report.

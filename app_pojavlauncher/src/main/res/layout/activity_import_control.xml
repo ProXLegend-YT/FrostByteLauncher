@@ -37,7 +37,7 @@
             app:layout_constraintBottom_toTopOf="@+id/editText_import_control_file_name"
             app:layout_constraintStart_toStartOf="@+id/editText_import_control_file_name" />
 
-        <com.kdt.mcgui.MineEditText
+        <com.frostbyte.launcher.mcgui.MineEditText
             android:id="@+id/editText_import_control_file_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
 
             app:layout_constraintBottom_toTopOf="@+id/mineButton_import_control" />
 
-        <com.kdt.mcgui.MineButton
+        <com.frostbyte.launcher.mcgui.MineButton
             android:id="@+id/mineButton_import_control"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

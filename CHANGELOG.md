@@ -1,5 +1,13 @@
 # Changelog
 
+> **Note:** This changelog documents development of `app/`, a separate
+> Compose-based rewrite that is not part of the current shipping build (see
+> `settings.gradle` - only `app_pojavlauncher` and `forge_installer` are
+> included). The actual FrostByte Launcher app is `app_pojavlauncher`, a
+> rebrand of [MojoLauncher](https://github.com/MojoLauncher/MojoLauncher) /
+> [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher). This
+> history is kept for reference.
+
 All notable changes to this project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).

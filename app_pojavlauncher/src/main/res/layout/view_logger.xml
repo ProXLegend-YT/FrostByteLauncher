@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.kdt.DefocusableScrollView
+    <com.frostbyte.launcher.DefocusableScrollView
         android:id="@+id/content_log_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -67,6 +67,6 @@
             android:layout_height="wrap_content"
             android:textIsSelectable="true"/>
 
-    </com.kdt.DefocusableScrollView>
+    </com.frostbyte.launcher.DefocusableScrollView>
 
 </merge>

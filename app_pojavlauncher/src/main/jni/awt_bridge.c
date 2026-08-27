@@ -39,10 +39,10 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
         dalvikJavaVMPtr = vm;
         JNIEnv *env = NULL;
         (*vm)->GetEnv(vm, (void**)&env, JNI_VERSION_1_4);
-        class_MainActivity = (*env)->NewGlobalRef(env,(*env)->FindClass(env, "net/kdt/pojavlaunch/CallbackBridge"));
+        class_MainActivity = (*env)->NewGlobalRef(env,(*env)->FindClass(env, "com/frostbyte/launcher/CallbackBridge"));
         method_OpenLink= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
         method_OpenPath= (*env)->GetStaticMethodID(env, class_MainActivity, "openLink", "(Ljava/lang/String;)V");
-        class_JavaGUILauncherActivity = (*env)->NewGlobalRef(env, (*env)->FindClass(env, "net/kdt/pojavlaunch/JavaGUILauncherActivity"));
+        class_JavaGUILauncherActivity = (*env)->NewGlobalRef(env, (*env)->FindClass(env, "com/frostbyte/launcher/JavaGUILauncherActivity"));
         method_QuerySystemClipboard = (*env)->GetStaticMethodID(env, class_JavaGUILauncherActivity, "querySystemClipboard", "()V");
         method_PutClipboardData = (*env)->GetStaticMethodID(env, class_JavaGUILauncherActivity, "putClipboardData", "(Ljava/lang/String;Ljava/lang/String;)V");
     } else if (dalvikJavaVMPtr != vm) {
@@ -52,7 +52,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     return JNI_VERSION_1_4;
 }
 
-JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeSendData(JNIEnv* env, jclass clazz, jint type, jint i1, jint i2, jint i3, jint i4) {
+JNIEXPORT void JNICALL Java_com_frostbyte_launcher_AWTInputBridge_nativeSendData(JNIEnv* env, jclass clazz, jint type, jint i1, jint i2, jint i3, jint i4) {
     if (runtimeJNIEnvPtr_INPUT == NULL) {
         if (runtimeJavaVMPtr == NULL) {
             return;
@@ -82,7 +82,7 @@ JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeSendData(JN
 // TODO: check for memory leaks
 // int printed = 0;
 int threadAttached = 0;
-JNIEXPORT jboolean JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_renderAWTScreenFrame(JNIEnv* env, jclass clazz, jobject targetBuffer) {
+JNIEXPORT jboolean JNICALL Java_com_frostbyte_launcher_utils_JREUtils_renderAWTScreenFrame(JNIEnv* env, jclass clazz, jobject targetBuffer) {
     if (runtimeJNIEnvPtr_GRAPHICS == NULL) {
         if (runtimeJavaVMPtr == NULL) {
             return JNI_FALSE;
@@ -187,7 +187,7 @@ JNIEXPORT void JNICALL Java_net_java_openjdk_cacio_ctc_CTCDesktopPeer_openUri(JN
     if(detachable) (*dalvikJavaVMPtr)->DetachCurrentThread(dalvikJavaVMPtr);
 }
 
-JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeClipboardReceived(JNIEnv *env, jclass clazz, jstring clipboardData, jstring clipboardDataMime) {
+JNIEXPORT void JNICALL Java_com_frostbyte_launcher_AWTInputBridge_nativeClipboardReceived(JNIEnv *env, jclass clazz, jstring clipboardData, jstring clipboardDataMime) {
     if(method_SystemClipboardDataReceived == NULL || class_CTCClipboard == NULL) return;
     if (runtimeJNIEnvPtr_INPUT == NULL) {
         if (runtimeJavaVMPtr == NULL) {
@@ -206,7 +206,7 @@ JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_AWTInputBridge_nativeClipboardRe
 }
 
 JNIEXPORT void JNICALL
-Java_net_kdt_pojavlaunch_AWTInputBridge_nativeMoveWindow(JNIEnv *env, jclass clazz, jint xoff, jint yoff) {
+Java_com_frostbyte_launcher_AWTInputBridge_nativeMoveWindow(JNIEnv *env, jclass clazz, jint xoff, jint yoff) {
     if (runtimeJNIEnvPtr_INPUT == NULL) {
         if (runtimeJavaVMPtr == NULL) {
             return;

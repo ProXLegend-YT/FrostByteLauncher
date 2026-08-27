@@ -17,6 +17,6 @@ jar {
     }
     manifest {
         attributes("Manifest-Version": "1.0",
-                "PreMain-Class": "git.artdeell.installer_agent.Agent")
+                "PreMain-Class": "com.frostbyte.launcher.installer_agent.Agent")
     }
 }

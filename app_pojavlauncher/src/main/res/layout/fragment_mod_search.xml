@@ -103,7 +103,7 @@
         app:layout_constraintStart_toStartOf="@+id/search_mod_list"
         app:layout_constraintTop_toTopOf="@+id/search_mod_list" />
 
-    <com.kdt.mcgui.MineButton
+    <com.frostbyte.launcher.mcgui.MineButton
         android:id="@+id/mineButton_import_local_modpack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

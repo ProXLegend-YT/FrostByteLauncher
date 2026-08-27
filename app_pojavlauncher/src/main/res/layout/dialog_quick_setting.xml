@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.kdt.CustomSeekbar
+    <com.frostbyte.launcher.CustomSeekbar
         android:id="@+id/editResolution_seekbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"
@@ -89,7 +89,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/checkboxGyroY" />
 
-    <com.kdt.CustomSeekbar
+    <com.frostbyte.launcher.CustomSeekbar
         android:id="@+id/editGyro_seekbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"
@@ -128,7 +128,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editGyro_seekbar" />
 
-    <com.kdt.CustomSeekbar
+    <com.frostbyte.launcher.CustomSeekbar
         android:id="@+id/editMouseSpeed_seekbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"
@@ -177,7 +177,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/checkboxGesture" />
 
-    <com.kdt.CustomSeekbar
+    <com.frostbyte.launcher.CustomSeekbar
         android:id="@+id/editGestureDelay_seekbar"
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"

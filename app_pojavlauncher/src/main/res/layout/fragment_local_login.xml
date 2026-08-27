@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="@+id/login_edit_email" />
 
 
-    <com.kdt.mcgui.MineEditText
+    <com.frostbyte.launcher.mcgui.MineEditText
         android:id="@+id/login_edit_email"
         android:layout_width="0dp"
         android:layout_height="@dimen/_37sdp"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="@+id/login_menu"
         app:layout_constraintVertical_bias="0.251" />
 
-    <com.kdt.mcgui.MineButton
+    <com.frostbyte.launcher.mcgui.MineButton
         android:id="@+id/login_button"
         android:layout_width="0dp"
         android:layout_height="@dimen/_42sdp"

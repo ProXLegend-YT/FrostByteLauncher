@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name="net.kdt.pojavlaunch.PojavApplication"
+        android:name="com.frostbyte.launcher.PojavApplication"
         android:allowBackup="true"
         android:allowNativeHeapPointerTagging="false"
         android:appCategory="game"
@@ -42,7 +42,7 @@
         android:enableOnBackInvokedCallback="false"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name="net.kdt.pojavlaunch.MissingStorageActivity"
+            android:name="com.frostbyte.launcher.MissingStorageActivity"
             android:exported="false" />
 
         <meta-data
@@ -50,7 +50,7 @@
             android:value="ratio_float" />
 
         <activity
-            android:name="net.kdt.pojavlaunch.TestStorageActivity"
+            android:name="com.frostbyte.launcher.TestStorageActivity"
             android:exported="true"
             android:label="@string/app_short_name"
             android:launchMode="singleTop">
@@ -61,11 +61,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.kdt.pojavlaunch.LauncherActivity"
+            android:name="com.frostbyte.launcher.LauncherActivity"
             android:label="@string/app_short_name"
+            android:theme="@style/AppTheme.Launcher"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name="net.kdt.pojavlaunch.ImportControlActivity"
+            android:name="com.frostbyte.launcher.ImportControlActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:launchMode="singleInstance"
@@ -85,23 +86,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.kdt.pojavlaunch.FatalErrorActivity"
+            android:name="com.frostbyte.launcher.FatalErrorActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
-        <activity android:name="net.kdt.pojavlaunch.ShowErrorActivity"
+        <activity android:name="com.frostbyte.launcher.ShowErrorActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
         <activity
-            android:name="net.kdt.pojavlaunch.ExitActivity"
+            android:name="com.frostbyte.launcher.ExitActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
         <activity
             android:process=":gui_installer"
-            android:name="net.kdt.pojavlaunch.JavaGUILauncherActivity"
+            android:name="com.frostbyte.launcher.JavaGUILauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="net.kdt.pojavlaunch.CustomControlsActivity"
+            android:name="com.frostbyte.launcher.CustomControlsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:exported="false"
             android:screenOrientation="sensorLandscape">
@@ -112,14 +113,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.kdt.pojavlaunch.game.GameActivity"
+            android:name="com.frostbyte.launcher.game.GameActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
             android:launchMode="singleTop"
             android:process=":game"
             android:screenOrientation="sensorLandscape" />
 
         <provider
-            android:name="net.kdt.pojavlaunch.scoped.FolderProvider"
+            android:name="com.frostbyte.launcher.scoped.FolderProvider"
             android:authorities="@string/storageProviderAuthorities"
             android:exported="true"
             android:grantUriPermissions="true"
@@ -129,9 +130,9 @@
             </intent-filter>
         </provider>
 
-        <service android:name="net.kdt.pojavlaunch.services.ProgressService"
+        <service android:name="com.frostbyte.launcher.services.ProgressService"
             android:foregroundServiceType="dataSync"/>
-        <service android:name="net.kdt.pojavlaunch.services.GameService" android:process=":game"
+        <service android:name="com.frostbyte.launcher.services.GameService" android:process=":game"
             android:foregroundServiceType="specialUse">
             <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="This application is intended to run a 3rd-party piece of software which cannot be managed using the activity's saved instance state. This service is used for background persistence of this piece of software."/>

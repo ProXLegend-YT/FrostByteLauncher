@@ -15,19 +15,19 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<net.kdt.pojavlaunch.customcontrols.ControlLayout
+		<com.frostbyte.launcher.customcontrols.ControlLayout
 			android:id="@+id/main_control_layout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<net.kdt.pojavlaunch.game.GameView
+			<com.frostbyte.launcher.game.GameView
 				android:id="@+id/main_game_render_view"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:defaultFocusHighlightEnabled="false"
                 tools:ignore="UnusedAttribute">
 
-				<net.kdt.pojavlaunch.game.GameCursorView
+				<com.frostbyte.launcher.game.GameCursorView
 					android:layout_height="match_parent"
 					android:layout_width="match_parent"
 					android:orientation="vertical"
@@ -37,32 +37,31 @@
 					android:visibility="gone"
 					app:defaultCursorDrawable="@drawable/ic_mouse_pointer"/>
 
-			</net.kdt.pojavlaunch.game.GameView>
+			</com.frostbyte.launcher.game.GameView>
 
 
-			<net.kdt.pojavlaunch.customcontrols.keyboard.TouchCharInput
+			<com.frostbyte.launcher.customcontrols.keyboard.TouchCharInput
 				android:id="@+id/mainTouchCharInput"
 				android:layout_width="1dp"
 				android:layout_height="1dp"
-				android:background="@drawable/frostbyte_bg"
 				android:ems="10"
 				android:imeOptions="flagNoFullscreen|flagNoExtractUi|flagNoPersonalizedLearning|actionDone"
 				android:inputType="textFilter|textImeMultiLine|textAutoComplete|textAutoCorrect"
 				tools:ignore="TouchTargetSizeCheck" />
 
-			<net.kdt.pojavlaunch.customcontrols.handleview.DrawerPullButton
+			<com.frostbyte.launcher.customcontrols.handleview.DrawerPullButton
 				android:id="@+id/drawer_button"
 				android:layout_width="40dp"
 				android:layout_height="20dp"
 				android:padding="8dp"
 				android:elevation="10dp"
 				android:layout_gravity="center_horizontal"/>
-			<net.kdt.pojavlaunch.customcontrols.mouse.HotbarView
+			<com.frostbyte.launcher.customcontrols.mouse.HotbarView
 				android:id="@+id/hotbar_view"
 				android:layout_width="0px"
 				android:layout_height="0px"/>
 
-		</net.kdt.pojavlaunch.customcontrols.ControlLayout>
+		</com.frostbyte.launcher.customcontrols.ControlLayout>
 
 		<FrameLayout
 			android:id="@+id/main_loading_screen"
@@ -104,7 +103,7 @@
 			</LinearLayout>
 		</FrameLayout>
 
-		<com.kdt.LoggerView
+		<com.frostbyte.launcher.LoggerView
 			android:id="@+id/mainLoggerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"

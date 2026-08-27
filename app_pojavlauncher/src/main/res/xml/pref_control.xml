@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app2="http://schemas.android.com/apk/res-auto">
 
-    <net.kdt.pojavlaunch.prefs.BackButtonPreference/>
+    <com.frostbyte.launcher.prefs.BackButtonPreference/>
 
 
     <Preference
@@ -10,7 +10,7 @@
         android:summary="@string/preference_edit_controls_summary"
         app2:icon="@drawable/ic_px_gamepad"
         >
-        <intent android:targetPackage="@string/application_package" android:targetClass="net.kdt.pojavlaunch.CustomControlsActivity" android:action=".CustomControlsActivity"/>
+        <intent android:targetPackage="@string/application_package" android:targetClass="com.frostbyte.launcher.CustomControlsActivity" android:action=".CustomControlsActivity"/>
     </Preference>
 
     <PreferenceCategory
@@ -30,7 +30,7 @@
             android:title="@string/mcl_disable_swap_hand"
             android:icon="@drawable/ic_px_switch_arrows_x"/>
 
-        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+        <com.frostbyte.launcher.prefs.CustomSeekBarPreference
             android:key="timeLongPressTrigger"
             android:summary="@string/mcl_setting_subtitle_longpresstrigger"
             android:title="@string/mcl_setting_title_longpresstrigger"
@@ -47,7 +47,7 @@
     <PreferenceCategory
         android:title="@string/preference_category_buttons">
 
-        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+        <com.frostbyte.launcher.prefs.CustomSeekBarPreference
             android:key="buttonscale"
             android:title="@string/mcl_setting_title_buttonscale"
             android:summary="@string/mcl_setting_subtitle_buttonscale"
@@ -71,7 +71,7 @@
     <PreferenceCategory
         android:title="@string/preference_category_virtual_mouse">
 
-        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+        <com.frostbyte.launcher.prefs.CustomSeekBarPreference
             android:key="mousescale"
             android:summary="@string/mcl_setting_subtitle_mousescale"
             android:title="@string/mcl_setting_title_mousescale"
@@ -84,7 +84,7 @@
             android:icon="@drawable/ic_px_pointer_size"
             />
 
-        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+        <com.frostbyte.launcher.prefs.CustomSeekBarPreference
             android:key="mousespeed"
             android:summary="@string/mcl_setting_subtitle_mousespeed"
             android:title="@string/mcl_setting_title_mousespeed"
@@ -109,7 +109,7 @@
             android:key="enableGyro"
             android:title="@string/preference_enable_gyro_title"
             android:summary="@string/preference_enable_gyro_description"/>
-        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+        <com.frostbyte.launcher.prefs.CustomSeekBarPreference
             android:key="gyroSensitivity"
             android:title="@string/preference_gyro_sensitivity_title"
             android:summary="@string/preference_gyro_sensitivity_description"
@@ -118,7 +118,7 @@
             android:max="@integer/gyro_speed_seekbar_max"
             app2:seekBarIncrement="@integer/gyro_speed_seekbar_increment"
             app2:showSeekBarValue="true"/>
-        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+        <com.frostbyte.launcher.prefs.CustomSeekBarPreference
             android:key="gyroSampleRate"
             android:title="@string/preference_gyro_sample_rate_title"
             android:summary="@string/preference_gyro_sample_rate_description"
@@ -149,12 +149,12 @@
         <Preference
             android:title="@string/preference_remap_controller_title"
             android:summary="@string/preference_remap_controller_description"
-            android:fragment="net.kdt.pojavlaunch.fragments.GamepadMapperFragment"/>
-        <net.kdt.pojavlaunch.prefs.GamepadRemapPreference
+            android:fragment="com.frostbyte.launcher.fragments.GamepadMapperFragment"/>
+        <com.frostbyte.launcher.prefs.GamepadRemapPreference
             android:title="@string/preference_wipe_controller_title"
             android:summary="@string/preference_wipe_controller_description"
             />
-        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+        <com.frostbyte.launcher.prefs.CustomSeekBarPreference
             android:key="gamepad_deadzone_scale"
             android:title="@string/preference_deadzone_scale_title"
             android:summary="@string/preference_deadzone_scale_description"

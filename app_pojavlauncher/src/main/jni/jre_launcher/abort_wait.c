@@ -61,10 +61,10 @@ _Noreturn void abort_call(int code, bool is_signal) {
 }
 
 JNIEXPORT void JNICALL
-Java_net_kdt_pojavlaunch_utils_jre_JavaRunner_nativeSetupExit(JNIEnv *env, jclass clazz,
+Java_com_frostbyte_launcher_utils_jre_JavaRunner_nativeSetupExit(JNIEnv *env, jclass clazz,
                                                               jobject context) {
     (*env)->GetJavaVM(env, &vm_exit_data.vm);
-    jclass class = (*env)->FindClass(env, "net/kdt/pojavlaunch/ExitActivity");
+    jclass class = (*env)->FindClass(env, "com/frostbyte/launcher/ExitActivity");
     vm_exit_data.exit_class  = (*env)->NewGlobalRef(env, class);
     vm_exit_data.exit_method = (*env)->GetStaticMethodID(env, class, "showExitMessage", "(Landroid/content/Context;IZ)V");
     if(vm_exit_data.context != NULL) {

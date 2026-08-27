@@ -7,7 +7,7 @@
     android:background="@color/background_app"
     android:paddingHorizontal="@dimen/fragment_padding_medium">
 
-    <com.kdt.pickafile.FileListView
+    <com.frostbyte.launcher.pickafile.FileListView
         android:id="@+id/file_selector"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toTopOf="@id/file_selector_create_folder"
         app:layout_constraintTop_toBottomOf="@+id/file_selector_current_path" />
 
-    <com.kdt.mcgui.MineButton
+    <com.frostbyte.launcher.mcgui.MineButton
         android:id="@+id/file_selector_select_folder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toEndOf="@+id/file_selector_create_folder"
          />
 
-    <com.kdt.mcgui.MineButton
+    <com.frostbyte.launcher.mcgui.MineButton
         android:id="@+id/file_selector_create_folder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

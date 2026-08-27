@@ -13,6 +13,13 @@
 
     </style>
 
+    <!-- Applied to launcher UI screens (home, profiles, settings) only -
+         NOT the base AppTheme, so GameActivity keeps a clean render surface
+         with no wallpaper behind it during gameplay/loading. -->
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/frostbyte_bg</item>
+    </style>
+
     <style name="LauncherFragment_Divider">
         <item name="android:layout_width">@dimen/padding_tiny</item>
         <item name="android:layout_height">0dp</item>

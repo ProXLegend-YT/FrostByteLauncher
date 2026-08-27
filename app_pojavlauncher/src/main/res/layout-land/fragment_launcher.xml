@@ -28,7 +28,7 @@
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5"/>
-            <com.kdt.mcgui.LauncherMenuButton
+            <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/news_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="0dp"
@@ -45,7 +45,7 @@
                 app:layout_constraintStart_toStartOf="@id/center_guideline"
                 app:layout_constraintEnd_toEndOf="@id/center_guideline"
                 app:layout_constraintBottom_toBottomOf="@id/news_button"/>
-            <com.kdt.mcgui.LauncherMenuButton
+            <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/social_media_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="0dp"
@@ -55,7 +55,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/social_divider"/>
 
-            <com.kdt.mcgui.LauncherMenuButton
+            <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/custom_control_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:text="@string/mcl_option_customcontrol"
                 app:layout_constraintTop_toBottomOf="@id/news_button"/>
 
-            <com.kdt.mcgui.LauncherMenuButton
+            <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/install_jar_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toBottomOf="@id/custom_control_button"
                 tools:layout_editor_absoluteX="0dp" />
 
-            <com.kdt.mcgui.LauncherMenuButton
+            <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/share_logs_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 android:text="@string/main_share_logs"
                 app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
 
-            <com.kdt.mcgui.LauncherMenuButton
+            <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/open_files_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
@@ -94,7 +94,7 @@
 
 
 
-    <com.kdt.mcgui.mcVersionSpinner
+    <com.frostbyte.launcher.mcgui.mcVersionSpinner
         android:id="@+id/mc_version_spinner"
         android:layout_width="0dp"
         android:layout_height="@dimen/_32sdp"
@@ -136,7 +136,7 @@
         android:translationZ="-1dp"
         app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
 
-    <com.kdt.mcgui.MineButton
+    <com.frostbyte.launcher.mcgui.MineButton
         android:id="@+id/play_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

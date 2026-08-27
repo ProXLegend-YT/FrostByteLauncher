@@ -70,7 +70,7 @@ jstring convertStringJVM(JNIEnv* srcEnv, JNIEnv* dstEnv, jstring srcStr) {
 }
 
 
-JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_setLdLibraryPath(JNIEnv *env, jclass clazz, jstring ldLibraryPath) {
+JNIEXPORT void JNICALL Java_com_frostbyte_launcher_utils_JREUtils_setLdLibraryPath(JNIEnv *env, jclass clazz, jstring ldLibraryPath) {
 	// jclass exception_cls = (*env)->FindClass(env, "java/lang/UnsatisfiedLinkError");
 	
 	android_update_LD_LIBRARY_PATH_t android_update_LD_LIBRARY_PATH;
@@ -95,7 +95,7 @@ JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_setLdLibraryPath(
 }
 
 
-JNIEXPORT jint JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_chdir(JNIEnv *env, jclass clazz, jstring nameStr) {
+JNIEXPORT jint JNICALL Java_com_frostbyte_launcher_utils_JREUtils_chdir(JNIEnv *env, jclass clazz, jstring nameStr) {
 	const char *name = (*env)->GetStringUTFChars(env, nameStr, NULL);
 	int retval = chdir(name);
 	(*env)->ReleaseStringUTFChars(env, nameStr, name);

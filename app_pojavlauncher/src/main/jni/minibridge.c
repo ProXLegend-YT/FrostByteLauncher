@@ -20,7 +20,7 @@ void openLink(const char* link) {
 }
 
 JNIEXPORT void JNICALL
-Java_net_kdt_pojavlaunch_CallbackBridge_minibridgeInit(JNIEnv *env, jclass clazz) {
+Java_com_frostbyte_launcher_CallbackBridge_minibridgeInit(JNIEnv *env, jclass clazz) {
     (*env)->GetJavaVM(env, &dalivk);
     class_CallbackBridge = (*env)->NewGlobalRef(env, clazz);
     method_openLink = (*env)->GetStaticMethodID(env, clazz, "openLink", "(Ljava/lang/String;)V");
