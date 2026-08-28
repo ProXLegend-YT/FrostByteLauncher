@@ -17,7 +17,11 @@ public class MineEditText extends androidx.appcompat.widget.AppCompatEditText {
 	}
 
 	public void init() {
-		setBackgroundColor(Color.parseColor("#131313"));
-		setPadding(5, 5, 5, 5);
+		setBackground(androidx.core.content.res.ResourcesCompat.getDrawable(getResources(), com.frostbyte.launcher.R.drawable.frostbyte_input_bg, null));
+		setTextColor(getResources().getColor(com.frostbyte.launcher.R.color.frostbyte_text_primary));
+		setHintTextColor(getResources().getColor(com.frostbyte.launcher.R.color.frostbyte_text_secondary));
+		int hPad = (int) (16 * getResources().getDisplayMetrics().density);
+		int vPad = (int) (10 * getResources().getDisplayMetrics().density);
+		setPadding(hPad, vPad, hPad, vPad);
 	}
 }
