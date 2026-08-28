@@ -44,33 +44,33 @@
     </style>
 
     <!-- FrostByte typography -->
-    <style name="Frostbyte.Text.Title">
+    <style name="Frostbyte.Text.Title" parent="">
         <item name="android:textColor">@color/frostbyte_text_primary</item>
         <item name="android:textSize">22sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:letterSpacing">0.01</item>
     </style>
 
-    <style name="Frostbyte.Text.Body">
+    <style name="Frostbyte.Text.Body" parent="">
         <item name="android:textColor">@color/frostbyte_text_primary</item>
         <item name="android:textSize">15sp</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="Frostbyte.Text.Caption">
+    <style name="Frostbyte.Text.Caption" parent="">
         <item name="android:textColor">@color/frostbyte_text_secondary</item>
         <item name="android:textSize">13sp</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <!-- FrostByte glass card container, for use on any screen -->
-    <style name="Frostbyte.Card">
+    <style name="Frostbyte.Card" parent="">
         <item name="android:background">@drawable/frostbyte_card_bg</item>
         <item name="android:padding">16dp</item>
     </style>
 
     <!-- Primary action button (Play, Confirm, etc.) -->
-    <style name="Frostbyte.Button.Primary">
+    <style name="Frostbyte.Button.Primary" parent="">
         <item name="android:background">@drawable/frostbyte_button_primary</item>
         <item name="android:textColor">@color/frostbyte_text_primary</item>
         <item name="android:textAllCaps">false</item>
