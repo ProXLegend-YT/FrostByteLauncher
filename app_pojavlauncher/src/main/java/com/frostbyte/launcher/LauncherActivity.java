@@ -175,7 +175,6 @@ public class LauncherActivity extends BaseActivity {
 
         IconCacheJanitor.runJanitor();
 
-        getWindow().setBackgroundDrawable(null);
         bindViews();
         mRequestPermissionLauncher = this.registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),

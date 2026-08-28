@@ -100,6 +100,7 @@
             android:process=":gui_installer"
             android:name="com.frostbyte.launcher.JavaGUILauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
+            android:theme="@style/AppTheme.Launcher"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name="com.frostbyte.launcher.CustomControlsActivity"
