@@ -29,6 +29,8 @@
 				android:layout_width="match_parent"
 				android:text="@string/mcl_button_social_media"
 				android:drawableStart="@drawable/ic_social_media"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"/>
@@ -39,6 +41,8 @@
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
 				android:drawableStart="@drawable/ic_px_gamepad"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
 				android:text="@string/mcl_option_customcontrol"
 				app:layout_constraintTop_toBottomOf="@id/social_media_button" />
 
@@ -47,6 +51,8 @@
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
 				android:drawableStart="@drawable/ic_px_java_run"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
 				android:text="@string/main_install_jar_file"
 				app:layout_constraintTop_toBottomOf="@id/custom_control_button" />
 
@@ -55,6 +61,8 @@
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
 				android:drawableStart="@drawable/ic_px_sharelog"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
 				android:text="@string/main_share_logs"
 				app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
 
@@ -63,6 +71,8 @@
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
 				android:drawableStart="@drawable/ic_px_folder"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
 				android:text="@string/mcl_button_open_directory"
 				app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
 		</androidx.constraintlayout.widget.ConstraintLayout>
@@ -88,9 +98,11 @@
 		android:id="@+id/edit_profile_button"
 		android:layout_width="@dimen/_52sdp"
 		android:layout_height="@dimen/_52sdp"
-		android:background="?android:attr/selectableItemBackground"
+		android:background="@drawable/frostbyte_icon_button_bg"
+		android:padding="14dp"
 
 		android:src="@drawable/ic_px_edit"
+		app:tint="@color/frostbyte_accent"
 		app:layout_constraintBottom_toBottomOf="@+id/mc_version_spinner"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="@+id/mc_version_spinner" />
@@ -115,7 +127,6 @@
 		android:layout_marginHorizontal="@dimen/_17sdp"
 		android:layout_marginBottom="@dimen/_15sdp"
 
-		android:textAllCaps="true"
 		android:text="@string/main_play"
 		app:layout_constraintBottom_toBottomOf="parent"
 		/>
