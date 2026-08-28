@@ -2,10 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app2="http://schemas.android.com/apk/res-auto">
 
-    <com.frostbyte.launcher.prefs.BackButtonPreference/>
+    <com.frostbyte.launcher.prefs.BackButtonPreference
+        android:layout="@layout/frostbyte_preference_item"/>
 
     <PreferenceCategory android:title="@string/preference_category_java_tweaks">
         <Preference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="install_jre"
             android:icon="@drawable/ic_px_runtime_mgr"
             android:persistent="false"
@@ -13,6 +15,7 @@
             android:title="@string/multirt_title"/>
 
         <androidx.preference.EditTextPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:dialogTitle="@string/mcl_setting_title_javaargs"
             android:icon="@drawable/ic_px_console"
             android:key="javaArgs"
@@ -21,6 +24,7 @@
             android:title="@string/mcl_setting_title_javaargs" />
 
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="allocation"
             android:icon="@drawable/ic_px_ram"
             android:summary="@string/mcl_memory_allocation_subtitle"
@@ -31,6 +35,7 @@
             app2:selectable="false"/>
 
         <SwitchPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:defaultValue="true"
             android:icon="@drawable/ic_px_java_run"
             android:key="java_sandbox"

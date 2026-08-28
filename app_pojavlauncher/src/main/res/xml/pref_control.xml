@@ -2,10 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app2="http://schemas.android.com/apk/res-auto">
 
-    <com.frostbyte.launcher.prefs.BackButtonPreference/>
+    <com.frostbyte.launcher.prefs.BackButtonPreference
+        android:layout="@layout/frostbyte_preference_item"/>
 
 
     <Preference
+        android:layout="@layout/frostbyte_preference_item"
         android:title="@string/preference_edit_controls_title"
         android:summary="@string/preference_edit_controls_summary"
         app2:icon="@drawable/ic_px_gamepad"
@@ -17,6 +19,7 @@
         android:title="@string/preference_category_gestures">
 
         <androidx.preference.SwitchPreferenceCompat
+        android:layout="@layout/frostbyte_preference_item"
             android:defaultValue="false"
             android:icon="@drawable/ic_px_nogestures"
             android:key="disableGestures"
@@ -24,6 +27,7 @@
             android:title="@string/mcl_disable_gestures" />
 
         <androidx.preference.SwitchPreferenceCompat
+        android:layout="@layout/frostbyte_preference_item"
             android:defaultValue="false"
             android:key="disableDoubleTap"
             android:summary="@string/mcl_disable_swap_hand_subtitle"
@@ -31,6 +35,7 @@
             android:icon="@drawable/ic_px_switch_arrows_x"/>
 
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="timeLongPressTrigger"
             android:summary="@string/mcl_setting_subtitle_longpresstrigger"
             android:title="@string/mcl_setting_title_longpresstrigger"
@@ -48,6 +53,7 @@
         android:title="@string/preference_category_buttons">
 
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="buttonscale"
             android:title="@string/mcl_setting_title_buttonscale"
             android:summary="@string/mcl_setting_subtitle_buttonscale"
@@ -59,6 +65,7 @@
             android:icon="@drawable/ic_px_control_size"
             />
         <SwitchPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="buttonAllCaps"
             android:defaultValue="true"
             android:title="@string/mcl_setting_title_buttonallcaps"
@@ -72,6 +79,7 @@
         android:title="@string/preference_category_virtual_mouse">
 
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="mousescale"
             android:summary="@string/mcl_setting_subtitle_mousescale"
             android:title="@string/mcl_setting_title_mousescale"
@@ -85,6 +93,7 @@
             />
 
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="mousespeed"
             android:summary="@string/mcl_setting_subtitle_mousespeed"
             android:title="@string/mcl_setting_title_mousespeed"
@@ -95,6 +104,7 @@
             app2:seekBarIncrement="@integer/mouse_speed_seekbar_increment"
             app2:showSeekBarValue="true" />
         <SwitchPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="mouse_start"
             android:title="@string/preference_mouse_start_title"
             android:summary="@string/preference_mouse_start_description"
@@ -106,10 +116,12 @@
         android:title="@string/preference_category_gyro_controls"
         >
         <SwitchPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="enableGyro"
             android:title="@string/preference_enable_gyro_title"
             android:summary="@string/preference_enable_gyro_description"/>
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="gyroSensitivity"
             android:title="@string/preference_gyro_sensitivity_title"
             android:summary="@string/preference_gyro_sensitivity_description"
@@ -119,6 +131,7 @@
             app2:seekBarIncrement="@integer/gyro_speed_seekbar_increment"
             app2:showSeekBarValue="true"/>
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="gyroSampleRate"
             android:title="@string/preference_gyro_sample_rate_title"
             android:summary="@string/preference_gyro_sample_rate_description"
@@ -127,16 +140,19 @@
             app2:selectable="false"
             app2:showSeekBarValue="true"/>
         <SwitchPreferenceCompat
+        android:layout="@layout/frostbyte_preference_item"
             android:key="gyroSmoothing"
             android:title="@string/preference_gyro_smoothing_title"
             android:summary="@string/preference_gyro_smoothing_description"
             android:defaultValue="true"
             />
         <SwitchPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="gyroInvertX"
             android:title="@string/preference_gyro_invert_x_axis"
             android:summary="@string/preference_gyro_invert_x_axis_description"/>
         <SwitchPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="gyroInvertY"
             android:title="@string/preference_gyro_invert_y_axis"
             android:summary="@string/preference_gyro_invert_y_axis_description"/>
@@ -147,14 +163,17 @@
         android:title="@string/preference_category_controller_settings"
         >
         <Preference
+        android:layout="@layout/frostbyte_preference_item"
             android:title="@string/preference_remap_controller_title"
             android:summary="@string/preference_remap_controller_description"
             android:fragment="com.frostbyte.launcher.fragments.GamepadMapperFragment"/>
         <com.frostbyte.launcher.prefs.GamepadRemapPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:title="@string/preference_wipe_controller_title"
             android:summary="@string/preference_wipe_controller_description"
             />
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="gamepad_deadzone_scale"
             android:title="@string/preference_deadzone_scale_title"
             android:summary="@string/preference_deadzone_scale_description"
@@ -168,6 +187,7 @@
 
     <PreferenceCategory android:title="@string/preference_category_keyboard">
         <SwitchPreference
+        android:layout="@layout/frostbyte_preference_item"
             android:key="keyboardAutoPanning"
             android:title="@string/preference_keyboard_autopan_title"
             android:summary="@string/preference_keyboard_autopan_summary"
