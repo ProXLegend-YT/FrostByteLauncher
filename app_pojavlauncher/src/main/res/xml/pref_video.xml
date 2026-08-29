@@ -24,7 +24,7 @@
             />
 
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
-        android:layout="@layout/frostbyte_preference_item"
+        android:layout="@layout/frostbyte_preference_seekbar"
             android:key="resolutionRatio"
             android:summary="@string/mcl_setting_subtitle_resolution_scaler"
             android:title="@string/mcl_setting_title_resolution_scaler"

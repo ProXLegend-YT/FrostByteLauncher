@@ -59,7 +59,6 @@ public class CustomSeekBarPreference extends SeekBarPreference {
     @Override
     public void onBindViewHolder(@NonNull PreferenceViewHolder view) {
         super.onBindViewHolder(view);
-        TextView titleTextView = (TextView) view.findViewById(android.R.id.title);
 
         mTextView = (TextView) view.findViewById(R.id.seekbar_value);
         mTextView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);

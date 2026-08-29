@@ -24,7 +24,7 @@
             android:title="@string/mcl_setting_title_javaargs" />
 
         <com.frostbyte.launcher.prefs.CustomSeekBarPreference
-        android:layout="@layout/frostbyte_preference_item"
+        android:layout="@layout/frostbyte_preference_seekbar"
             android:key="allocation"
             android:icon="@drawable/ic_px_ram"
             android:summary="@string/mcl_memory_allocation_subtitle"
