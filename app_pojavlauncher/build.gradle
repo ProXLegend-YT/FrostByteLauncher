@@ -82,6 +82,14 @@ android {
         multiDexEnabled false //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
         resValue 'string', 'group_id', 'com.frostbyte'
+
+        externalNativeBuild {
+            cmake {
+                arguments "-DCMAKE_BUILD_TYPE=Release", "-DANDROID_STL=c++_shared"
+                cFlags "-O3", "-fvisibility=hidden"
+                cppFlags "-O3", "-fvisibility=hidden"
+            }
+        }
     }
 
     flavorDimensions  = ["runtime"]
@@ -136,9 +144,6 @@ android {
     externalNativeBuild {
         cmake {
             path file('src/main/jni/CMakeLists.txt')
-            arguments += ["-DCMAKE_BUILD_TYPE=Release", "-DANDROID_STL=c++_shared"]
-            cFlags += ["-O3", "-fvisibility=hidden"]
-            cppFlags += ["-O3", "-fvisibility=hidden"]
         }
     }
 
