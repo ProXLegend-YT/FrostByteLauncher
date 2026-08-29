@@ -24,9 +24,9 @@
     <color name="frostbyte_violet">#8C6BFF</color>
 
     <!-- Surfaces: layered glass tones, dark space-navy base -->
-    <color name="frostbyte_surface_1">#CC10131F</color>
-    <color name="frostbyte_surface_2">#E6161A2B</color>
-    <color name="frostbyte_surface_pressed">#F01E2338</color>
+    <color name="frostbyte_surface_1">#99141826</color>
+    <color name="frostbyte_surface_2">#A6181D30</color>
+    <color name="frostbyte_surface_pressed">#CC1E2338</color>
     <color name="frostbyte_card_bg">#CC1A1F2E</color>
     <color name="frostbyte_card_stroke">#335AD1FF</color>
 
