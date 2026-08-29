@@ -67,10 +67,16 @@ jobs:
           gradle :app_pojavlauncher:assembleNoruntimeDebug
           mv app_pojavlauncher/build/outputs/apk/noruntime/debug/app_pojavlauncher-noruntime-debug.apk out/FrostByteLauncher-debug-noruntime.apk
 
+      - name: Build Optimized APK (minified, shrunk resources)
+        run: |
+          gradle :app_pojavlauncher:assembleFullProguardNoDebug
+          mv app_pojavlauncher/build/outputs/apk/full/proguardNoDebug/app_pojavlauncher-full-proguardNoDebug.apk out/FrostByteLauncher-optimized.apk
+
       - name: Gen md5sums
         run: |
           md5sum out/FrostByteLauncher-debug.apk > out/FrostByteLauncher-debug.md5
           md5sum out/FrostByteLauncher-debug-noruntime.apk > out/FrostByteLauncher-debug-noruntime.md5
+          md5sum out/FrostByteLauncher-optimized.apk > out/FrostByteLauncher-optimized.md5
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
@@ -83,6 +89,12 @@ jobs:
         with:
           name: FrostByteLauncher-debug-noruntime
           path: out/FrostByteLauncher-debug-noruntime.apk
+
+      - name: Upload Optimized APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: FrostByteLauncher-optimized
+          path: out/FrostByteLauncher-optimized.apk
 
       # Release build is intentionally left out of default CI.
       # Uncomment once you've generated your own frostbyte_release.jks and added
