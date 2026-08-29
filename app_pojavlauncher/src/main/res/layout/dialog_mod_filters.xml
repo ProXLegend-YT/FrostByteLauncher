@@ -15,6 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profiles_profile_version"
+        android:textColor="@color/frostbyte_text_secondary"
+        android:textSize="12.5sp"
         app:layout_constraintTop_toTopOf="parent"
 
         app:layout_constraintStart_toStartOf="@+id/search_mod_selected_mc_version_textview" />
@@ -25,10 +27,14 @@
         android:layout_height="wrap_content"
 
         android:layout_marginEnd="@dimen/padding_medium"
+        android:layout_marginTop="8dp"
 
-        android:background="@drawable/background_line"
+        android:background="@drawable/frostbyte_input_field"
         android:hint="@string/version_select_hint"
+        android:textColor="@color/frostbyte_text_primary"
+        android:textColorHint="@color/frostbyte_text_secondary"
         android:paddingHorizontal="@dimen/padding_heavy"
+        android:paddingVertical="12dp"
         android:textSize="@dimen/_13ssp"
 
         app:layout_constraintEnd_toStartOf="@+id/search_mod_mc_version_button"
@@ -39,6 +45,8 @@
         android:id="@+id/search_mod_mc_version_button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:background="@drawable/frostbyte_button_secondary"
+        android:textColor="@color/frostbyte_accent"
         android:paddingHorizontal="@dimen/padding_large"
 
         android:text="@string/global_select"

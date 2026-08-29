@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/background_app"
+    android:background="@android:color/transparent"
     android:paddingHorizontal="@dimen/fragment_padding_medium">
 
 
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:gravity="center"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_marginTop="@dimen/padding_large"
         android:text="@string/forge_dl_select_version" />
 
@@ -32,10 +33,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/primary_text" />
+        android:textColor="@color/frostbyte_text_secondary" />
 
     <ExpandableListView
-        android:scrollbarThumbVertical="@color/minebutton_color"
+        android:scrollbarThumbVertical="@color/frostbyte_accent"
         android:id="@+id/mod_dl_expandable_version_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -59,13 +60,15 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/modloader_dl_failed_to_load_list"
-            android:textColor="#FFFF0000"
+            android:textColor="#FF6B6B"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/forge_installer_retry_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/frostbyte_button_secondary"
+            android:textColor="@color/frostbyte_accent"
             android:text="@string/global_retry" />
     </LinearLayout>
 
@@ -74,5 +77,6 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:indeterminateTint="@color/frostbyte_accent"
         android:indeterminate="true" />
 </LinearLayout>

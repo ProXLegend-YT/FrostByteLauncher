@@ -5,16 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_line"
-    android:paddingHorizontal="@dimen/_2sdp"
-    android:paddingVertical="@dimen/_2sdp"
-    android:layout_marginVertical="@dimen/padding_medium"
+    android:background="@drawable/frostbyte_button_secondary"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="12dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="5dp"
     >
 
     <ImageView
         android:id="@+id/mod_thumbnail_imageview"
         android:layout_width="@dimen/_65sdp"
         android:layout_height="@dimen/_65sdp"
+        android:background="@drawable/frostbyte_card_bg"
+        android:clipToOutline="true"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,6 +45,8 @@
         android:maxLines="1"
         android:layout_marginStart="@dimen/padding_moderate"
         android:ellipsize="end"
+        android:textColor="@color/frostbyte_text_primary"
+        android:fontFamily="sans-serif-medium"
 
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintEnd_toStartOf="@+id/mod_source_imageview"
@@ -58,6 +63,8 @@
         android:layout_marginEnd="@dimen/padding_medium"
         android:ellipsize="end"
         android:maxLines="3"
+        android:textColor="@color/frostbyte_text_secondary"
+        android:textSize="12.5sp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
