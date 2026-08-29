@@ -16,6 +16,7 @@
 
     <!-- FrostByte design system -->
     <!-- Accent: icy cyan-blue, matches the logo -->
+    <color name="frostbyte_window_fallback">#FF0A0C14</color>
     <color name="frostbyte_accent">#5AD1FF</color>
     <color name="frostbyte_accent_dark">#2E7FB8</color>
     <color name="frostbyte_accent_glow">#805AD1FF</color>

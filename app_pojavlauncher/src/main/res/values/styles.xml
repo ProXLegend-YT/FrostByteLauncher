@@ -17,7 +17,7 @@
          NOT the base AppTheme, so GameActivity keeps a clean render surface
          with no wallpaper behind it during gameplay/loading. -->
     <style name="AppTheme.Launcher">
-        <item name="android:windowBackground">@drawable/frostbyte_bg</item>
+        <item name="android:windowBackground">@color/frostbyte_window_fallback</item>
     </style>
 
     <style name="LauncherFragment_Divider">
