@@ -24,4 +24,33 @@
 # Option screens
  -keep class com.frostbyte.launcher.prefs.screens** {*;}
 
+# Gson deserializes model classes via reflection at runtime - R8 doesn't see
+# this usage and will strip no-args constructors / restructure fields, causing
+# "Abstract class can't be instantiated" crashes on minified builds.
+# Keep fields and no-args constructors intact for the packages that actually
+# hold Gson-deserialized model classes, without keeping the whole app.
+-keepclassmembers class com.frostbyte.launcher.modloaders.** {
+    <init>();
+    <fields>;
+}
+-keep,allowobfuscation class com.frostbyte.launcher.modloaders.** { *; }
+
+-keepclassmembers class com.frostbyte.launcher.authenticator.** {
+    <init>();
+    <fields>;
+}
+-keep,allowobfuscation class com.frostbyte.launcher.authenticator.** { *; }
+
+-keepclassmembers class com.frostbyte.launcher.instances.** {
+    <init>();
+    <fields>;
+}
+-keep,allowobfuscation class com.frostbyte.launcher.instances.** { *; }
+
+# Gson's own TypeToken/reflection internals need generic signature info preserved
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+
 
