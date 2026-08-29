@@ -136,10 +136,9 @@ android {
     externalNativeBuild {
         cmake {
             path file('src/main/jni/CMakeLists.txt')
-            arguments "-DCMAKE_BUILD_TYPE=Release",
-                      "-DANDROID_STL=c++_shared"
-            cFlags "-O3", "-fvisibility=hidden"
-            cppFlags "-O3", "-fvisibility=hidden"
+            arguments += ["-DCMAKE_BUILD_TYPE=Release", "-DANDROID_STL=c++_shared"]
+            cFlags += ["-O3", "-fvisibility=hidden"]
+            cppFlags += ["-O3", "-fvisibility=hidden"]
         }
     }
 
