@@ -6,6 +6,18 @@
 	android:layout_height="match_parent"
 	android:layout_width="match_parent">
 
+	<ImageView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scaleType="centerCrop"
+		android:src="@drawable/frostbyte_space_bg"
+		android:contentDescription="@null" />
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#33000000" />
+
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
