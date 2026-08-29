@@ -304,6 +304,12 @@ public class GameActivity extends BaseActivity implements ControlButtonMenuListe
         mDrawerPullButton = findViewById(R.id.drawer_button);
         mHotbarView = findViewById(R.id.hotbar_view);
         mLoadingScreen = findViewById(R.id.main_loading_screen);
+        if(mLoadingScreen != null){
+            View loadingRing = mLoadingScreen.findViewById(R.id.main_loading_screen_progress);
+            if(loadingRing != null){
+                loadingRing.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, R.anim.frostbyte_spin));
+            }
+        }
     }
 
     @Override

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frostbyte_loading_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/frostbyte_window_fallback"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="24dp">
+
+    <ImageView
+        android:id="@+id/frostbyte_loading_logo"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/ic_frostbyte_full"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toTopOf="@+id/frostbyte_loading_spinner_ring"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0.42" />
+
+    <ImageView
+        android:id="@+id/frostbyte_loading_spinner_ring"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/frostbyte_loading_ring"
+        android:contentDescription="@null"
+        app:layout_constraintBottom_toTopOf="@+id/frostbyte_loading_status_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frostbyte_loading_logo" />
+
+    <TextView
+        android:id="@+id/frostbyte_loading_status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="48dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/frostbyte_loading_default"
+        android:textColor="@color/frostbyte_text_secondary"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frostbyte_loading_spinner_ring" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

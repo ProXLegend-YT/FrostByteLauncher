@@ -22,6 +22,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         Tools.getDisplayMetrics(this);
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.frostbyte_enter_back, R.anim.frostbyte_exit_back);
+    }
+
     /** @return Whether the activity should be set as a fullscreen one */
     public boolean setFullscreen(){
         return true;
@@ -31,6 +37,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void startActivity(Intent i) {
         super.startActivity(i);
+        if(i.getComponent() != null && getPackageName().equals(i.getComponent().getPackageName())){
+            overridePendingTransition(R.anim.frostbyte_enter_forward, R.anim.frostbyte_exit_forward);
+        }
         //new Throwable("StartActivity").printStackTrace();
     }
 

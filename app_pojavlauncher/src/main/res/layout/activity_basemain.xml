@@ -67,7 +67,7 @@
 			android:id="@+id/main_loading_screen"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="#BB000000"
+			android:background="@color/frostbyte_window_fallback"
 			android:visibility="visible"
 			>
 
@@ -79,26 +79,37 @@
 				android:gravity="center"
 				android:orientation="vertical">
 
-				<ProgressBar
+				<ImageView
+					android:layout_width="72dp"
+					android:layout_height="72dp"
+					android:layout_marginBottom="24dp"
+					android:src="@drawable/ic_frostbyte_full"
+					android:contentDescription="@null" />
+
+				<ImageView
 					android:id="@+id/main_loading_screen_progress"
-					android:layout_width="24dp"
-					android:layout_height="24dp"
-					android:indeterminate="true" />
+					android:layout_width="32dp"
+					android:layout_height="32dp"
+					android:layout_marginBottom="16dp"
+					android:src="@drawable/frostbyte_loading_ring"
+					android:contentDescription="@null" />
 
 				<TextView
 					android:id="@+id/main_loading_screen_text"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:fontFamily="sans-serif-medium"
 					android:text="@string/loading_screen_title"
-					android:textColor="@android:color/white"
+					android:textColor="@color/frostbyte_text_primary"
 					android:textSize="16sp" />
 
 				<TextView
 					android:id="@+id/main_loading_screen_warning"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:layout_marginTop="4dp"
 					android:text="@string/loading_screen_warning"
-					android:textColor="@android:color/darker_gray"
+					android:textColor="@color/frostbyte_text_secondary"
 					android:textSize="12sp" />
 			</LinearLayout>
 		</FrameLayout>
