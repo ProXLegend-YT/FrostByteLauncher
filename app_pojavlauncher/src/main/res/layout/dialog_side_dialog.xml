@@ -16,6 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_moderate"
+        android:textColor="@color/frostbyte_text_primary"
+        android:fontFamily="sans-serif-medium"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
 
@@ -35,8 +37,7 @@
         android:id="@+id/side_dialog_scrollview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:background="@color/background_status_bar">
+        android:layout_weight="1">
         <!-- The content is inflated here -->
     </com.frostbyte.launcher.DefocusableScrollView>
 
@@ -50,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:textColor="@color/frostbyte_text_secondary"
             android:visibility="gone"
 
             tools:visibility="visible"
@@ -62,6 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:textColor="@color/frostbyte_accent"
+            android:textStyle="bold"
             android:visibility="gone"
 
             tools:text="Confirm"

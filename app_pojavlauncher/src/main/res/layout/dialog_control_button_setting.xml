@@ -15,6 +15,7 @@
     <!-- EDIT NAME SECTION -->
     <TextView
         android:id="@+id/editName_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -26,6 +27,10 @@
 
     <EditText
         android:id="@+id/editName_editText"
+        android:background="@drawable/frostbyte_input_field"
+        android:textColor="@color/frostbyte_text_primary"
+        android:textColorHint="@color/frostbyte_text_secondary"
+        android:paddingHorizontal="@dimen/padding_heavy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -40,6 +45,7 @@
     <!--  SIZE SECTION -->
     <TextView
         android:id="@+id/editSize_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -52,6 +58,10 @@
 
     <EditText
         android:id="@+id/editSize_editTextX"
+        android:background="@drawable/frostbyte_input_field"
+        android:textColor="@color/frostbyte_text_primary"
+        android:textColorHint="@color/frostbyte_text_secondary"
+        android:paddingHorizontal="@dimen/padding_heavy"
         android:layout_width="@dimen/_134sdp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -63,6 +73,10 @@
 
     <EditText
         android:id="@+id/editSize_editTextY"
+        android:background="@drawable/frostbyte_input_field"
+        android:textColor="@color/frostbyte_text_primary"
+        android:textColorHint="@color/frostbyte_text_secondary"
+        android:paddingHorizontal="@dimen/padding_heavy"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -76,6 +90,7 @@
 
     <TextView
         android:id="@+id/editSize_x_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
@@ -89,6 +104,7 @@
     <!-- MAPPING SECTION -->
     <TextView
         android:id="@+id/editMapping_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -168,6 +184,7 @@
 
     <TextView
         android:id="@+id/mapping_1_textview"
+        android:textColor="@color/frostbyte_text_primary"
         style="?android:attr/spinnerItemStyle"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
@@ -184,6 +201,7 @@
 
     <TextView
         android:id="@+id/editMapping_plus_1"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
@@ -196,6 +214,7 @@
 
     <TextView
         android:id="@+id/mapping_2_textview"
+        android:textColor="@color/frostbyte_text_primary"
         style="?android:attr/spinnerItemStyle"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
@@ -212,6 +231,7 @@
 
     <TextView
         android:id="@+id/mapping_3_textview"
+        android:textColor="@color/frostbyte_text_primary"
         style="?android:attr/spinnerItemStyle"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
@@ -228,6 +248,7 @@
 
     <TextView
         android:id="@+id/editMapping_plus_3"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
@@ -241,6 +262,7 @@
 
     <TextView
         android:id="@+id/mapping_4_textview"
+        android:textColor="@color/frostbyte_text_primary"
         style="?android:attr/spinnerItemStyle"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
@@ -259,6 +281,7 @@
     <!-- ORIENTATION SECTION -->
     <TextView
         android:id="@+id/editOrientation_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_2sdp"
@@ -283,6 +306,9 @@
     <!-- TOGGLE SECTION -->
     <Switch
         android:id="@+id/checkboxToggle"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
         android:text="@string/customctrl_toggle"
@@ -294,6 +320,9 @@
     <!-- MOUSE PASS THROUGH SECTION -->
     <Switch
         android:id="@+id/checkboxPassThrough"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
         android:text="@string/customctrl_passthru"
@@ -305,6 +334,9 @@
     <!-- SWIPEABLE BUTTON SECTION -->
     <Switch
         android:id="@+id/checkboxSwipeable"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
         android:text="@string/customctrl_swipeable"
@@ -316,6 +348,9 @@
     <!-- FORWARD LOCK SECTION -->
     <Switch
         android:id="@+id/checkboxForwardLock"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
         android:text="@string/customctrl_forward_lock"
@@ -326,6 +361,9 @@
 
     <Switch
         android:id="@+id/checkboxAbsoluteFingerTracking"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
         android:text="@string/customctrl_absolute_tracking"
@@ -336,6 +374,7 @@
     <!-- BACKGROUND IMAGE SECTION -->
     <fr.spse.extended_view.ExtendedTextView
         android:id="@+id/setBackgroundBitmap_textView"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
         android:background="?attr/selectableItemBackground"
@@ -354,6 +393,7 @@
     <!-- BACKGROUND COLOR SECTION -->
     <fr.spse.extended_view.ExtendedTextView
         android:id="@+id/editBackgroundColor_textView"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
         android:background="?attr/selectableItemBackground"
@@ -371,6 +411,7 @@
 
     <fr.spse.extended_view.ExtendedTextView
         android:id="@+id/editBackgroundColorWarning_textView"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -389,6 +430,7 @@
     <!-- STROKE WIDTH -->
     <TextView
         android:id="@+id/editStrokeWidth_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
@@ -402,6 +444,8 @@
 
     <SeekBar
         android:id="@+id/editStrokeWidth_seekbar"
+        android:progressTint="@color/frostbyte_accent"
+        android:thumbTint="@color/frostbyte_accent"
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"
 
@@ -412,6 +456,7 @@
 
     <TextView
         android:id="@+id/editStrokeWidth_textView_percent"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="50dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -424,6 +469,7 @@
     <!-- STROKE COLOR VERSION -->
     <fr.spse.extended_view.ExtendedTextView
         android:id="@+id/editStrokeColor_textView"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
         android:background="?attr/selectableItemBackground"
@@ -442,6 +488,7 @@
     <!-- CORNER RADIUS SECTION -->
     <TextView
         android:id="@+id/editCornerRadius_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -454,6 +501,8 @@
 
     <SeekBar
         android:id="@+id/editCornerRadius_seekbar"
+        android:progressTint="@color/frostbyte_accent"
+        android:thumbTint="@color/frostbyte_accent"
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"
 
@@ -464,6 +513,7 @@
 
     <TextView
         android:id="@+id/editCornerRadius_textView_percent"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="50dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -476,6 +526,7 @@
     <!-- BUTTON OPACITY SECTION -->
     <TextView
         android:id="@+id/editButtonOpacity_textView"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -488,6 +539,8 @@
 
     <SeekBar
         android:id="@+id/editButtonOpacity_seekbar"
+        android:progressTint="@color/frostbyte_accent"
+        android:thumbTint="@color/frostbyte_accent"
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"
 
@@ -497,6 +550,7 @@
 
     <TextView
         android:id="@+id/editButtonOpacity_textView_percent"
+        android:textColor="@color/frostbyte_text_primary"
         android:layout_width="50dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -509,6 +563,7 @@
     <!-- Button visibility -->
     <TextView
         android:id="@+id/visibility_textview"
+        android:textColor="@color/frostbyte_text_secondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/customctrl_visibility_title"
@@ -517,6 +572,8 @@
 
     <CheckBox
         android:id="@+id/visibility_game_checkbox"
+        android:textColor="@color/frostbyte_text_primary"
+        app:buttonTint="@color/frostbyte_accent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/customctrl_visibility_ingame"
@@ -524,6 +581,8 @@
 
     <CheckBox
         android:id="@+id/visibility_menu_checkbox"
+        android:textColor="@color/frostbyte_text_primary"
+        app:buttonTint="@color/frostbyte_accent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/customctrl_visibility_in_menus"

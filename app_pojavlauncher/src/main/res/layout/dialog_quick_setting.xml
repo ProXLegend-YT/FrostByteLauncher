@@ -17,6 +17,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:gravity="center"
         android:paddingEnd="5dp"
+        android:textColor="@color/frostbyte_text_secondary"
         android:text="@string/mcl_setting_title_resolution_scaler"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +28,8 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/_36sdp"
         android:min="@integer/resolution_seekbar_min"
+        android:progressTint="@color/frostbyte_accent"
+        android:thumbTint="@color/frostbyte_accent"
         app:seekBarIncrement="@integer/resolution_seekbar_increment"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +42,7 @@
         android:layout_width="150dp"
         android:layout_height="0dp"
         android:gravity="end"
+        android:textColor="@color/frostbyte_text_primary"
         tools:text="50%"
 
         app:layout_constraintBottom_toBottomOf="@id/editResolution_textView"
@@ -50,6 +54,9 @@
         android:id="@+id/checkboxGyro"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:text="@string/preference_enable_gyro_title"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +67,9 @@
         android:id="@+id/checkboxGyroX"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:text="@string/preference_gyro_invert_x_axis"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +80,9 @@
         android:id="@+id/checkboxGyroY"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:text="@string/preference_gyro_invert_y_axis"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +97,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:gravity="center"
         android:paddingEnd="5dp"
+        android:textColor="@color/frostbyte_text_secondary"
         android:text="@string/preference_gyro_sensitivity_title"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +110,8 @@
 
         android:min="@integer/gyro_speed_seekbar_min"
         android:max="@integer/gyro_speed_seekbar_max"
+        android:progressTint="@color/frostbyte_accent"
+        android:thumbTint="@color/frostbyte_accent"
         app:seekBarIncrement="@integer/gyro_speed_seekbar_increment"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,6 +124,7 @@
         android:layout_width="150dp"
         android:layout_height="0dp"
         android:gravity="end"
+        android:textColor="@color/frostbyte_text_primary"
         tools:text="100%"
 
         app:layout_constraintBottom_toBottomOf="@id/editGyro_textView"
@@ -123,6 +140,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:gravity="center"
         android:paddingEnd="5dp"
+        android:textColor="@color/frostbyte_text_secondary"
         android:text="@string/mcl_setting_title_mousespeed"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -135,6 +153,8 @@
 
         android:min="@integer/mouse_speed_seekbar_min"
         android:max="@integer/mouse_speed_seekbar_max"
+        android:progressTint="@color/frostbyte_accent"
+        android:thumbTint="@color/frostbyte_accent"
         app:seekBarIncrement="@integer/mouse_speed_seekbar_increment"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,6 +167,7 @@
         android:layout_width="150dp"
         android:layout_height="0dp"
         android:gravity="end"
+        android:textColor="@color/frostbyte_text_primary"
         tools:text="100%"
 
         app:layout_constraintBottom_toBottomOf="@id/editMouseSpeed_textView"
@@ -158,6 +179,9 @@
         android:id="@+id/checkboxGesture"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
+        android:textColor="@color/frostbyte_text_primary"
+        android:thumbTint="@color/frostbyte_accent"
+        android:trackTint="@color/frostbyte_card_stroke"
         android:text="@string/mcl_disable_gestures"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -172,6 +196,7 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:gravity="center"
         android:paddingEnd="5dp"
+        android:textColor="@color/frostbyte_text_secondary"
         android:text="@string/mcl_setting_title_longpresstrigger"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -184,6 +209,8 @@
 
         android:min="@integer/gesture_delay_seekbar_min"
         android:max="@integer/gesture_delay_seekbar_max"
+        android:progressTint="@color/frostbyte_accent"
+        android:thumbTint="@color/frostbyte_accent"
         app:seekBarIncrement="@integer/gesture_delay_seekbar_increment"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -196,6 +223,7 @@
         android:layout_width="150dp"
         android:layout_height="0dp"
         android:gravity="end"
+        android:textColor="@color/frostbyte_text_primary"
         tools:text="270 ms"
 
         app:layout_constraintBottom_toBottomOf="@id/editGestureDelay_textView"

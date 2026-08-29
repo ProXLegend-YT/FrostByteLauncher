@@ -27,6 +27,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/frostbyte_button_secondary"
+            android:textColor="@color/frostbyte_text_primary"
             android:textOn="@string/cropper_lock_horizontal"
             android:textOff="@string/cropper_lock_horizontal"/>
         <ToggleButton
@@ -34,6 +36,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/frostbyte_button_secondary"
+            android:textColor="@color/frostbyte_text_primary"
             android:textOn="@string/cropper_lock_vertical"
             android:textOff="@string/cropper_lock_vertical"/>
         <Button
@@ -41,6 +45,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/frostbyte_button_secondary"
+            android:textColor="@color/frostbyte_accent"
             android:text="@string/cropper_reset"/>
     </LinearLayout>
     <ProgressBar
@@ -48,5 +54,6 @@
         android:layout_height="wrap_content"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:id="@+id/crop_dialog_progressbar"
+        android:indeterminateTint="@color/frostbyte_accent"
         android:indeterminate="true"/>
 </LinearLayout>
