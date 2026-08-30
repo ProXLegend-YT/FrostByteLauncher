@@ -90,8 +90,8 @@
 
 				<ImageView
 					android:id="@+id/main_loading_screen_progress"
-					android:layout_width="32dp"
-					android:layout_height="32dp"
+					android:layout_width="44dp"
+					android:layout_height="44dp"
 					android:layout_marginBottom="16dp"
 					android:src="@drawable/frostbyte_loading_ring"
 					android:contentDescription="@null" />

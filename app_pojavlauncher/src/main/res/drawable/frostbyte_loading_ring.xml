@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="ring"
-            android:innerRadiusRatio="3.2"
-            android:thickness="4dp"
-            android:useLevel="false">
-            <solid android:color="@android:color/transparent" />
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Faint full track -->
+    <path
+        android:pathData="M24,4 A20,20 0 1,1 23.9,4"
+        android:strokeColor="#332C3550"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000" />
+    <!-- Bright arc segment -->
+    <path
+        android:pathData="M24,4 A20,20 0 0,1 42,24"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000">
+        <aapt:attr xmlns:aapt="http://schemas.android.com/aapt" name="android:strokeColor">
             <gradient
-                android:type="sweep"
-                android:startColor="@android:color/transparent"
-                android:centerColor="@color/frostbyte_accent"
-                android:endColor="@color/frostbyte_violet"
-                android:useLevel="false" />
-        </shape>
-    </item>
-</layer-list>
+                android:type="linear"
+                android:startX="24"
+                android:startY="4"
+                android:endX="42"
+                android:endY="24"
+                android:startColor="@color/frostbyte_accent"
+                android:endColor="@color/frostbyte_violet" />
+        </aapt:attr>
+    </path>
+</vector>
