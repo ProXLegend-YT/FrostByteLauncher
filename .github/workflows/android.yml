@@ -57,6 +57,9 @@ jobs:
       - name: Create out directory
         run: mkdir out
 
+      - name: Clean previous build outputs
+        run: gradle :app_pojavlauncher:clean
+
       - name: Build Debug APK
         run: |
           gradle :app_pojavlauncher:assembleFullDebug
