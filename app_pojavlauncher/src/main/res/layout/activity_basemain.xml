@@ -67,17 +67,19 @@
 			android:id="@+id/main_loading_screen"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="@color/frostbyte_window_fallback"
+			android:background="@android:color/transparent"
 			android:visibility="visible"
 			>
 
 			<LinearLayout
-				android:layout_width="match_parent"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
 				android:layout_gravity="center"
 				android:gravity="center"
-				android:orientation="vertical">
+				android:orientation="vertical"
+				android:background="@drawable/frostbyte_dropdown_panel_bg"
+				android:paddingHorizontal="@dimen/_32sdp"
+				android:paddingVertical="@dimen/_24sdp">
 
 				<ImageView
 					android:layout_width="72dp"
