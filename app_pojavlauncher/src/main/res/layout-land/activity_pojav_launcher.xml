@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/frostbyte_space_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.frostbyte.launcher.mcgui.AccountSpinner
         android:id="@+id/account_spinner"
         android:layout_width="match_parent"
@@ -24,6 +34,7 @@
         android:background="?attr/selectableItemBackground"
         android:src="@drawable/ic_px_sliders"
         android:scaleType="fitCenter"
+        app:tint="@color/frostbyte_accent"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
