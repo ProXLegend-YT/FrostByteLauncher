@@ -35,6 +35,8 @@ import static com.frostbyte.launcher.game.platform.Platform.PLATFORM;
 @SuppressLint({"ViewConstructor", "AppCompatCustomView"})
 public class ControlButton extends TextView implements ControlInterface {
     private final Paint mRectPaint = new Paint();
+    private final Paint mBorderPaint = new Paint();
+    private int mRestAlpha = BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA;
     protected ControlData mProperties;
     private final ControlLayout mControlLayout;
 
@@ -79,15 +81,23 @@ public class ControlButton extends TextView implements ControlInterface {
     private void setupNormalTint() {
         mComputedRadius = ControlInterface.super.computeCornerRadius(mProperties.cornerRadius);
         setBackgroundTintList(null);
+        mBorderPaint.setStyle(Paint.Style.STROKE);
+        mBorderPaint.setStrokeWidth(3f);
         if (mProperties.isToggle) {
             //For the toggle layer
             final TypedValue value = new TypedValue();
             getContext().getTheme().resolveAttribute(R.attr.colorAccent, value, true);
             mRectPaint.setColor(value.data);
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA);
+            mRestAlpha = BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA;
+            mBorderPaint.setColor(value.data);
+            mBorderPaint.setAlpha(220);
         } else {
             mRectPaint.setColor(Color.WHITE);
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA);
+            mRestAlpha = BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA;
+            mBorderPaint.setColor(Color.WHITE);
+            mBorderPaint.setAlpha(180);
         }
     }
 
@@ -107,8 +117,11 @@ public class ControlButton extends TextView implements ControlInterface {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         // Bitmap uses a tint list, so don't do any custom rendering
-        if(mHasBitmap || !isActivated()) return;
+        if(mHasBitmap) return;
+        boolean pressed = isActivated();
+        mRectPaint.setAlpha(pressed ? 190 : mRestAlpha);
         canvas.drawRoundRect(0, 0, getWidth(), getHeight(), mComputedRadius, mComputedRadius, mRectPaint);
+        canvas.drawRoundRect(1.5f, 1.5f, getWidth() - 1.5f, getHeight() - 1.5f, mComputedRadius, mComputedRadius, mBorderPaint);
     }
 
     @Override
