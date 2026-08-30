@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/transparent">
+    android:background="#FFFF0000">
 
     <ScrollView
         android:layout_width="0dp"
@@ -29,45 +29,34 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5"/>
             <com.frostbyte.launcher.mcgui.LauncherMenuButton
-                android:id="@+id/news_button"
-                style="@style/LauncherMenuButton.Universal"
-                android:layout_width="0dp"
-                android:drawableStart="@drawable/ic_px_book"
-                android:text="@string/mcl_tab_wiki"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/social_divider"/>
-            <View
-                android:id="@+id/social_divider"
-                style="@style/LauncherFragment_Divider"
-                android:layout_marginVertical="@dimen/padding_heavy"
-                app:layout_constraintTop_toTopOf="@id/news_button"
-                app:layout_constraintStart_toStartOf="@id/center_guideline"
-                app:layout_constraintEnd_toEndOf="@id/center_guideline"
-                app:layout_constraintBottom_toBottomOf="@id/news_button"/>
-            <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/social_media_button"
                 style="@style/LauncherMenuButton.Universal"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:drawableStart="@drawable/ic_social_media"
+                android:drawableTint="@color/frostbyte_accent"
+                android:drawablePadding="14dp"
                 android:text="@string/mcl_button_social_media"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/social_divider"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/custom_control_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
                 android:drawableStart="@drawable/ic_px_gamepad"
+                android:drawableTint="@color/frostbyte_accent"
+                android:drawablePadding="14dp"
                 android:text="@string/mcl_option_customcontrol"
-                app:layout_constraintTop_toBottomOf="@id/news_button"/>
+                app:layout_constraintTop_toBottomOf="@id/social_media_button"/>
 
             <com.frostbyte.launcher.mcgui.LauncherMenuButton
                 android:id="@+id/install_jar_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
                 android:drawableStart="@drawable/ic_px_java_run"
+                android:drawableTint="@color/frostbyte_accent"
+                android:drawablePadding="14dp"
                 android:text="@string/main_install_jar_file"
                 app:layout_constraintTop_toBottomOf="@id/custom_control_button"
                 tools:layout_editor_absoluteX="0dp" />
@@ -77,6 +66,8 @@
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
                 android:drawableStart="@drawable/ic_px_sharelog"
+                android:drawableTint="@color/frostbyte_accent"
+                android:drawablePadding="14dp"
                 android:text="@string/main_share_logs"
                 app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
 
@@ -85,6 +76,8 @@
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
                 android:drawableStart="@drawable/ic_px_folder"
+                android:drawableTint="@color/frostbyte_accent"
+                android:drawablePadding="14dp"
                 android:text="@string/mcl_button_open_directory"
 
                 app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
@@ -118,8 +111,10 @@
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/_8sdp"
 
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@drawable/frostbyte_icon_button_bg"
+        android:padding="6dp"
         android:src="@drawable/ic_px_edit"
+        app:tint="@color/frostbyte_accent"
         app:layout_constraintBottom_toBottomOf="@+id/mc_version_spinner"
         app:layout_constraintEnd_toStartOf="@+id/play_button"
         app:layout_constraintTop_toTopOf="@+id/mc_version_spinner" />
