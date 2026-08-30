@@ -82,22 +82,22 @@ public class ControlButton extends TextView implements ControlInterface {
         mComputedRadius = ControlInterface.super.computeCornerRadius(mProperties.cornerRadius);
         setBackgroundTintList(null);
         mBorderPaint.setStyle(Paint.Style.STROKE);
-        mBorderPaint.setStrokeWidth(3f);
+        mBorderPaint.setStrokeWidth(3.5f);
+        setTextColor(Color.WHITE);
         if (mProperties.isToggle) {
-            //For the toggle layer
-            final TypedValue value = new TypedValue();
-            getContext().getTheme().resolveAttribute(R.attr.colorAccent, value, true);
-            mRectPaint.setColor(value.data);
+            // Violet accent for the toggle layer, matching the rest of the app's toggle color
+            mRectPaint.setColor(Color.parseColor("#8C6BFF"));
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA);
             mRestAlpha = BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA;
-            mBorderPaint.setColor(value.data);
-            mBorderPaint.setAlpha(220);
+            mBorderPaint.setColor(Color.parseColor("#8C6BFF"));
+            mBorderPaint.setAlpha(255);
         } else {
-            mRectPaint.setColor(Color.WHITE);
+            // Deep navy fill matching frostbyte_card_bg, cyan border matching frostbyte_accent
+            mRectPaint.setColor(Color.parseColor("#1A1F2E"));
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA);
             mRestAlpha = BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA;
-            mBorderPaint.setColor(Color.WHITE);
-            mBorderPaint.setAlpha(180);
+            mBorderPaint.setColor(Color.parseColor("#5AD1FF"));
+            mBorderPaint.setAlpha(220);
         }
     }
 
