@@ -82,7 +82,9 @@
 		android:id="@+id/mc_version_spinner"
 		android:layout_width="0dp"
 		android:layout_height="@dimen/_52sdp"
-		android:background="@android:color/transparent"
+		android:layout_marginStart="@dimen/_17sdp"
+		android:layout_marginBottom="@dimen/_10sdp"
+		android:background="@drawable/frostbyte_card_bg"
 		android:drawableEnd="@drawable/spinner_arrow"
 
 		app:drawableEndSize="@dimen/padding_heavy"
@@ -98,6 +100,7 @@
 		android:id="@+id/edit_profile_button"
 		android:layout_width="@dimen/_52sdp"
 		android:layout_height="@dimen/_52sdp"
+		android:layout_marginEnd="@dimen/_17sdp"
 		android:background="@drawable/frostbyte_icon_button_bg"
 		android:padding="14dp"
 

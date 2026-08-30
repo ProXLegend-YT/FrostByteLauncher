@@ -1,10 +1,13 @@
 package com.frostbyte.launcher.instances;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import androidx.core.graphics.ColorUtils;
 
 import com.frostbyte.launcher.R;
 
@@ -89,11 +92,11 @@ public class InstanceAdapter extends BaseAdapter {
             extendedTextView.setText(versionName);
         else extendedTextView.setText(String.format("%s - %s", profileName, versionName));
 
-        // Set selected background if needed, otherwise keep the default glass-card background
+        // Set selected background if needed, otherwise keep transparent (unified panel handles the box)
         if(idx == mSelectionIndex && displaySelection) {
-            extendedTextView.setBackgroundResource(R.drawable.frostbyte_card_bg_selected);
+            extendedTextView.setBackgroundColor(ColorUtils.setAlphaComponent(Color.WHITE, 26));
         }else {
-            extendedTextView.setBackgroundResource(R.drawable.frostbyte_card_bg);
+            extendedTextView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
@@ -101,7 +104,7 @@ public class InstanceAdapter extends BaseAdapter {
         ExtendedTextView extendedTextView = (ExtendedTextView) v;
         extendedTextView.setCompoundDrawablesRelative(extra.icon, null, extendedTextView.getCompoundsDrawables()[2], null);
         extendedTextView.setText(extra.name);
-        extendedTextView.setBackgroundResource(R.drawable.frostbyte_card_bg);
+        extendedTextView.setBackgroundColor(Color.TRANSPARENT);
     }
 
     public void setView(View v, int index, boolean displaySelection) {
