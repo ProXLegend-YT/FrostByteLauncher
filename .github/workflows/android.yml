@@ -36,7 +36,6 @@ jobs:
         uses: dawidd6/action-download-artifact@v6
         continue-on-error: true
         with:
-          github_token: ${{ secrets.MESA_ACTIONS }}
           repo: MojoLauncher/mesa-unified2
           workflow: android.yml
           workflow_conclusion: success
