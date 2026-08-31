@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/frostbyte_bg">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skins_title"
+                android:textColor="@color/frostbyte_text_primary"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/skins_account_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/frostbyte_text_secondary"
+                android:textSize="12sp"
+                android:layout_marginBottom="16dp"
+                tools:text="Signed in with a Microsoft account — skins you apply will upload to Mojang"
+                xmlns:tools="http://schemas.android.com/tools" />
+
+            <!-- Upload from gallery -->
+            <Button
+                android:id="@+id/skins_upload_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/frostbyte_button_primary"
+                android:text="@string/skins_upload_from_gallery"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:padding="14dp"
+                android:layout_marginBottom="4dp" />
+
+            <CheckBox
+                android:id="@+id/skins_slim_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skins_slim_model"
+                android:textColor="@color/frostbyte_text_secondary"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/skins_reset_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/frostbyte_button_secondary"
+                android:text="@string/skins_reset"
+                android:textAllCaps="false"
+                android:textColor="@color/frostbyte_accent"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Username lookup -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <EditText
+                    android:id="@+id/skins_username_input"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/frostbyte_input_field"
+                    android:hint="@string/skins_username_hint"
+                    android:textColorHint="@color/frostbyte_text_secondary"
+                    android:textColor="@color/frostbyte_text_primary"
+                    android:padding="12dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch" />
+
+                <Button
+                    android:id="@+id/skins_username_search_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/frostbyte_button_secondary"
+                    android:text="@string/skins_search"
+                    android:textAllCaps="false"
+                    android:textColor="@color/frostbyte_accent"
+                    android:paddingHorizontal="20dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skins_gallery_title"
+                android:textColor="@color/frostbyte_text_primary"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="8dp" />
+
+            <GridView
+                android:id="@+id/skins_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="3"
+                android:verticalSpacing="4dp"
+                android:horizontalSpacing="4dp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Capes section (Microsoft accounts only) -->
+            <LinearLayout
+                android:id="@+id/skins_capes_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skins_capes_title"
+                    android:textColor="@color/frostbyte_text_primary"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/skins_capes_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/frostbyte_dropdown_panel_bg" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/skins_loading_indicator"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

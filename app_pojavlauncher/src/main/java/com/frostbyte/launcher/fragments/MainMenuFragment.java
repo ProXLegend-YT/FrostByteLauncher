@@ -1,7 +1,6 @@
 package com.frostbyte.launcher.fragments;
 
 import static com.frostbyte.launcher.Tools.openPath;
-import static com.frostbyte.launcher.Tools.shareLog;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +18,11 @@ import androidx.fragment.app.Fragment;
 import com.frostbyte.launcher.mcgui.mcVersionSpinner;
 
 import com.frostbyte.launcher.CustomControlsActivity;
+import com.frostbyte.launcher.LogViewerActivity;
+import com.frostbyte.launcher.PojavApplication;
+import com.frostbyte.launcher.instances.ShortcutHelper;
+import com.frostbyte.launcher.ScreenshotGalleryActivity;
+import com.frostbyte.launcher.skins.SkinsActivity;
 import com.frostbyte.launcher.R;
 
 import com.frostbyte.launcher.Tools;
@@ -50,8 +54,10 @@ public class MainMenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button mDiscordButton = view.findViewById(R.id.social_media_button);
         Button mCustomControlButton = view.findViewById(R.id.custom_control_button);
+        Button mSkinsButton = view.findViewById(R.id.skins_button);
         Button mInstallJarButton = view.findViewById(R.id.install_jar_button);
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
+        Button mScreenshotsButton = view.findViewById(R.id.screenshots_button);
         Button mOpenDirectoryButton = view.findViewById(R.id.open_files_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
@@ -64,12 +70,14 @@ public class MainMenuFragment extends Fragment {
             return true;
         });
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
+        mSkinsButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), SkinsActivity.class)));
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation());
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
         mPlayButton.setOnClickListener(v -> ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true));
 
-        mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
+        mShareLogsButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), LogViewerActivity.class)));
+        mScreenshotsButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), ScreenshotGalleryActivity.class)));
 
         mOpenDirectoryButton.setOnClickListener((v)-> openGameDirectory(v.getContext()));
 
@@ -94,6 +102,7 @@ public class MainMenuFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ExtraCore.setValue(ExtraConstants.REFRESH_ACCOUNT_SPINNER, true);
+        PojavApplication.sExecutorService.submit(() -> ShortcutHelper.syncShortcuts(requireContext().getApplicationContext()));
     }
 
     private void runInstallerWithConfirmation() {

@@ -109,6 +109,10 @@ public class InstanceEditorFragment extends Fragment implements CropperUtils.Cro
             mRecommendedIconSize = Math.max(v.getWidth(), v.getHeight());
             CropperUtils.startCropper(mCropperLauncher);
         });
+        mInstanceIcon.setOnLongClickListener(v -> {
+            showPresetIconPicker();
+            return true;
+        });
 
         mSharedDataCheckbox.setOnCheckedChangeListener((v,checked) ->{
             mInstance.sharedData = checked;
@@ -125,6 +129,20 @@ public class InstanceEditorFragment extends Fragment implements CropperUtils.Cro
         }else {
             loadValues(selectedInstance, context);
         }
+    }
+
+    private void showPresetIconPicker() {
+        String[] presetNames = {"default", "fabric", "quilt", "forge", "neoforge"};
+        String[] presetLabels = {"Default", "Fabric", "Quilt", "Forge", "NeoForge"};
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle(R.string.instance_icon_pick_preset)
+                .setItems(presetLabels, (dialog, which) -> {
+                    mInstance.resetToStaticIcon(presetNames[which]);
+                    mInstanceIcon.setImageDrawable(
+                            InstanceIconProvider.fetchIcon(getResources(), mInstance));
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
     private View.OnClickListener getControlSelectListener() {

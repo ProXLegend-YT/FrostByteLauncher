@@ -47,6 +47,16 @@
 				app:layout_constraintTop_toBottomOf="@id/social_media_button" />
 
 			<com.frostbyte.launcher.mcgui.LauncherMenuButton
+				android:id="@+id/skins_button"
+				style="@style/LauncherMenuButton.Universal"
+				android:layout_width="match_parent"
+				android:drawableStart="@drawable/ic_px_image"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
+				android:text="@string/skins_title"
+				app:layout_constraintTop_toBottomOf="@id/custom_control_button" />
+
+			<com.frostbyte.launcher.mcgui.LauncherMenuButton
 				android:id="@+id/install_jar_button"
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
@@ -54,7 +64,7 @@
 				android:drawableTint="@color/frostbyte_accent"
 				android:drawablePadding="14dp"
 				android:text="@string/main_install_jar_file"
-				app:layout_constraintTop_toBottomOf="@id/custom_control_button" />
+				app:layout_constraintTop_toBottomOf="@id/skins_button" />
 
 			<com.frostbyte.launcher.mcgui.LauncherMenuButton
 				android:id="@+id/share_logs_button"
@@ -67,6 +77,16 @@
 				app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
 
 			<com.frostbyte.launcher.mcgui.LauncherMenuButton
+				android:id="@+id/screenshots_button"
+				style="@style/LauncherMenuButton.Universal"
+				android:layout_width="match_parent"
+				android:drawableStart="@drawable/ic_px_image"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
+				android:text="@string/screenshot_gallery_title"
+				app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
+
+			<com.frostbyte.launcher.mcgui.LauncherMenuButton
 				android:id="@+id/open_files_button"
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
@@ -74,7 +94,7 @@
 				android:drawableTint="@color/frostbyte_accent"
 				android:drawablePadding="14dp"
 				android:text="@string/mcl_button_open_directory"
-				app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
+				app:layout_constraintTop_toBottomOf="@id/screenshots_button" />
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</ScrollView>
 

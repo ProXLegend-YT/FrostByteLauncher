@@ -36,6 +36,7 @@ import com.frostbyte.launcher.fragments.SelectAuthFragment;
 import com.frostbyte.launcher.instances.Instance;
 import com.frostbyte.launcher.instances.InstanceInstaller;
 import com.frostbyte.launcher.instances.Instances;
+import com.frostbyte.launcher.instances.ShortcutHelper;
 import com.frostbyte.launcher.lifecycle.ContextAwareDoneListener;
 import com.frostbyte.launcher.lifecycle.ContextExecutor;
 import com.frostbyte.launcher.modloaders.modpacks.imagecache.IconCacheJanitor;
@@ -206,6 +207,32 @@ public class LauncherActivity extends BaseActivity {
         mProgressLayout.observe(ProgressLayout.DOWNLOAD_VERSION_LIST);
         mProgressLayout.observe(ProgressLayout.INSTANCE_INSTALL);
         mProgressLayout.observe(ProgressLayout.DATA_MIGRATION);
+
+        handleShortcutLaunch(getIntent());
+    }
+
+    /**
+     * If this activity was opened from a "quick launch" home-screen shortcut, select
+     * that instance and immediately trigger the same launch flow as tapping Play.
+     */
+    private void handleShortcutLaunch(Intent intent) {
+        if (intent == null) return;
+        String instanceName = intent.getStringExtra(ShortcutHelper.EXTRA_LAUNCH_INSTANCE_ID);
+        if (instanceName == null) return;
+
+        PojavApplication.sExecutorService.submit(() -> {
+            try {
+                for (Instance instance : Instances.loadAllInstances()) {
+                    if (instance.name.equals(instanceName)) {
+                        Instances.setSelectedInstance(instance);
+                        Tools.runOnUiThread(() -> ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true));
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                Tools.runOnUiThread(() -> Toast.makeText(this, R.string.shortcut_instance_not_found, Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 
     @Override

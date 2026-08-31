@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/frostbyte_card_bg"
+    android:layout_margin="6dp"
+    android:paddingVertical="14dp"
+    android:paddingHorizontal="8dp">
+
+    <ImageView
+        android:id="@+id/skin_thumbnail"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/skin_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/frostbyte_text_primary"
+        android:textSize="13sp"
+        tools:text="Cyber Ninja"
+        xmlns:tools="http://schemas.android.com/tools" />
+
+</LinearLayout>

@@ -506,6 +506,44 @@
     <string name="preference_alsoft_opensl_title">Forcefully use OpenSL for audio</string>
     <string name="preference_alsoft_opensl_summary">Forcefully enables OpenSL backend in ALSoft instead of Oboe. Can fix audio capture issues on some devices. Disable if you see audio playback/capture issues</string>
     <string name="loading_screen_title">Waiting for a game window to appear…</string>
+
+    <string name="skins_title">Skins &amp; Capes</string>
+    <string name="skins_account_notice_microsoft">Signed in with a Microsoft account — applied skins upload to Mojang and show up anywhere</string>
+    <string name="skins_account_notice_local">Offline account — skins apply locally in FrostByte only and won\'t be visible to other players online</string>
+    <string name="skins_upload_from_gallery">Upload skin from gallery</string>
+    <string name="skins_username_hint">Look up a player\'s skin by username</string>
+    <string name="skins_search">Search</string>
+    <string name="skins_gallery_title">Presets</string>
+    <string name="skins_capes_title">Your capes</string>
+    <string name="skins_apply">Apply</string>
+    <string name="skins_slim_model">Slim arms (Alex model)</string>
+    <string name="skins_applying">Applying skin…</string>
+    <string name="skins_applied_success">Skin applied</string>
+    <string name="skins_applied_error">Couldn\'t apply that skin: %1$s</string>
+    <string name="skins_lookup_not_found">No player found with that username</string>
+    <string name="skins_lookup_no_skin">That player is using the default skin, nothing to copy</string>
+    <string name="skins_lookup_error">Couldn\'t look that player up: %1$s</string>
+    <string name="skins_invalid_dimensions">That image isn\'t a valid skin size — it needs to be 64x64 or 64x32 pixels</string>
+    <string name="skins_reset">Reset to default</string>
+    <string name="skins_cape_none">No capes owned on this account</string>
+    <string name="skins_cape_hide">Hide cape</string>
+    <string name="instance_icon_pick_preset">Choose a preset icon</string>
+
+    <string name="log_viewer_title">Game Log</string>
+    <string name="log_viewer_search">Search log</string>
+    <string name="log_viewer_refresh">Refresh</string>
+    <string name="log_viewer_share">Share</string>
+    <string name="log_viewer_no_log">No log file found yet — launch the game at least once first.</string>
+    <string name="log_viewer_read_error">Couldn\'t read the log file: %1$s</string>
+    <string name="log_viewer_no_matches">No matches found</string>
+    <string name="shortcut_instance_not_found">That instance no longer exists</string>
+
+    <string name="screenshot_gallery_title">Screenshots</string>
+    <string name="screenshot_gallery_empty">No screenshots yet — take some in-game with F2</string>
+    <string name="screenshot_delete">Delete</string>
+    <string name="screenshot_delete_confirm">Delete this screenshot? This can\'t be undone.</string>
+    <string name="screenshot_delete_failed">Couldn\'t delete that screenshot</string>
+
     <string name="loading_screen_booted">Ready - running on %1$s!</string>
     <string name="loading_screen_warning">If you are stuck here, the game might have crashed</string>
     <string name="frostbyte_loading_default">Loading…</string>

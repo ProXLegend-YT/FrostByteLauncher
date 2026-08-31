@@ -114,6 +114,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.frostbyte.launcher.skins.SkinsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+            android:exported="false"
+            android:label="@string/skins_title" />
+        <activity
+            android:name="com.frostbyte.launcher.LogViewerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+            android:exported="false"
+            android:label="@string/log_viewer_title" />
+        <activity
+            android:name="com.frostbyte.launcher.ScreenshotGalleryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+            android:exported="false"
+            android:label="@string/screenshot_gallery_title" />
+        <activity
             android:name="com.frostbyte.launcher.game.GameActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
             android:launchMode="singleTop"

@@ -65,6 +65,18 @@ public class Instance extends DisplayInstance {
     }
 
     /**
+     * Remove any custom icon file for this instance and switch to one of the built-in
+     * static icons (e.g. "fabric", "quilt", "forge", "neoforge", "default").
+     * @param staticIconName one of the names known to InstanceIconProvider
+     */
+    public void resetToStaticIcon(String staticIconName) {
+        File customIcon = getInstanceIconLocation();
+        if (customIcon.isFile()) customIcon.delete();
+        this.icon = staticIconName;
+        InstanceIconProvider.dropIcon(this);
+    }
+
+    /**
      * Encode the Bitmap as the new profile icon with required encoding settings.
      * @param bitmap the target bitmap
      * @throws IOException in case of errors while storing the icon
