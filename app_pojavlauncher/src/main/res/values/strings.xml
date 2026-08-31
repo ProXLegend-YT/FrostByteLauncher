@@ -543,6 +543,8 @@
     <string name="screenshot_delete">Delete</string>
     <string name="screenshot_delete_confirm">Delete this screenshot? This can\'t be undone.</string>
     <string name="screenshot_delete_failed">Couldn\'t delete that screenshot</string>
+    <string name="customctrl_restore_fresh_default">Restore fresh default layout</string>
+    <string name="customctrl_restore_fresh_default_confirm">This replaces your default control layout with a brand new one, matching the latest FrostByte style. Your current default layout will be lost. Continue?</string>
 
     <string name="loading_screen_booted">Ready - running on %1$s!</string>
     <string name="loading_screen_warning">If you are stuck here, the game might have crashed</string>

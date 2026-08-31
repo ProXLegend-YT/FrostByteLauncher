@@ -12,15 +12,15 @@ import androidx.core.content.res.ResourcesCompat;
 import com.frostbyte.launcher.R;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class InstanceIconProvider {
     public static final String FALLBACK_ICON_NAME = "default";
-    private static final Map<Integer, Drawable> sIconCache = new HashMap<>();
-    private static final Map<String, Drawable> sStaticIconCache = new HashMap<>();
-    private static final Map<String, Integer> sStaticIcons = new HashMap<>();
+    private static final Map<String, Drawable> sIconCache = new ConcurrentHashMap<>();
+    private static final Map<String, Drawable> sStaticIconCache = new ConcurrentHashMap<>();
+    private static final Map<String, Integer> sStaticIcons = new ConcurrentHashMap<>();
 
     static {
         sStaticIcons.put("default", R.drawable.ic_frostbyte_full);
@@ -37,15 +37,15 @@ public class InstanceIconProvider {
      * @return an icon drawable
      */
     public static @NonNull Drawable fetchIcon(Resources resources, @NonNull DisplayInstance instance) {
-        int identityHashCode = System.identityHashCode(instance);
+        String cacheKey = instanceCacheKey(instance);
 
-        Drawable cachedIcon = sIconCache.get(identityHashCode);
+        Drawable cachedIcon = sIconCache.get(cacheKey);
         if(cachedIcon != null) return cachedIcon;
 
-        Drawable instanceIcon = fetchInstanceFileIcon(resources, identityHashCode, instance.getInstanceIconLocation());
+        Drawable instanceIcon = fetchInstanceFileIcon(resources, cacheKey, instance.getInstanceIconLocation());
         if(instanceIcon != null) return instanceIcon;
 
-        return fetchStaticIcon(resources, identityHashCode, instance.icon);
+        return fetchStaticIcon(resources, cacheKey, instance.icon);
     }
 
     /**
@@ -54,26 +54,35 @@ public class InstanceIconProvider {
      * @param key the instance
      */
     public static void dropIcon(@NonNull Instance key) {
-        sIconCache.remove(System.identityHashCode(key));
+        sIconCache.remove(instanceCacheKey(key));
     }
 
-    private static Drawable fetchInstanceFileIcon(Resources resources, int identityHash, File iconLocation) {
+    private static String instanceCacheKey(DisplayInstance instance) {
+        // Instances are frequently reloaded fresh from disk as new objects, so a stable
+        // identifier (name) is used here rather than System.identityHashCode, which could
+        // collide or get reused across garbage collections and cause icons to intermittently
+        // fail to show.
+        return instance.name != null ? instance.name : ("unnamed_" + System.identityHashCode(instance));
+    }
+
+    private static Drawable fetchInstanceFileIcon(Resources resources, String cacheKey, File iconLocation) {
         if(!iconLocation.isFile() || !iconLocation.canRead()) return null;
         Bitmap iconBitmap = BitmapFactory.decodeFile(iconLocation.getAbsolutePath());
         if(iconBitmap == null) return null;
         Drawable iconDrawable = new BitmapDrawable(resources, iconBitmap);
-        sIconCache.put(identityHash, iconDrawable);
+        sIconCache.put(cacheKey, iconDrawable);
         return iconDrawable;
     }
 
-    private static Drawable fetchStaticIcon(Resources resources, int identityHash, String icon) {
-        Drawable staticIcon = sStaticIconCache.get(icon);
+    private static Drawable fetchStaticIcon(Resources resources, String cacheKey, String icon) {
+        String safeIcon = (icon != null) ? icon : FALLBACK_ICON_NAME;
+        Drawable staticIcon = sStaticIconCache.get(safeIcon);
         if(staticIcon == null) {
-            if(icon != null) staticIcon = getStaticIcon(resources, icon);
+            staticIcon = getStaticIcon(resources, safeIcon);
             if(staticIcon == null) staticIcon = fetchFallbackIcon(resources);
-            sStaticIconCache.put(icon, staticIcon);
+            sStaticIconCache.put(safeIcon, staticIcon);
         }
-        sIconCache.put(identityHash, staticIcon);
+        sIconCache.put(cacheKey, staticIcon);
         return staticIcon;
     }
 
