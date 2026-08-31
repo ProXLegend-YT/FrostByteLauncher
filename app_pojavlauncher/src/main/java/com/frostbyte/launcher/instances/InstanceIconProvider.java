@@ -113,6 +113,6 @@ public class InstanceIconProvider {
      * @return whether the icon is available or not
      */
     public static boolean hasStaticIcon(String name) {
-        return sStaticIcons.containsKey(name);
+        return name != null && sStaticIcons.containsKey(name);
     }
 }
