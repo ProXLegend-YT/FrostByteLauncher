@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class InstanceIconProvider {
     public static final String FALLBACK_ICON_NAME = "default";
-    private static final Map<String, Drawable> sIconCache = new ConcurrentHashMap<>();
-    private static final Map<String, Drawable> sStaticIconCache = new ConcurrentHashMap<>();
+    private static final Map<String, Bitmap> sIconCache = new ConcurrentHashMap<>();
+    private static final Map<String, Integer> sStaticIconResCache = new ConcurrentHashMap<>();
     private static final Map<String, Integer> sStaticIcons = new ConcurrentHashMap<>();
 
     static {
@@ -32,18 +32,26 @@ public class InstanceIconProvider {
 
     /**
      * Fetch an icon from the cache, or load it if it's not cached.
+     *
+     * Important: this always returns a fresh Drawable object, even for a cache hit. Drawables
+     * are mutable (setBounds, setAlpha, etc), and the same instance's icon is drawn in several
+     * places at once (the dropdown row, the selection box, shortcut generation) — handing out
+     * the literal cached object let one view's bounds silently affect another, which is why
+     * the icon could intermittently vanish. Only the decoded Bitmap is shared/cached; each
+     * caller gets its own BitmapDrawable wrapper around it.
+     *
      * @param resources the Resources object, used for creating drawables
      * @param instance the instance
-     * @return an icon drawable
+     * @return an icon drawable, safe for the caller to mutate freely
      */
     public static @NonNull Drawable fetchIcon(Resources resources, @NonNull DisplayInstance instance) {
         String cacheKey = instanceCacheKey(instance);
 
-        Drawable cachedIcon = sIconCache.get(cacheKey);
-        if(cachedIcon != null) return cachedIcon;
+        Bitmap cachedBitmap = sIconCache.get(cacheKey);
+        if(cachedBitmap != null) return new BitmapDrawable(resources, cachedBitmap);
 
-        Drawable instanceIcon = fetchInstanceFileIcon(resources, cacheKey, instance.getInstanceIconLocation());
-        if(instanceIcon != null) return instanceIcon;
+        Bitmap instanceBitmap = fetchInstanceFileIcon(cacheKey, instance.getInstanceIconLocation());
+        if(instanceBitmap != null) return new BitmapDrawable(resources, instanceBitmap);
 
         return fetchStaticIcon(resources, cacheKey, instance.icon);
     }
@@ -65,34 +73,22 @@ public class InstanceIconProvider {
         return instance.name != null ? instance.name : ("unnamed_" + System.identityHashCode(instance));
     }
 
-    private static Drawable fetchInstanceFileIcon(Resources resources, String cacheKey, File iconLocation) {
+    private static Bitmap fetchInstanceFileIcon(String cacheKey, File iconLocation) {
         if(!iconLocation.isFile() || !iconLocation.canRead()) return null;
         Bitmap iconBitmap = BitmapFactory.decodeFile(iconLocation.getAbsolutePath());
         if(iconBitmap == null) return null;
-        Drawable iconDrawable = new BitmapDrawable(resources, iconBitmap);
-        sIconCache.put(cacheKey, iconDrawable);
-        return iconDrawable;
+        sIconCache.put(cacheKey, iconBitmap);
+        return iconBitmap;
     }
 
     private static Drawable fetchStaticIcon(Resources resources, String cacheKey, String icon) {
         String safeIcon = (icon != null) ? icon : FALLBACK_ICON_NAME;
-        Drawable staticIcon = sStaticIconCache.get(safeIcon);
-        if(staticIcon == null) {
-            staticIcon = getStaticIcon(resources, safeIcon);
-            if(staticIcon == null) staticIcon = fetchFallbackIcon(resources);
-            sStaticIconCache.put(safeIcon, staticIcon);
-        }
-        sIconCache.put(cacheKey, staticIcon);
-        return staticIcon;
-    }
-
-    private static @NonNull Drawable fetchFallbackIcon(Resources resources) {
-        Drawable fallbackIcon = sStaticIconCache.get(FALLBACK_ICON_NAME);
-        if(fallbackIcon == null) {
-            fallbackIcon = Objects.requireNonNull(getStaticIcon(resources, FALLBACK_ICON_NAME));
-            sStaticIconCache.put(FALLBACK_ICON_NAME, fallbackIcon);
-        }
-        return fallbackIcon;
+        int resId = sStaticIconResCache.computeIfAbsent(safeIcon,
+                key -> getStaticIconResource(key) != -1 ? getStaticIconResource(key) : getStaticIconResource(FALLBACK_ICON_NAME));
+        // Static (vector/webp) drawables from ResourcesCompat are already safe to hand out
+        // fresh each time since getDrawable() itself returns a new instance per call.
+        Drawable freshDrawable = ResourcesCompat.getDrawable(resources, resId, null);
+        return freshDrawable != null ? freshDrawable : Objects.requireNonNull(getStaticIcon(resources, FALLBACK_ICON_NAME));
     }
 
     private static Drawable getStaticIcon(Resources resources, @NonNull String icon) {

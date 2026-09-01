@@ -26,6 +26,11 @@ import java.io.IOException;
  */
 public class LogViewerActivity extends BaseActivity {
 
+    @Override
+    public boolean setFullscreen() {
+        return false;
+    }
+
     private TextView mLogText;
     private String mRawLogContent = "";
 
@@ -36,6 +41,7 @@ public class LogViewerActivity extends BaseActivity {
 
         mLogText = findViewById(R.id.log_viewer_text);
         mLogText.setTextIsSelectable(true);
+        findViewById(R.id.log_viewer_back_button).setOnClickListener(v -> finish());
 
         loadLog();
 

@@ -67,6 +67,16 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         RendererCompatUtil.RenderersList renderersList = RendererCompatUtil.getCompatibleRenderers(getContext());
         rendererListPreference.setEntries(renderersList.rendererDisplayNames);
         rendererListPreference.setEntryValues(renderersList.rendererIds.toArray(new String[0]));
+        rendererListPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            if ("vulkan_zink".equals(newValue) && getContext() != null) {
+                new android.app.AlertDialog.Builder(getContext())
+                        .setTitle(R.string.renderer_zink_warning_title)
+                        .setMessage(R.string.renderer_zink_warning_message)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
+            }
+            return true;
+        });
 
         computeVisibility();
     }

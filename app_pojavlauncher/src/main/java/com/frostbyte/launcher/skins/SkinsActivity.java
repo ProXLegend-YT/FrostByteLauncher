@@ -19,8 +19,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.frostbyte.launcher.BaseActivity;
 import com.frostbyte.launcher.R;
+import com.frostbyte.launcher.authenticator.AuthType;
 import com.frostbyte.launcher.authenticator.accounts.Account;
 import com.frostbyte.launcher.authenticator.accounts.Accounts;
+import com.frostbyte.launcher.authenticator.listener.LoginListener;
+import com.frostbyte.launcher.progresskeeper.ProgressKeeper;
 
 import org.json.JSONObject;
 
@@ -28,6 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkinsActivity extends BaseActivity {
+
+    @Override
+    public boolean setFullscreen() {
+        return false;
+    }
 
     private Account mAccount;
     private SkinGridAdapter mAdapter;
@@ -79,12 +87,45 @@ public class SkinsActivity extends BaseActivity {
         return w == 64 && (h == 64 || h == 32);
     }
 
+    /**
+     * Microsoft access tokens are short-lived (about an hour). Since this screen can sit open
+     * for a while before the person taps Apply, check freshness right before any Mojang-touching
+     * call and silently refresh first if needed — otherwise Mojang rejects the request with a 401.
+     * Runs the given action once a usable token is guaranteed to be in place.
+     */
+    private void ensureFreshToken(Runnable onReady, Runnable onFailure) {
+        if (mAccount == null || mAccount.isLocal() || !mAccount.authType.requiresLogin()
+                || System.currentTimeMillis() <= mAccount.expiresAt) {
+            onReady.run();
+            return;
+        }
+        mAccount.authType.createAuth().refreshAccount(new LoginListener() {
+            @Override
+            public void onLoginDone(Account refreshedAccount) {
+                mAccount = refreshedAccount;
+                onReady.run();
+            }
+
+            @Override
+            public void onLoginError(Throwable errorMessage) {
+                onFailure.run();
+            }
+
+            @Override
+            public void onLoginProgress(int step) {}
+
+            @Override
+            public void setMaxLoginProgress(int max) {}
+        }, mAccount);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skins);
 
         mAccount = Accounts.getCurrent();
+        findViewById(R.id.skins_back_button).setOnClickListener(v -> finish());
         mLoadingIndicator = findViewById(R.id.skins_loading_indicator);
         mCapesSection = findViewById(R.id.skins_capes_section);
         mCapesList = findViewById(R.id.skins_capes_list);
@@ -163,7 +204,7 @@ public class SkinsActivity extends BaseActivity {
                 .setTitle(R.string.skins_reset)
                 .setPositiveButton(R.string.skins_reset, (dialog, which) -> {
                     setLoading(true);
-                    new Thread(() -> {
+                    ensureFreshToken(() -> new Thread(() -> {
                         try {
                             SkinManager.resetSkin(mAccount);
                             mAccount.updateSkinFace();
@@ -178,7 +219,10 @@ public class SkinsActivity extends BaseActivity {
                                 Toast.makeText(this, getString(R.string.skins_applied_error, e.getMessage()), Toast.LENGTH_LONG).show();
                             });
                         }
-                    }).start();
+                    }).start(), () -> runOnUiThread(() -> {
+                        setLoading(false);
+                        Toast.makeText(this, R.string.skins_token_refresh_failed, Toast.LENGTH_LONG).show();
+                    }));
                 })
                 .setNeutralButton(android.R.string.cancel, null)
                 .show();
@@ -187,7 +231,7 @@ public class SkinsActivity extends BaseActivity {
     private void applySkin(SkinEntry entry, boolean slim) {
         if (mAccount == null) return;
         setLoading(true);
-        new Thread(() -> {
+        ensureFreshToken(() -> new Thread(() -> {
             try {
                 SkinManager.applySkin(this, mAccount, entry, slim);
                 mAccount.updateSkinFace();
@@ -202,7 +246,10 @@ public class SkinsActivity extends BaseActivity {
                     Toast.makeText(this, getString(R.string.skins_applied_error, e.getMessage()), Toast.LENGTH_LONG).show();
                 });
             }
-        }).start();
+        }).start(), () -> runOnUiThread(() -> {
+            setLoading(false);
+            Toast.makeText(this, R.string.skins_token_refresh_failed, Toast.LENGTH_LONG).show();
+        }));
     }
 
     private void loadOwnedCapes() {
@@ -243,7 +290,7 @@ public class SkinsActivity extends BaseActivity {
 
     private void toggleCape(String capeId, boolean currentlyActive) {
         setLoading(true);
-        new Thread(() -> {
+        ensureFreshToken(() -> new Thread(() -> {
             try {
                 if (currentlyActive) {
                     SkinManager.hideCape(mAccount);
@@ -260,7 +307,10 @@ public class SkinsActivity extends BaseActivity {
                     Toast.makeText(this, getString(R.string.skins_applied_error, e.getMessage()), Toast.LENGTH_LONG).show();
                 });
             }
-        }).start();
+        }).start(), () -> runOnUiThread(() -> {
+            setLoading(false);
+            Toast.makeText(this, R.string.skins_token_refresh_failed, Toast.LENGTH_LONG).show();
+        }));
     }
 
     private void setLoading(boolean loading) {

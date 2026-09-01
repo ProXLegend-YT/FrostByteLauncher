@@ -29,6 +29,11 @@ import java.util.List;
  */
 public class ScreenshotGalleryActivity extends BaseActivity {
 
+    @Override
+    public boolean setFullscreen() {
+        return false;
+    }
+
     private GridView mGrid;
     private ScreenshotAdapter mAdapter;
     private File mScreenshotsDir;
@@ -40,6 +45,7 @@ public class ScreenshotGalleryActivity extends BaseActivity {
 
         mGrid = findViewById(R.id.screenshot_grid);
         TextView emptyText = findViewById(R.id.screenshot_gallery_empty);
+        findViewById(R.id.screenshot_gallery_back_button).setOnClickListener(v -> finish());
 
         Instance instance = Instances.loadSelectedInstance();
         if (instance == null) {

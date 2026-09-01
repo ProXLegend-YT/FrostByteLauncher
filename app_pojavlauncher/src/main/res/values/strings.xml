@@ -545,6 +545,9 @@
     <string name="screenshot_delete_failed">Couldn\'t delete that screenshot</string>
     <string name="customctrl_restore_fresh_default">Restore fresh default layout</string>
     <string name="customctrl_restore_fresh_default_confirm">This replaces your default control layout with a brand new one, matching the latest FrostByte style. Your current default layout will be lost. Continue?</string>
+    <string name="skins_token_refresh_failed">Your Microsoft sign-in expired and couldn\'t refresh automatically. Try signing in again from the account menu.</string>
+    <string name="renderer_zink_warning_title">Zink (Vulkan) can be unstable</string>
+    <string name="renderer_zink_warning_message">Zink relies on your device\'s Vulkan driver, which crashes on some phones with no fix available from FrostByte\'s side. If the game crashes right after launching, switch back to the default renderer here.</string>
 
     <string name="loading_screen_booted">Ready - running on %1$s!</string>
     <string name="loading_screen_warning">If you are stuck here, the game might have crashed</string>
