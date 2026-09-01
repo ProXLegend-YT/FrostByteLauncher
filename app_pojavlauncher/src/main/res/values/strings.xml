@@ -548,6 +548,7 @@
     <string name="skins_token_refresh_failed">Your Microsoft sign-in expired and couldn\'t refresh automatically. Try signing in again from the account menu.</string>
     <string name="renderer_zink_warning_title">Zink (Vulkan) can be unstable</string>
     <string name="renderer_zink_warning_message">Zink relies on your device\'s Vulkan driver, which crashes on some phones with no fix available from FrostByte\'s side. If the game crashes right after launching, switch back to the default renderer here.</string>
+    <string name="skins_no_accounts">You need at least one logged-in account to apply a skin. Add one from the account menu first.</string>
 
     <string name="loading_screen_booted">Ready - running on %1$s!</string>
     <string name="loading_screen_warning">If you are stuck here, the game might have crashed</string>

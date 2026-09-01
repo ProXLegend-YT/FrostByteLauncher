@@ -98,6 +98,10 @@ public class CustomControlsActivity extends BaseActivity implements EditorExitab
 					try {
 						com.frostbyte.launcher.customcontrols.CustomControls fresh =
 								new com.frostbyte.launcher.customcontrols.CustomControls(this);
+						// mLayoutBitmaps is transient and not set by this constructor (it's normally
+						// populated when a layout is deserialized from disk) - saveLayout() needs it
+						// to exist, so give the freshly-built object an empty one here.
+						fresh.mLayoutBitmaps = com.frostbyte.launcher.customcontrols.LayoutBitmaps.createEmpty();
 						mControlLayout.loadLayout(fresh);
 						mControlLayout.saveLayout(Tools.CTRLDEF_FILE);
 					} catch (Exception e) {

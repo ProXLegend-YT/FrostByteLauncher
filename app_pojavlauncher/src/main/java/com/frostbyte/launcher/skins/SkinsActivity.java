@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -93,16 +94,18 @@ public class SkinsActivity extends BaseActivity {
      * call and silently refresh first if needed — otherwise Mojang rejects the request with a 401.
      * Runs the given action once a usable token is guaranteed to be in place.
      */
-    private void ensureFreshToken(Runnable onReady, Runnable onFailure) {
-        if (mAccount == null || mAccount.isLocal() || !mAccount.authType.requiresLogin()
-                || System.currentTimeMillis() <= mAccount.expiresAt) {
+    private void ensureFreshToken(Account account, Runnable onReady, Runnable onFailure) {
+        if (account == null || account.isLocal() || !account.authType.requiresLogin()
+                || System.currentTimeMillis() <= account.expiresAt) {
             onReady.run();
             return;
         }
-        mAccount.authType.createAuth().refreshAccount(new LoginListener() {
+        account.authType.createAuth().refreshAccount(new LoginListener() {
             @Override
             public void onLoginDone(Account refreshedAccount) {
-                mAccount = refreshedAccount;
+                if (mAccount != null && mAccount.profileId.equals(refreshedAccount.profileId)) {
+                    mAccount = refreshedAccount;
+                }
                 onReady.run();
             }
 
@@ -116,7 +119,7 @@ public class SkinsActivity extends BaseActivity {
 
             @Override
             public void setMaxLoginProgress(int max) {}
-        }, mAccount);
+        }, account);
     }
 
     @Override
@@ -185,30 +188,64 @@ public class SkinsActivity extends BaseActivity {
     }
 
     private void confirmAndApply(SkinEntry entry) {
-        boolean isLocal = mAccount == null || mAccount.isLocal();
-        String message = isLocal
-                ? getString(R.string.skins_account_notice_local)
-                : getString(R.string.skins_account_notice_microsoft);
+        List<Account> accounts;
+        try {
+            accounts = Accounts.load().accounts;
+        } catch (Exception e) {
+            accounts = mAccount != null ? java.util.Collections.singletonList(mAccount) : java.util.Collections.emptyList();
+        }
+        if (accounts.isEmpty()) {
+            Toast.makeText(this, R.string.skins_no_accounts, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        View previewView = getLayoutInflater().inflate(R.layout.dialog_skin_preview, null);
+        ImageView previewImage = previewView.findViewById(R.id.skin_preview_image);
+        new Thread(() -> {
+            try {
+                Bitmap bitmap = SkinManager.loadPreviewBitmap(this, entry);
+                if (bitmap != null) {
+                    runOnUiThread(() -> previewImage.setImageBitmap(bitmap));
+                }
+            } catch (Exception ignored) {
+                // Leave the placeholder image if the preview fails to load; picking an account still works
+            }
+        }).start();
+
+        String[] accountLabels = new String[accounts.size()];
+        for (int i = 0; i < accounts.size(); i++) {
+            Account acc = accounts.get(i);
+            accountLabels[i] = acc.username + " (" + acc.authType.name() + ")";
+        }
+
+        int[] selectedIndex = {accounts.indexOf(mAccount) >= 0 ? accounts.indexOf(mAccount) : 0};
+        List<Account> finalAccounts = accounts;
 
         new AlertDialog.Builder(this)
                 .setTitle(entry.displayName)
-                .setMessage(message)
-                .setPositiveButton(R.string.skins_apply, (dialog, which) -> applySkin(entry, entry.isSlimModel))
-                .setNeutralButton(android.R.string.cancel, null)
+                .setView(previewView)
+                .setSingleChoiceItems(accountLabels, selectedIndex[0], (dialog, which) -> selectedIndex[0] = which)
+                .setPositiveButton(R.string.skins_apply, (dialog, which) -> {
+                    Account chosen = finalAccounts.get(selectedIndex[0]);
+                    mAccount = chosen;
+                    applySkin(chosen, entry, entry.isSlimModel);
+                })
+                .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 
     private void confirmAndReset() {
         if (mAccount == null) return;
+        Account target = mAccount;
         new AlertDialog.Builder(this)
                 .setTitle(R.string.skins_reset)
                 .setPositiveButton(R.string.skins_reset, (dialog, which) -> {
                     setLoading(true);
-                    ensureFreshToken(() -> new Thread(() -> {
+                    ensureFreshToken(target, () -> new Thread(() -> {
                         try {
-                            SkinManager.resetSkin(mAccount);
-                            mAccount.updateSkinFace();
-                            try { mAccount.save(); } catch (Exception ignored) {}
+                            SkinManager.resetSkin(target);
+                            target.updateSkinFace();
+                            try { target.save(); } catch (Exception ignored) {}
                             runOnUiThread(() -> {
                                 setLoading(false);
                                 Toast.makeText(this, R.string.skins_applied_success, Toast.LENGTH_SHORT).show();
@@ -228,14 +265,13 @@ public class SkinsActivity extends BaseActivity {
                 .show();
     }
 
-    private void applySkin(SkinEntry entry, boolean slim) {
-        if (mAccount == null) return;
+    private void applySkin(Account target, SkinEntry entry, boolean slim) {
         setLoading(true);
-        ensureFreshToken(() -> new Thread(() -> {
+        ensureFreshToken(target, () -> new Thread(() -> {
             try {
-                SkinManager.applySkin(this, mAccount, entry, slim);
-                mAccount.updateSkinFace();
-                try { mAccount.save(); } catch (Exception ignored) {}
+                SkinManager.applySkin(this, target, entry, slim);
+                target.updateSkinFace();
+                try { target.save(); } catch (Exception ignored) {}
                 runOnUiThread(() -> {
                     setLoading(false);
                     Toast.makeText(this, R.string.skins_applied_success, Toast.LENGTH_SHORT).show();
@@ -290,7 +326,7 @@ public class SkinsActivity extends BaseActivity {
 
     private void toggleCape(String capeId, boolean currentlyActive) {
         setLoading(true);
-        ensureFreshToken(() -> new Thread(() -> {
+        ensureFreshToken(mAccount, () -> new Thread(() -> {
             try {
                 if (currentlyActive) {
                     SkinManager.hideCape(mAccount);

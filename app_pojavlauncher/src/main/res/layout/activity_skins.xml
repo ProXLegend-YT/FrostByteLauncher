@@ -3,8 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/frostbyte_bg">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/frostbyte_space_bg"
+        android:contentDescription="@null" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#33000000" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,8 +36,9 @@
 
                 <ImageButton
                     android:id="@+id/skins_back_button"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:padding="10dp"
                     android:background="@drawable/frostbyte_icon_button_bg"
                     android:src="@drawable/ic_px_arrow_left"
                     app:tint="@color/frostbyte_accent"
