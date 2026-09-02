@@ -154,7 +154,11 @@ public class SkinsActivity extends BaseActivity {
 
         TextView notice = findViewById(R.id.skins_account_notice);
         boolean isMicrosoft = mAccount != null && mAccount.authType == AuthType.MICROSOFT;
-        notice.setText(isMicrosoft ? R.string.skins_account_notice_microsoft : R.string.skins_account_notice_local);
+        boolean isElyBy = mAccount != null && mAccount.authType == AuthType.ELY_BY;
+        int noticeRes = isMicrosoft ? R.string.skins_account_notice_microsoft
+                : isElyBy ? R.string.skins_account_notice_elyby
+                : R.string.skins_account_notice_local;
+        notice.setText(noticeRes);
 
         findViewById(R.id.skins_upload_button).setOnClickListener(v -> mGalleryLauncher.launch("image/png"));
 
@@ -190,7 +194,23 @@ public class SkinsActivity extends BaseActivity {
                     mModelView.setSkin(skin, slim);
                 });
             } catch (Exception e) {
-                runOnUiThread(() -> mModelLoading.setVisibility(View.GONE));
+                runOnUiThread(() -> {
+                    mModelLoading.setVisibility(View.GONE);
+                    Toast.makeText(this, R.string.skins_model_load_failed, Toast.LENGTH_SHORT).show();
+                    loadFallbackSkinIntoModel();
+                });
+            }
+        }).start();
+    }
+
+    /** Shows a bundled default skin in the 3D model when the account's real skin can't be fetched. */
+    private void loadFallbackSkinIntoModel() {
+        new Thread(() -> {
+            try (java.io.InputStream is = getAssets().open("frostbyte_skins/frostbyte_fallback_steve.png")) {
+                Bitmap fallback = BitmapFactory.decodeStream(is);
+                runOnUiThread(() -> mModelView.setSkin(fallback, false));
+            } catch (Exception ignored) {
+                // If even the bundled fallback fails to load, leave the model empty rather than crash
             }
         }).start();
     }

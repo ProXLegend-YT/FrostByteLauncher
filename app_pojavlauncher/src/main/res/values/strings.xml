@@ -509,7 +509,9 @@
 
     <string name="skins_title">Skins &amp; Capes</string>
     <string name="skins_account_notice_microsoft">Signed in with a Microsoft account — applied skins upload to Mojang and show up anywhere</string>
+    <string name="skins_account_notice_elyby">Signed in with an Ely.by account — applied skins upload to Ely.by and show up on Ely.by-authenticated servers</string>
     <string name="skins_account_notice_local">Offline account — skins apply locally in FrostByte only and won\'t be visible to other players online</string>
+    <string name="skins_model_load_failed">Couldn\'t load this account\'s current skin — showing the default instead</string>
     <string name="skins_upload_from_gallery">Upload skin from gallery</string>
     <string name="skins_username_hint">Look up a player\'s skin by username</string>
     <string name="skins_search">Search</string>

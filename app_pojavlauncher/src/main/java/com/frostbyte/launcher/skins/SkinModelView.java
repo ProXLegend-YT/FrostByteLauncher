@@ -26,7 +26,6 @@ public class SkinModelView extends GLSurfaceView {
         setEGLContextClientVersion(2);
         setEGLConfigChooser(8, 8, 8, 8, 16, 0); // request an alpha channel so the background shows through
         getHolder().setFormat(android.graphics.PixelFormat.TRANSLUCENT);
-        setZOrderOnTop(true);
         mRenderer = new SkinModelRenderer();
         setRenderer(mRenderer);
         setRenderMode(RENDERMODE_CONTINUOUSLY);
