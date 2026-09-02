@@ -90,8 +90,8 @@ public class ElyByBackgroundLogin implements BackgroundLogin {
         Log.i("MicrosoftLogin", "isRefresh=" + isRefresh + ", authCode= "+code);
 
         String formData = CommonLoginUtils.convertToFormData(
-                "client_id", "mojolauncher2",
-                "client_secret", "o14Zb2Zzj0_k6o4kN0t1mIEhoQxeayn8hYi5VSX2q3NXrdQm5T2Q6wqsCfpv1vhu",
+                "client_id", "frostbyte-launcher",
+                "client_secret", "AV4fQ_kSs7bvO1KZjI1rttWHMlKTEAKaAPu2trvsmgiH-kYPBynHTRznVamU7GjK",
                 "redirect_uri", "internalredirect://complete",
                 isRefresh ? "refresh_token" : "code", code,
                 "grant_type", isRefresh ? "refresh_token" : "authorization_code"
