@@ -25,7 +25,6 @@
         <item name="4">@string/global_save</item>
         <item name="5">@string/customctrl_selectdefault</item>
         <item name="6">@string/customctrl_export</item>
-        <item name="7">@string/customctrl_restore_fresh_default</item>
     </string-array>
 
     <string-array name="menu_ingame">

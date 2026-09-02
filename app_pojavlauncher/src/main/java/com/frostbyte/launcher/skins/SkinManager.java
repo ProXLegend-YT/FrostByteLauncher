@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import com.frostbyte.launcher.Tools;
+import com.frostbyte.launcher.authenticator.AuthType;
 import com.frostbyte.launcher.authenticator.accounts.Account;
 
 import org.json.JSONArray;
@@ -34,37 +35,56 @@ import java.util.List;
  */
 public class SkinManager {
 
-    /** File names bundled under assets/frostbyte_skins/. Add more PNGs there and list them here. */
-    public static final String[] BUNDLED_PRESETS = {
-            "frostbyte_default_steve.png",
-            "frostbyte_default_alex.png",
-            "frostbyte_cyber_ninja.png",
-            "frostbyte_frost_knight.png",
-            "frostbyte_space_voyager.png",
-            "frostbyte_shadow_walker.png"
-    };
-
     private static final String MOJANG_UUID_LOOKUP = "https://api.mojang.com/users/profiles/minecraft/";
     private static final String MOJANG_PROFILE_LOOKUP = "https://sessionserver.mojang.com/session/minecraft/profile/";
     private static final String MC_SERVICES_SKIN_URL = "https://api.minecraftservices.com/minecraft/profile/skins";
     private static final String MC_SERVICES_SKIN_RESET_URL = "https://api.minecraftservices.com/minecraft/profile/skins/active";
     private static final String MC_SERVICES_CAPE_URL = "https://api.minecraftservices.com/minecraft/profile/capes/active";
 
-    public static List<SkinEntry> getBundledPresets() {
-        List<SkinEntry> presets = new ArrayList<>();
-        for (String fileName : BUNDLED_PRESETS) {
-            String prettyName = fileName
-                    .replace("frostbyte_", "")
-                    .replace(".png", "")
-                    .replace("_", " ");
-            prettyName = Character.toUpperCase(prettyName.charAt(0)) + prettyName.substring(1);
-            presets.add(new SkinEntry(SkinEntry.Source.BUNDLED_ASSET, prettyName, "frostbyte_skins/" + fileName, false));
-        }
-        return presets;
+    /**
+     * Only real Microsoft/Mojang accounts have a profile on Mojang's skin service. Ely.by
+     * (and any other third-party auth) has its own accessToken and isn't "local" by
+     * Account.isLocal()'s definition, but it still isn't a Mojang account — sending its
+     * token to Mojang's API gets rejected with an HTTP 401. Every Mojang-touching call in
+     * this class should check this instead of isLocal().
+     */
+    private static boolean isMicrosoft(Account account) {
+        return account.authType == AuthType.MICROSOFT;
     }
 
     /**
-     * Look up a real Minecraft player's current skin by username, using Mojang's own
+     * Downloads the account's actual current full skin bitmap (not just the small face icon),
+     * for showing in the 3D model preview. Must be called off the main thread.
+     */
+    public static Bitmap fetchCurrentSkinBitmap(Account account) throws IOException {
+        if (!isMicrosoft(account) && account.authType.skinUrl == null) {
+            // Offline accounts with no real skin source fall back to whatever was applied locally
+            Bitmap local = getLocalSkin(account);
+            if (local != null) return local;
+            throw new IOException("No skin source available for this account");
+        }
+        if (!isMicrosoft(account)) {
+            String url = String.format(account.authType.skinUrl, account.username);
+            byte[] bytes = downloadBytes(url);
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        }
+        // Microsoft accounts: look up the real current skin via the session server, same
+        // mechanism as looking up any other player's skin by username.
+        SkinEntry entry = lookupByUsername(account.username);
+        if (entry == null) {
+            Bitmap local = getLocalSkin(account);
+            if (local != null) return local;
+            throw new IOException("Could not find a current skin for this account");
+        }
+        return downloadBytesAsBitmap(entry.reference);
+    }
+
+    private static Bitmap downloadBytesAsBitmap(String url) throws IOException {
+        byte[] bytes = downloadBytes(url);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    /** Look up a real Minecraft player's current skin by username, using Mojang's own
      * public, unauthenticated API. Works for any real Java Edition account.
      * Must be called off the main thread.
      */
@@ -137,10 +157,10 @@ public class SkinManager {
         Bitmap bitmap = loadBitmap(ctx, entry);
         if (bitmap == null) throw new IOException("Could not decode the selected skin image");
         try {
-            if (account.isLocal()) {
-                saveLocalSkin(account, bitmap);
-            } else {
+            if (isMicrosoft(account)) {
                 uploadSkinToMojang(account.accessToken, bitmap, isSlimModel);
+            } else {
+                saveLocalSkin(account, bitmap);
             }
         } finally {
             bitmap.recycle();
@@ -233,7 +253,7 @@ public class SkinManager {
 
     /** Resets the account's skin back to Mojang's default (Steve/Alex). Microsoft accounts only. */
     public static void resetSkin(Account account) throws IOException {
-        if (account.isLocal()) {
+        if (!isMicrosoft(account)) {
             getLocalSkinFile(account).delete();
             return;
         }
@@ -252,7 +272,7 @@ public class SkinManager {
 
     /** Shows the account's already-owned cape, if any. Microsoft accounts only. */
     public static void showCape(Account account, String capeId) throws IOException {
-        if (account.isLocal()) throw new IOException("Offline accounts cannot have capes");
+        if (!isMicrosoft(account)) throw new IOException("Only Microsoft accounts can have capes");
         URL url = new URL(MC_SERVICES_CAPE_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("PUT");
@@ -276,7 +296,7 @@ public class SkinManager {
 
     /** Hides the account's currently active cape. Microsoft accounts only. */
     public static void hideCape(Account account) throws IOException {
-        if (account.isLocal()) return;
+        if (!isMicrosoft(account)) return;
         URL url = new URL(MC_SERVICES_CAPE_URL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("DELETE");
@@ -297,7 +317,7 @@ public class SkinManager {
      */
     public static List<JSONObject> fetchOwnedCapes(Account account) throws IOException {
         List<JSONObject> capes = new ArrayList<>();
-        if (account.isLocal()) return capes;
+        if (!isMicrosoft(account)) return capes;
         URL url = new URL("https://api.minecraftservices.com/minecraft/profile");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestProperty("Authorization", "Bearer " + account.accessToken);

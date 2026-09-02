@@ -76,40 +76,10 @@ public class CustomControlsActivity extends BaseActivity implements EditorExitab
 						Tools.showError(this, e);
 					}
 					break;
-				case 7: confirmRestoreFreshDefault(); break;
 			}
 			mDrawerLayout.closeDrawers();
 		});
 		mControlLayout.setModifiable(true);
-	}
-
-	/**
-	 * Regenerates the default control layout from scratch using the current button
-	 * styling (rounded, tinted), and saves it over the on-device default.json. This is
-	 * needed because default.json is written to device storage once and then never
-	 * automatically re-synced, so older installs can be stuck with outdated button styling
-	 * even after an app update fixes it.
-	 */
-	private void confirmRestoreFreshDefault() {
-		new androidx.appcompat.app.AlertDialog.Builder(this)
-				.setTitle(R.string.customctrl_restore_fresh_default)
-				.setMessage(R.string.customctrl_restore_fresh_default_confirm)
-				.setPositiveButton(R.string.customctrl_restore_fresh_default, (dialog, which) -> {
-					try {
-						com.frostbyte.launcher.customcontrols.CustomControls fresh =
-								new com.frostbyte.launcher.customcontrols.CustomControls(this);
-						// mLayoutBitmaps is transient and not set by this constructor (it's normally
-						// populated when a layout is deserialized from disk) - saveLayout() needs it
-						// to exist, so give the freshly-built object an empty one here.
-						fresh.mLayoutBitmaps = com.frostbyte.launcher.customcontrols.LayoutBitmaps.createEmpty();
-						mControlLayout.loadLayout(fresh);
-						mControlLayout.saveLayout(Tools.CTRLDEF_FILE);
-					} catch (Exception e) {
-						Tools.showError(this, e);
-					}
-				})
-				.setNegativeButton(android.R.string.cancel, null)
-				.show();
 	}
 
 	@Override

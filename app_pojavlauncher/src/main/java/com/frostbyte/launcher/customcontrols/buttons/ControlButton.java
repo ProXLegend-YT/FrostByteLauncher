@@ -85,19 +85,17 @@ public class ControlButton extends TextView implements ControlInterface {
         mBorderPaint.setStrokeWidth(3.5f);
         setTextColor(Color.WHITE);
         if (mProperties.isToggle) {
-            // Violet accent for the toggle layer, matching the rest of the app's toggle color
-            mRectPaint.setColor(Color.parseColor("#8C6BFF"));
+            mRectPaint.setColor(Color.WHITE);
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA);
             mRestAlpha = BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA;
-            mBorderPaint.setColor(Color.parseColor("#8C6BFF"));
-            mBorderPaint.setAlpha(255);
+            mBorderPaint.setColor(Color.WHITE);
+            mBorderPaint.setAlpha(0);
         } else {
-            // Deep navy fill matching frostbyte_card_bg, cyan border matching frostbyte_accent
-            mRectPaint.setColor(Color.parseColor("#1A1F2E"));
+            mRectPaint.setColor(Color.WHITE);
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA);
             mRestAlpha = BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA;
-            mBorderPaint.setColor(Color.parseColor("#5AD1FF"));
-            mBorderPaint.setAlpha(220);
+            mBorderPaint.setColor(Color.WHITE);
+            mBorderPaint.setAlpha(0);
         }
     }
 

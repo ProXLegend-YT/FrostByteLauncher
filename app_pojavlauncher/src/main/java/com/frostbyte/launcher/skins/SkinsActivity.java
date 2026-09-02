@@ -2,14 +2,12 @@ package com.frostbyte.launcher.skins;
 
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,11 +22,14 @@ import com.frostbyte.launcher.authenticator.AuthType;
 import com.frostbyte.launcher.authenticator.accounts.Account;
 import com.frostbyte.launcher.authenticator.accounts.Accounts;
 import com.frostbyte.launcher.authenticator.listener.LoginListener;
-import com.frostbyte.launcher.progresskeeper.ProgressKeeper;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 
 public class SkinsActivity extends BaseActivity {
@@ -39,11 +40,11 @@ public class SkinsActivity extends BaseActivity {
     }
 
     private Account mAccount;
-    private SkinGridAdapter mAdapter;
+    private SkinModelView mModelView;
+    private ProgressBar mModelLoading;
     private ProgressBar mLoadingIndicator;
     private LinearLayout mCapesSection;
     private LinearLayout mCapesList;
-    private CheckBox mSlimCheckbox;
 
     private final ActivityResultLauncher<String> mGalleryLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
@@ -52,10 +53,10 @@ public class SkinsActivity extends BaseActivity {
                 new Thread(() -> {
                     try {
                         Bitmap bitmap;
-                        try (java.io.InputStream is = getContentResolver().openInputStream(uri)) {
-                            bitmap = android.graphics.BitmapFactory.decodeStream(is);
+                        try (InputStream is = getContentResolver().openInputStream(uri)) {
+                            bitmap = BitmapFactory.decodeStream(is);
                         }
-                        if (bitmap == null) throw new java.io.IOException("Could not read the selected image");
+                        if (bitmap == null) throw new IOException("Could not read the selected image");
                         if (!isValidSkinDimensions(bitmap.getWidth(), bitmap.getHeight())) {
                             bitmap.recycle();
                             runOnUiThread(() -> {
@@ -64,12 +65,13 @@ public class SkinsActivity extends BaseActivity {
                             });
                             return;
                         }
-                        java.io.File temp = java.io.File.createTempFile("frostbyte_gallery_skin", ".png", getCacheDir());
-                        try (java.io.FileOutputStream fos = new java.io.FileOutputStream(temp)) {
+                        File temp = File.createTempFile("frostbyte_gallery_skin", ".png", getCacheDir());
+                        try (FileOutputStream fos = new FileOutputStream(temp)) {
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                         }
+                        boolean isSlim = bitmap.getWidth() == 64 && guessSlimFromArmWidth(bitmap);
                         bitmap.recycle();
-                        SkinEntry entry = new SkinEntry(SkinEntry.Source.LOCAL_FILE, "From gallery", temp.getAbsolutePath(), mSlimCheckbox.isChecked());
+                        SkinEntry entry = new SkinEntry(SkinEntry.Source.LOCAL_FILE, "From gallery", temp.getAbsolutePath(), isSlim);
                         runOnUiThread(() -> {
                             setLoading(false);
                             confirmAndApply(entry);
@@ -89,13 +91,28 @@ public class SkinsActivity extends BaseActivity {
     }
 
     /**
+     * Best-effort slim-arm detection: on a 64x64 skin, column 54 (inside the classic arm's
+     * extra pixel column) is fully transparent on slim skins and opaque on classic ones.
+     * Not perfect for every hand-edited skin, but a reasonable default; the person can still
+     * see the model preview and re-pick if it looks wrong.
+     */
+    private boolean guessSlimFromArmWidth(Bitmap bitmap) {
+        if (bitmap.getHeight() < 64) return false; // legacy 64x32 skins predate the slim model entirely
+        try {
+            return (bitmap.getPixel(55, 20) >>> 24) == 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
      * Microsoft access tokens are short-lived (about an hour). Since this screen can sit open
      * for a while before the person taps Apply, check freshness right before any Mojang-touching
      * call and silently refresh first if needed — otherwise Mojang rejects the request with a 401.
-     * Runs the given action once a usable token is guaranteed to be in place.
+     * Only real Microsoft accounts need this; Ely.by and offline accounts never touch Mojang.
      */
     private void ensureFreshToken(Account account, Runnable onReady, Runnable onFailure) {
-        if (account == null || account.isLocal() || !account.authType.requiresLogin()
+        if (account == null || account.authType != AuthType.MICROSOFT
                 || System.currentTimeMillis() <= account.expiresAt) {
             onReady.run();
             return;
@@ -132,19 +149,14 @@ public class SkinsActivity extends BaseActivity {
         mLoadingIndicator = findViewById(R.id.skins_loading_indicator);
         mCapesSection = findViewById(R.id.skins_capes_section);
         mCapesList = findViewById(R.id.skins_capes_list);
-        mSlimCheckbox = findViewById(R.id.skins_slim_checkbox);
+        mModelView = findViewById(R.id.skins_model_view);
+        mModelLoading = findViewById(R.id.skins_model_loading);
 
         TextView notice = findViewById(R.id.skins_account_notice);
-        boolean isLocal = mAccount == null || mAccount.isLocal();
-        notice.setText(isLocal ? R.string.skins_account_notice_local : R.string.skins_account_notice_microsoft);
-
-        GridView grid = findViewById(R.id.skins_grid);
-        mAdapter = new SkinGridAdapter(this, this::confirmAndApply);
-        grid.setAdapter(mAdapter);
-        mAdapter.setEntries(SkinManager.getBundledPresets());
+        boolean isMicrosoft = mAccount != null && mAccount.authType == AuthType.MICROSOFT;
+        notice.setText(isMicrosoft ? R.string.skins_account_notice_microsoft : R.string.skins_account_notice_local);
 
         findViewById(R.id.skins_upload_button).setOnClickListener(v -> mGalleryLauncher.launch("image/png"));
-        findViewById(R.id.skins_reset_button).setOnClickListener(v -> confirmAndReset());
 
         EditText usernameInput = findViewById(R.id.skins_username_input);
         Button searchButton = findViewById(R.id.skins_username_search_button);
@@ -158,9 +170,29 @@ public class SkinsActivity extends BaseActivity {
             return false;
         });
 
-        if (!isLocal) {
+        if (mAccount != null) {
+            loadCurrentSkinIntoModel(mAccount);
+        }
+        if (isMicrosoft) {
             loadOwnedCapes();
         }
+    }
+
+    /** Loads whichever account's real current skin into the 3D preview model. */
+    private void loadCurrentSkinIntoModel(Account account) {
+        mModelLoading.setVisibility(View.VISIBLE);
+        new Thread(() -> {
+            try {
+                Bitmap skin = SkinManager.fetchCurrentSkinBitmap(account);
+                boolean slim = skin.getHeight() >= 64 && guessSlimFromArmWidth(skin);
+                runOnUiThread(() -> {
+                    mModelLoading.setVisibility(View.GONE);
+                    mModelView.setSkin(skin, slim);
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> mModelLoading.setVisibility(View.GONE));
+            }
+        }).start();
     }
 
     private void performUsernameLookup(String username) {
@@ -174,7 +206,6 @@ public class SkinsActivity extends BaseActivity {
                     if (entry == null) {
                         Toast.makeText(this, R.string.skins_lookup_not_found, Toast.LENGTH_SHORT).show();
                     } else {
-                        mAdapter.addEntry(entry);
                         confirmAndApply(entry);
                     }
                 });
@@ -192,25 +223,12 @@ public class SkinsActivity extends BaseActivity {
         try {
             accounts = Accounts.load().accounts;
         } catch (Exception e) {
-            accounts = mAccount != null ? java.util.Collections.singletonList(mAccount) : java.util.Collections.emptyList();
+            accounts = mAccount != null ? Collections.singletonList(mAccount) : Collections.emptyList();
         }
         if (accounts.isEmpty()) {
             Toast.makeText(this, R.string.skins_no_accounts, Toast.LENGTH_LONG).show();
             return;
         }
-
-        View previewView = getLayoutInflater().inflate(R.layout.dialog_skin_preview, null);
-        ImageView previewImage = previewView.findViewById(R.id.skin_preview_image);
-        new Thread(() -> {
-            try {
-                Bitmap bitmap = SkinManager.loadPreviewBitmap(this, entry);
-                if (bitmap != null) {
-                    runOnUiThread(() -> previewImage.setImageBitmap(bitmap));
-                }
-            } catch (Exception ignored) {
-                // Leave the placeholder image if the preview fails to load; picking an account still works
-            }
-        }).start();
 
         String[] accountLabels = new String[accounts.size()];
         for (int i = 0; i < accounts.size(); i++) {
@@ -223,7 +241,6 @@ public class SkinsActivity extends BaseActivity {
 
         new AlertDialog.Builder(this)
                 .setTitle(entry.displayName)
-                .setView(previewView)
                 .setSingleChoiceItems(accountLabels, selectedIndex[0], (dialog, which) -> selectedIndex[0] = which)
                 .setPositiveButton(R.string.skins_apply, (dialog, which) -> {
                     Account chosen = finalAccounts.get(selectedIndex[0]);
@@ -231,37 +248,6 @@ public class SkinsActivity extends BaseActivity {
                     applySkin(chosen, entry, entry.isSlimModel);
                 })
                 .setNegativeButton(android.R.string.cancel, null)
-                .show();
-    }
-
-    private void confirmAndReset() {
-        if (mAccount == null) return;
-        Account target = mAccount;
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.skins_reset)
-                .setPositiveButton(R.string.skins_reset, (dialog, which) -> {
-                    setLoading(true);
-                    ensureFreshToken(target, () -> new Thread(() -> {
-                        try {
-                            SkinManager.resetSkin(target);
-                            target.updateSkinFace();
-                            try { target.save(); } catch (Exception ignored) {}
-                            runOnUiThread(() -> {
-                                setLoading(false);
-                                Toast.makeText(this, R.string.skins_applied_success, Toast.LENGTH_SHORT).show();
-                            });
-                        } catch (Exception e) {
-                            runOnUiThread(() -> {
-                                setLoading(false);
-                                Toast.makeText(this, getString(R.string.skins_applied_error, e.getMessage()), Toast.LENGTH_LONG).show();
-                            });
-                        }
-                    }).start(), () -> runOnUiThread(() -> {
-                        setLoading(false);
-                        Toast.makeText(this, R.string.skins_token_refresh_failed, Toast.LENGTH_LONG).show();
-                    }));
-                })
-                .setNeutralButton(android.R.string.cancel, null)
                 .show();
     }
 
@@ -275,6 +261,7 @@ public class SkinsActivity extends BaseActivity {
                 runOnUiThread(() -> {
                     setLoading(false);
                     Toast.makeText(this, R.string.skins_applied_success, Toast.LENGTH_SHORT).show();
+                    loadCurrentSkinIntoModel(target);
                 });
             } catch (Exception e) {
                 runOnUiThread(() -> {
