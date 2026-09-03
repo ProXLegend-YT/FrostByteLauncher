@@ -145,30 +145,51 @@ public class SkinModelView extends TextureView implements TextureView.SurfaceTex
             int[] version = new int[2];
             if (!EGL14.eglInitialize(mEglDisplay, version, 0, version, 1)) return false;
 
-            int[] configAttribs = {
-                    EGL14.EGL_RED_SIZE, 8,
-                    EGL14.EGL_GREEN_SIZE, 8,
-                    EGL14.EGL_BLUE_SIZE, 8,
-                    EGL14.EGL_ALPHA_SIZE, 8,
-                    EGL14.EGL_DEPTH_SIZE, 16,
-                    EGL14.EGL_RENDERABLE_TYPE, EGL14.EGL_OPENGL_ES2_BIT,
-                    EGL14.EGL_NONE
-            };
-            EGLConfig[] configs = new EGLConfig[1];
-            int[] numConfigs = new int[1];
-            if (!EGL14.eglChooseConfig(mEglDisplay, configAttribs, 0, configs, 0, 1, numConfigs, 0)) {
-                return false;
-            }
+            EGLConfig config = chooseConfig(true, true);
+            if (config == null) config = chooseConfig(true, false);  // keep depth, drop alpha
+            if (config == null) config = chooseConfig(false, true);  // keep alpha, drop depth
+            if (config == null) return false;
 
             int[] contextAttribs = {EGL14.EGL_CONTEXT_CLIENT_VERSION, 2, EGL14.EGL_NONE};
-            mEglContext = EGL14.eglCreateContext(mEglDisplay, configs[0], EGL14.EGL_NO_CONTEXT, contextAttribs, 0);
+            mEglContext = EGL14.eglCreateContext(mEglDisplay, config, EGL14.EGL_NO_CONTEXT, contextAttribs, 0);
             if (mEglContext == EGL14.EGL_NO_CONTEXT) return false;
 
             int[] surfaceAttribs = {EGL14.EGL_NONE};
-            mEglSurface = EGL14.eglCreateWindowSurface(mEglDisplay, configs[0], mSurfaceTexture, surfaceAttribs, 0);
+            mEglSurface = EGL14.eglCreateWindowSurface(mEglDisplay, config, mSurfaceTexture, surfaceAttribs, 0);
             if (mEglSurface == EGL14.EGL_NO_SURFACE) return false;
 
             return EGL14.eglMakeCurrent(mEglDisplay, mEglSurface, mEglSurface, mEglContext);
+        }
+
+        private EGLConfig chooseConfig(boolean requireDepth, boolean requireAlpha) {
+            java.util.List<Integer> attribs = new java.util.ArrayList<>(java.util.Arrays.asList(
+                    EGL14.EGL_RED_SIZE, 8,
+                    EGL14.EGL_GREEN_SIZE, 8,
+                    EGL14.EGL_BLUE_SIZE, 8
+            ));
+            if (requireAlpha) {
+                attribs.add(EGL14.EGL_ALPHA_SIZE);
+                attribs.add(8);
+            }
+            if (requireDepth) {
+                attribs.add(EGL14.EGL_DEPTH_SIZE);
+                attribs.add(16);
+            }
+            attribs.add(EGL14.EGL_RENDERABLE_TYPE);
+            attribs.add(EGL14.EGL_OPENGL_ES2_BIT);
+            attribs.add(EGL14.EGL_NONE);
+
+            int[] configAttribs = new int[attribs.size()];
+            for (int i = 0; i < attribs.size(); i++) configAttribs[i] = attribs.get(i);
+
+            EGLConfig[] configs = new EGLConfig[1];
+            int[] numConfigs = new int[1];
+            boolean success = EGL14.eglChooseConfig(mEglDisplay, configAttribs, 0, configs, 0, 1, numConfigs, 0);
+            // eglChooseConfig can return true (success) while finding zero matches — numConfigs
+            // must be checked explicitly, or configs[0] is left null/undefined and everything
+            // built from it downstream silently corrupts.
+            if (!success || numConfigs[0] <= 0) return null;
+            return configs[0];
         }
 
         private void releaseEgl() {
