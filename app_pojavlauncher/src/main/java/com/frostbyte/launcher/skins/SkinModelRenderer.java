@@ -5,10 +5,6 @@ import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
 import java.util.List;
 
 /**
@@ -144,17 +140,13 @@ public class SkinModelRenderer {
     }
 
     private void drawBox(SkinModelGeometry.Box box) {
-        FloatBuffer vertexBuffer = toFloatBuffer(box.vertices);
-        FloatBuffer uvBuffer = toFloatBuffer(box.uvs);
-        ShortBuffer indexBuffer = toShortBuffer(box.indices);
-
         GLES20.glEnableVertexAttribArray(mPositionHandle);
-        GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 0, vertexBuffer);
+        GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 0, box.vertexBuffer);
 
         GLES20.glEnableVertexAttribArray(mTexCoordHandle);
-        GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0, uvBuffer);
+        GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0, box.uvBuffer);
 
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, box.indices.length, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, box.indices.length, GLES20.GL_UNSIGNED_SHORT, box.indexBuffer);
 
         GLES20.glDisableVertexAttribArray(mPositionHandle);
         GLES20.glDisableVertexAttribArray(mTexCoordHandle);
@@ -180,19 +172,5 @@ public class SkinModelRenderer {
         GLES20.glShaderSource(shader, source);
         GLES20.glCompileShader(shader);
         return shader;
-    }
-
-    private static FloatBuffer toFloatBuffer(float[] data) {
-        FloatBuffer buffer = ByteBuffer.allocateDirect(data.length * 4)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
-        buffer.put(data).position(0);
-        return buffer;
-    }
-
-    private static ShortBuffer toShortBuffer(short[] data) {
-        ShortBuffer buffer = ByteBuffer.allocateDirect(data.length * 2)
-                .order(ByteOrder.nativeOrder()).asShortBuffer();
-        buffer.put(data).position(0);
-        return buffer;
     }
 }

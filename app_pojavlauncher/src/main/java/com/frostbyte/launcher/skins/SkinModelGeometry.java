@@ -1,5 +1,9 @@
 package com.frostbyte.launcher.skins;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,16 +19,39 @@ import java.util.List;
  */
 public class SkinModelGeometry {
 
-    /** One renderable box: its 3D extent, position offset, and where each face samples from the texture. */
+    /**
+     * One renderable box: its 3D extent, position offset, and where each face samples from the
+     * texture. The GL-ready direct buffers are built ONCE here (not per draw call/frame) — the
+     * geometry never changes after construction, so re-wrapping the same arrays into brand-new
+     * off-heap direct ByteBuffers 60 times a second for every box was pure wasted allocation,
+     * and on real hardware (as opposed to a one-shot static render) that churn is exactly what
+     * shows up as stutter/glitching during the model's auto-rotate.
+     */
     public static class Box {
         public final float[] vertices; // x,y,z per vertex, 24 vertices (4 per face x 6 faces)
         public final float[] uvs;      // u,v per vertex, matching the vertex order
         public final short[] indices;  // 2 triangles per face x 6 faces = 36 indices
 
+        public final FloatBuffer vertexBuffer;
+        public final FloatBuffer uvBuffer;
+        public final ShortBuffer indexBuffer;
+
         Box(float[] vertices, float[] uvs, short[] indices) {
             this.vertices = vertices;
             this.uvs = uvs;
             this.indices = indices;
+
+            this.vertexBuffer = ByteBuffer.allocateDirect(vertices.length * 4)
+                    .order(ByteOrder.nativeOrder()).asFloatBuffer();
+            this.vertexBuffer.put(vertices).position(0);
+
+            this.uvBuffer = ByteBuffer.allocateDirect(uvs.length * 4)
+                    .order(ByteOrder.nativeOrder()).asFloatBuffer();
+            this.uvBuffer.put(uvs).position(0);
+
+            this.indexBuffer = ByteBuffer.allocateDirect(indices.length * 2)
+                    .order(ByteOrder.nativeOrder()).asShortBuffer();
+            this.indexBuffer.put(indices).position(0);
         }
     }
 
@@ -35,6 +62,7 @@ public class SkinModelGeometry {
     }
 
     private static final int TEX_SIZE = 64;
+
 
     public static Model build(boolean slimArms) {
         Model model = new Model();
