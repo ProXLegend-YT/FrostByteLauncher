@@ -73,6 +73,12 @@ public class SkinModelRenderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glEnable(GLES20.GL_CULL_FACE);
         GLES20.glCullFace(GLES20.GL_BACK);
+        // Without blending, any texture pixel with partial alpha (common on skin edges from
+        // some editors/exporters) renders fully opaque instead of blending with what's behind
+        // it, and combined with GL_NEAREST filtering can make overlay edges (sleeves, jacket
+        // hem, hat brim) look like hard blocky/torn bands instead of a clean outline.
+        GLES20.glEnable(GLES20.GL_BLEND);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
         int vertexShader = compileShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER);
         int fragmentShader = compileShader(GLES20.GL_FRAGMENT_SHADER, FRAGMENT_SHADER);
