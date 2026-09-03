@@ -2,7 +2,6 @@ package com.frostbyte.launcher.skins;
 
 import android.graphics.Bitmap;
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 
@@ -12,10 +11,12 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import java.util.List;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
-public class SkinModelRenderer implements GLSurfaceView.Renderer {
+/**
+ * Draws the 3D player model with OpenGL ES 2.0. Driven manually by SkinModelView's own EGL
+ * render loop (see RenderThread there) rather than GLSurfaceView, since GLSurfaceView's
+ * SurfaceView-backed rendering can't respect the rounded-corner clipping of its parent panel.
+ */
+public class SkinModelRenderer {
 
     private static final String VERTEX_SHADER =
             "uniform mat4 uMVPMatrix;" +
@@ -65,8 +66,7 @@ public class SkinModelRenderer implements GLSurfaceView.Renderer {
         mGeometryDirty = true;
     }
 
-    @Override
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+    public void onSurfaceCreated() {
         GLES20.glClearColor(0f, 0f, 0f, 0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glEnable(GLES20.GL_CULL_FACE);
@@ -85,16 +85,16 @@ public class SkinModelRenderer implements GLSurfaceView.Renderer {
         mTextureHandle = GLES20.glGetUniformLocation(mProgram, "uTexture");
     }
 
-    @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
+    public void onSurfaceChanged(int width, int height) {
         GLES20.glViewport(0, 0, width, height);
         float aspect = (float) width / height;
-        Matrix.perspectiveM(mProjectionMatrix, 0, 35f, aspect, 1f, 200f);
-        Matrix.setLookAtM(mViewMatrix, 0, 0f, 16f, 55f, 0f, 16f, 0f, 0f, 1f, 0f);
+        Matrix.perspectiveM(mProjectionMatrix, 0, 45f, aspect, 1f, 200f);
+        // Camera pulled back further with margin so the full ~32-unit-tall model reliably
+        // fits in frame across different panel aspect ratios, rather than assuming an exact fit.
+        Matrix.setLookAtM(mViewMatrix, 0, 0f, 16f, 70f, 0f, 16f, 0f, 0f, 1f, 0f);
     }
 
-    @Override
-    public void onDrawFrame(GL10 gl) {
+    public void onDrawFrame() {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         if (mGeometryDirty && mPendingSkinBitmap != null) {

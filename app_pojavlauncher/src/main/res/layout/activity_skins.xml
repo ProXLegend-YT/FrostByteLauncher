@@ -41,7 +41,7 @@
                     android:layout_height="32dp"
                     android:padding="6dp"
                     android:background="@drawable/frostbyte_icon_button_bg"
-                    android:src="@drawable/ic_px_arrow_left"
+                    android:src="@drawable/ic_frostbyte_back"
                     app:tint="@color/frostbyte_accent"
                     android:contentDescription="@null" />
 
@@ -66,10 +66,13 @@
 
             <!-- Real 3D player model, showing whichever account is currently selected's actual skin -->
             <FrameLayout
+                android:id="@+id/skins_model_container"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/frostbyte_dropdown_panel_bg">
+                android:background="@drawable/frostbyte_dropdown_panel_bg"
+                android:clipToOutline="true"
+                android:clipChildren="true">
 
                 <com.frostbyte.launcher.skins.SkinModelView
                     android:id="@+id/skins_model_view"

@@ -65,7 +65,7 @@ public class SkinModelGeometry {
 
         // Left leg — independent UV region in the 64x64 format
         model.baseBoxes.add(box(4, 12, 4, 0, 0, -2, 20, 52, false));
-        model.overlayBoxes.add(box(4.5f, 12.5f, 4.5f, -0.25f, -0.25f, -2.25f, 4, 52, false));
+        model.overlayBoxes.add(box(4.5f, 12.5f, 4.5f, -0.25f, -0.25f, -2.25f, 20, 52, false));
 
         return model;
     }

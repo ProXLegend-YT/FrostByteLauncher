@@ -35,7 +35,7 @@
                 android:layout_height="32dp"
                 android:padding="6dp"
                 android:background="@drawable/frostbyte_icon_button_bg"
-                android:src="@drawable/ic_px_arrow_left"
+                android:src="@drawable/ic_frostbyte_back"
                 app:tint="@color/frostbyte_accent"
                 android:contentDescription="@null" />
 
