@@ -44,28 +44,28 @@ public class SkinModelGeometry {
         // Minecraft itself lays the model out. Y grows upward.
 
         // Head: 8x8x8, centered on X/Z, sits from y=24 to y=32 (on a 32px-tall model)
-        model.baseBoxes.add(box(8, 8, 8, -4, 24, -4, 8, 8, true));
-        model.overlayBoxes.add(box(8.5f, 8.5f, 8.5f, -4.25f, 23.75f, -4.25f, 40, 8, true));
+        model.baseBoxes.add(box(8, 8, 8, -4, 24, -4, 0, 0, true));
+        model.overlayBoxes.add(box(8.5f, 8.5f, 8.5f, -4.25f, 23.75f, -4.25f, 32, 0, true));
 
         // Torso: 8 wide, 12 tall, 4 deep, sits from y=12 to y=24
-        model.baseBoxes.add(box(8, 12, 4, -4, 12, -2, 20, 20, false));
-        model.overlayBoxes.add(box(8.5f, 12.5f, 4.5f, -4.25f, 11.75f, -2.25f, 20, 36, false));
+        model.baseBoxes.add(box(8, 12, 4, -4, 12, -2, 16, 16, false));
+        model.overlayBoxes.add(box(8.5f, 12.5f, 4.5f, -4.25f, 11.75f, -2.25f, 16, 32, false));
 
         // Right arm (player's right = model's left side visually, matches Minecraft's own convention)
-        model.baseBoxes.add(box(armWidth, 12, 4, -4 - armWidth, 12, -2, 44, 20, false));
-        model.overlayBoxes.add(box(armWidth + 0.5f, 12.5f, 4.5f, -4.25f - armWidth, 11.75f, -2.25f, 44, 36, false));
+        model.baseBoxes.add(box(armWidth, 12, 4, -4 - armWidth, 12, -2, 40, 16, false));
+        model.overlayBoxes.add(box(armWidth + 0.5f, 12.5f, 4.5f, -4.25f - armWidth, 11.75f, -2.25f, 40, 32, false));
 
         // Left arm — 64x64 format gives it independent UVs instead of mirroring the right arm
-        model.baseBoxes.add(box(armWidth, 12, 4, 4, 12, -2, 36, 52, false));
-        model.overlayBoxes.add(box(armWidth + 0.5f, 12.5f, 4.5f, 3.75f, 11.75f, -2.25f, 52, 52, false));
+        model.baseBoxes.add(box(armWidth, 12, 4, 4, 12, -2, 32, 48, false));
+        model.overlayBoxes.add(box(armWidth + 0.5f, 12.5f, 4.5f, 3.75f, 11.75f, -2.25f, 48, 48, false));
 
         // Right leg: 4x12x4, sits from y=0 to y=12
-        model.baseBoxes.add(box(4, 12, 4, -4, 0, -2, 4, 20, false));
-        model.overlayBoxes.add(box(4.5f, 12.5f, 4.5f, -4.25f, -0.25f, -2.25f, 4, 36, false));
+        model.baseBoxes.add(box(4, 12, 4, -4, 0, -2, 0, 16, false));
+        model.overlayBoxes.add(box(4.5f, 12.5f, 4.5f, -4.25f, -0.25f, -2.25f, 0, 32, false));
 
         // Left leg — independent UV region in the 64x64 format
-        model.baseBoxes.add(box(4, 12, 4, 0, 0, -2, 20, 52, false));
-        model.overlayBoxes.add(box(4.5f, 12.5f, 4.5f, -0.25f, -0.25f, -2.25f, 20, 52, false));
+        model.baseBoxes.add(box(4, 12, 4, 0, 0, -2, 16, 48, false));
+        model.overlayBoxes.add(box(4.5f, 12.5f, 4.5f, -0.25f, -0.25f, -2.25f, 0, 48, false));
 
         return model;
     }

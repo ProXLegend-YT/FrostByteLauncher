@@ -283,6 +283,17 @@ public class SkinsActivity extends BaseActivity {
                     Toast.makeText(this, R.string.skins_applied_success, Toast.LENGTH_SHORT).show();
                     loadCurrentSkinIntoModel(target);
                 });
+            } catch (SkinManager.ElyByUploadUnsupportedException e) {
+                // The skin WAS saved locally (so FrostByte's own preview updates below), but it
+                // never reached Ely.by's servers or any multiplayer server — Ely.by's API has no
+                // upload endpoint. Tell the person that plainly instead of claiming success.
+                target.updateSkinFace();
+                try { target.save(); } catch (Exception ignored) {}
+                runOnUiThread(() -> {
+                    setLoading(false);
+                    Toast.makeText(this, R.string.skins_applied_local_only_elyby, Toast.LENGTH_LONG).show();
+                    loadCurrentSkinIntoModel(target);
+                });
             } catch (Exception e) {
                 runOnUiThread(() -> {
                     setLoading(false);

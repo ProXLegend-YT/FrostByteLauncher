@@ -49,7 +49,9 @@ public class SkinModelRenderer {
 
     private volatile Bitmap mPendingSkinBitmap;
     private volatile boolean mSlimArms;
-    private volatile boolean mGeometryDirty = true;
+    private volatile boolean mTextureDirty = true;
+    private boolean mGeometryBuilt = false;
+    private boolean mCurrentSlimArms = false;
 
     /** Current rotation, in degrees, driven by drag gestures and/or auto-spin. */
     public volatile float rotationYDegrees = 20f;
@@ -63,7 +65,7 @@ public class SkinModelRenderer {
     public void setSkin(Bitmap bitmap, boolean slimArms) {
         mPendingSkinBitmap = bitmap;
         mSlimArms = slimArms;
-        mGeometryDirty = true;
+        mTextureDirty = true;
     }
 
     public void onSurfaceCreated() {
@@ -97,12 +99,18 @@ public class SkinModelRenderer {
     public void onDrawFrame() {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
-        if (mGeometryDirty && mPendingSkinBitmap != null) {
+        if (mTextureDirty && mPendingSkinBitmap != null) {
             uploadTexture(mPendingSkinBitmap);
-            SkinModelGeometry.Model model = SkinModelGeometry.build(mSlimArms);
-            mBaseBoxes = model.baseBoxes;
-            mOverlayBoxes = model.overlayBoxes;
-            mGeometryDirty = false;
+            // Geometry only depends on arm width (slim vs classic), not on the texture pixels,
+            // so only rebuild the boxes when that actually changes instead of on every skin swap.
+            if (!mGeometryBuilt || mCurrentSlimArms != mSlimArms) {
+                SkinModelGeometry.Model model = SkinModelGeometry.build(mSlimArms);
+                mBaseBoxes = model.baseBoxes;
+                mOverlayBoxes = model.overlayBoxes;
+                mGeometryBuilt = true;
+                mCurrentSlimArms = mSlimArms;
+            }
+            mTextureDirty = false;
         }
 
         if (mBaseBoxes == null || mTextureId == -1) return;

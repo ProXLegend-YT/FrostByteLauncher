@@ -150,6 +150,11 @@ public class SkinManager {
      * Applies a chosen skin.
      * - Microsoft accounts: uploads the actual image bytes to Mojang's skin service, so the
      *   skin shows on any server or launcher from now on.
+     * - Ely.by accounts: Ely.by's skin backend (Chrly) has never implemented uploading a skin
+     *   file through its API — file upload via the API was explicitly left unimplemented and
+     *   removed rather than fixed (see https://github.com/elyby/chrly). The only way to set an
+     *   Ely.by skin is through the ely.by website's own uploader. We save locally so FrostByte's
+     *   own preview can still show it, but we must not claim this reached Ely.by or any server.
      * - Local/offline accounts: saves the skin locally only, for FrostByte's own rendering.
      * Must be called off the main thread.
      */
@@ -159,11 +164,26 @@ public class SkinManager {
         try {
             if (isMicrosoft(account)) {
                 uploadSkinToMojang(account.accessToken, bitmap, isSlimModel);
+            } else if (account.authType == AuthType.ELY_BY) {
+                saveLocalSkin(account, bitmap);
+                throw new ElyByUploadUnsupportedException();
             } else {
                 saveLocalSkin(account, bitmap);
             }
         } finally {
             bitmap.recycle();
+        }
+    }
+
+    /**
+     * Thrown after a skin is saved to FrostByte's local preview cache for an Ely.by account,
+     * to make sure callers never report success as if the skin reached Ely.by's own servers.
+     * The local save already happened by the time this is thrown, so the preview will still
+     * update — only the "success" messaging must be suppressed/replaced by the caller.
+     */
+    public static class ElyByUploadUnsupportedException extends IOException {
+        public ElyByUploadUnsupportedException() {
+            super("Ely.by doesn't support uploading skins through apps — only via ely.by's own website");
         }
     }
 

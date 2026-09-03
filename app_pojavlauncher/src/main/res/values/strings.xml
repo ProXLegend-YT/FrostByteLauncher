@@ -509,7 +509,7 @@
 
     <string name="skins_title">Skins &amp; Capes</string>
     <string name="skins_account_notice_microsoft">Signed in with a Microsoft account — applied skins upload to Mojang and show up anywhere</string>
-    <string name="skins_account_notice_elyby">Signed in with an Ely.by account — applied skins upload to Ely.by and show up on Ely.by-authenticated servers</string>
+    <string name="skins_account_notice_elyby">Signed in with an Ely.by account — Ely.by doesn\'t support uploading skins from apps, so applying a skin here only updates this preview. To change your real Ely.by skin, use ely.by\'s own website</string>
     <string name="skins_account_notice_local">Offline account — skins apply locally in FrostByte only and won\'t be visible to other players online</string>
     <string name="skins_model_load_failed">Couldn\'t load this account\'s current skin — showing the default instead</string>
     <string name="skins_upload_from_gallery">Upload skin from gallery</string>
@@ -521,6 +521,7 @@
     <string name="skins_slim_model">Slim arms (Alex model)</string>
     <string name="skins_applying">Applying skin…</string>
     <string name="skins_applied_success">Skin applied</string>
+    <string name="skins_applied_local_only_elyby">Saved to this preview only — Ely.by doesn\'t support skin uploads from apps, so this won\'t show on servers. Use ely.by\'s website to change your real skin.</string>
     <string name="skins_applied_error">Couldn\'t apply that skin: %1$s</string>
     <string name="skins_lookup_not_found">No player found with that username</string>
     <string name="skins_lookup_no_skin">That player is using the default skin, nothing to copy</string>
