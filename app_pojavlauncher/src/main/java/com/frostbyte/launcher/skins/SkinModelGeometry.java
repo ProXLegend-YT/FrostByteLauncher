@@ -138,7 +138,12 @@ public class SkinModelGeometry {
         float[] rightUv = uvCorners(u, v + dU, dU, hU, "TL", "TR", "BR", "BL");
         float[] frontUv = uvCorners(u + dU, v + dU, wU, hU, "BL", "BR", "TR", "TL");
         float[] leftUv = uvCorners(u + dU + wU, v + dU, dU, hU, "TL", "TR", "BR", "BL");
-        float[] backUv = uvCorners(u + dU + wU + dU, v + dU, wU, hU, "BR", "BL", "TL", "TR");
+        // Back face needs its U axis mirrored relative to front: walking around to view the
+        // back flips which world side (x0/x1) lands on which side of the screen, but the
+        // texture's left-right layout doesn't change — so char-right(x1) must read the
+        // texture's LEFT column here, not its right column (this is the same "back texture
+        // reads mirrored" issue Mojang themselves have shipped bugs on, e.g. MC-220061).
+        float[] backUv = uvCorners(u + dU + wU + dU, v + dU, wU, hU, "BL", "BR", "TR", "TL");
 
         float[] uvs = new float[48];
         System.arraycopy(topUv, 0, uvs, 0, 8);
