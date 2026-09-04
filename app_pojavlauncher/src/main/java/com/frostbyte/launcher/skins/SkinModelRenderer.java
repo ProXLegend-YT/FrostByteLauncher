@@ -53,6 +53,17 @@ public class SkinModelRenderer {
     public volatile float rotationYDegrees = 20f;
     public volatile float rotationXDegrees = -10f;
     public volatile boolean autoRotate = true;
+
+    /**
+     * Snaps to a clean, untilted view instead of relying on freehand dragging to line one up —
+     * a one-finger drag maps any diagonal movement straight into camera pitch, so on a small
+     * screen it's easy to end up staring down at the top of the head instead of a flat-on view.
+     */
+    public void snapToView(float yDegrees) {
+        autoRotate = false;
+        rotationXDegrees = 0f;
+        rotationYDegrees = yDegrees;
+    }
     private static final float AUTO_ROTATE_SPEED_DEG_PER_FRAME = 0.4f;
 
     private List<SkinModelGeometry.Box> mBaseBoxes;

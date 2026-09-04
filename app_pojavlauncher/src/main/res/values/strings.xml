@@ -508,6 +508,8 @@
     <string name="loading_screen_title">Waiting for a game window to appear…</string>
 
     <string name="skins_title">Skins &amp; Capes</string>
+    <string name="skins_view_front">Front view</string>
+    <string name="skins_view_back">Back view</string>
     <string name="skins_account_notice_microsoft">Signed in with a Microsoft account — applied skins upload to Mojang and show up anywhere</string>
     <string name="skins_account_notice_elyby">Signed in with an Ely.by account — Ely.by doesn\'t support uploading skins from apps, so applying a skin here only updates this preview. To change your real Ely.by skin, use ely.by\'s own website</string>
     <string name="skins_account_notice_local">Offline account — skins apply locally in FrostByte only and won\'t be visible to other players online</string>

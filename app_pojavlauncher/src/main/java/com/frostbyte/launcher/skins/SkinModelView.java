@@ -24,9 +24,14 @@ import android.view.TextureView;
 public class SkinModelView extends TextureView implements TextureView.SurfaceTextureListener {
 
     private final SkinModelRenderer mRenderer = new SkinModelRenderer();
+
+    /** Jumps to a clean front (0°) or back (180°) view instead of requiring a freehand drag. */
+    public void showFrontView() { mRenderer.snapToView(0f); }
+    public void showBackView() { mRenderer.snapToView(180f); }
     private RenderThread mRenderThread;
     private float mLastTouchX, mLastTouchY;
     private static final float DRAG_SENSITIVITY = 0.5f;
+    private static final float VERTICAL_DEAD_ZONE_PX = 4f;
 
     public SkinModelView(Context context) {
         this(context, null);
@@ -77,8 +82,14 @@ public class SkinModelView extends TextureView implements TextureView.SurfaceTex
                 float dx = event.getX() - mLastTouchX;
                 float dy = event.getY() - mLastTouchY;
                 mRenderer.rotationYDegrees += dx * DRAG_SENSITIVITY;
-                mRenderer.rotationXDegrees += dy * DRAG_SENSITIVITY;
-                mRenderer.rotationXDegrees = Math.max(-80f, Math.min(80f, mRenderer.rotationXDegrees));
+                // Small dead zone on the vertical (tilt) axis: a swipe meant purely to spin the
+                // model left/right almost never moves in a perfectly straight line, so without
+                // this any stray vertical jitter also tilts the camera — easy to end up staring
+                // down at the top of the head by accident instead of a clean side-on view.
+                if (Math.abs(dy) > VERTICAL_DEAD_ZONE_PX) {
+                    mRenderer.rotationXDegrees += dy * DRAG_SENSITIVITY;
+                    mRenderer.rotationXDegrees = Math.max(-80f, Math.min(80f, mRenderer.rotationXDegrees));
+                }
                 mLastTouchX = event.getX();
                 mLastTouchY = event.getY();
                 return true;

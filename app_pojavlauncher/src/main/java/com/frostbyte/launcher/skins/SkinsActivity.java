@@ -161,6 +161,8 @@ public class SkinsActivity extends BaseActivity {
         notice.setText(noticeRes);
 
         findViewById(R.id.skins_upload_button).setOnClickListener(v -> mGalleryLauncher.launch("image/png"));
+        findViewById(R.id.skins_view_front_button).setOnClickListener(v -> mModelView.showFrontView());
+        findViewById(R.id.skins_view_back_button).setOnClickListener(v -> mModelView.showBackView());
 
         EditText usernameInput = findViewById(R.id.skins_username_input);
         Button searchButton = findViewById(R.id.skins_username_search_button);

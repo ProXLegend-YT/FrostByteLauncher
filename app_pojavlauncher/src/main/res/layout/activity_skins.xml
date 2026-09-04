@@ -86,6 +86,42 @@
                     android:layout_gravity="center" />
             </FrameLayout>
 
+            <!-- Quick view snap buttons: dragging with one finger to line up an exact front/back
+                 view is fiddly (any diagonal swipe also tilts the camera up/down), so these jump
+                 straight to a clean, untilted angle instead of fighting the drag. -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/skins_view_front_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/frostbyte_button_secondary"
+                    android:text="@string/skins_view_front"
+                    android:textAllCaps="false"
+                    android:textColor="@color/frostbyte_accent"
+                    android:textSize="13sp"
+                    android:padding="10dp" />
+
+                <Button
+                    android:id="@+id/skins_view_back_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/frostbyte_button_secondary"
+                    android:text="@string/skins_view_back"
+                    android:textAllCaps="false"
+                    android:textColor="@color/frostbyte_accent"
+                    android:textSize="13sp"
+                    android:padding="10dp" />
+            </LinearLayout>
+
             <!-- Upload from gallery -->
             <Button
                 android:id="@+id/skins_upload_button"
