@@ -114,11 +114,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.frostbyte.launcher.skins.SkinsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
-            android:exported="false"
-            android:label="@string/skins_title" />
-        <activity
             android:name="com.frostbyte.launcher.LogViewerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:exported="false"

@@ -22,7 +22,6 @@ import com.frostbyte.launcher.LogViewerActivity;
 import com.frostbyte.launcher.PojavApplication;
 import com.frostbyte.launcher.instances.ShortcutHelper;
 import com.frostbyte.launcher.ScreenshotGalleryActivity;
-import com.frostbyte.launcher.skins.SkinsActivity;
 import com.frostbyte.launcher.R;
 
 import com.frostbyte.launcher.Tools;
@@ -54,7 +53,6 @@ public class MainMenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button mDiscordButton = view.findViewById(R.id.social_media_button);
         Button mCustomControlButton = view.findViewById(R.id.custom_control_button);
-        Button mSkinsButton = view.findViewById(R.id.skins_button);
         Button mInstallJarButton = view.findViewById(R.id.install_jar_button);
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
         Button mScreenshotsButton = view.findViewById(R.id.screenshots_button);
@@ -70,7 +68,6 @@ public class MainMenuFragment extends Fragment {
             return true;
         });
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
-        mSkinsButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), SkinsActivity.class)));
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation());
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
