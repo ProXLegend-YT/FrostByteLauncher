@@ -13,12 +13,21 @@ jobs:
       FROSTBYTE_KEYSTORE_PASSWORD: ${{ secrets.FROSTBYTE_KEYSTORE_PASSWORD }}
       FROSTBYTE_KEY_ALIAS: ${{ secrets.FROSTBYTE_KEY_ALIAS }}
       FROSTBYTE_KEY_PASSWORD: ${{ secrets.FROSTBYTE_KEY_PASSWORD }}
+      FROSTBYTE_KEYSTORE_BASE64: ${{ secrets.FROSTBYTE_KEYSTORE_BASE64 }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
+
+      # Decodes the FROSTBYTE_KEYSTORE_BASE64 secret back into a real .jks file for this build
+      # only — it never touches the repo itself, so the signing key stays out of git history.
+      # `secrets.*` can't be read directly in `if:` conditions, so it's mirrored into the
+      # FROSTBYTE_KEYSTORE_BASE64 env var above and checked from there instead.
+      - name: Decode release keystore
+        if: ${{ env.FROSTBYTE_KEYSTORE_BASE64 != '' }}
+        run: echo "$FROSTBYTE_KEYSTORE_BASE64" | base64 -d > app_pojavlauncher/frostbyte_release.jks
 
       # Optional: only needed if FrostByte depends on the same prebuilt AARs
       # upstream Mojo does. Safe to delete this step if not.
@@ -97,17 +106,19 @@ jobs:
           name: FrostByteLauncher-optimized
           path: out/FrostByteLauncher-optimized.apk
 
-      # Release build is intentionally left out of default CI.
-      # Uncomment once you've generated your own frostbyte_release.jks and added
-      # FROSTBYTE_KEYSTORE_PASSWORD / FROSTBYTE_KEY_ALIAS / FROSTBYTE_KEY_PASSWORD as repo secrets.
-      #
-      # - name: Build Release APK
-      #   run: |
-      #     gradle :app_pojavlauncher:assembleFullRelease
-      #     mv app_pojavlauncher/build/outputs/apk/full/release/app_pojavlauncher-full-release.apk out/FrostByteLauncher-release.apk
-      #
-      # - name: Upload Release APK
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: FrostByteLauncher-release
-      #     path: out/FrostByteLauncher-release.apk
+      - name: Build Release APK
+        if: ${{ env.FROSTBYTE_KEYSTORE_BASE64 != '' }}
+        run: |
+          gradle :app_pojavlauncher:assembleFullRelease
+          mv app_pojavlauncher/build/outputs/apk/full/release/app_pojavlauncher-full-release.apk out/FrostByteLauncher-release.apk
+
+      - name: Gen release md5sum
+        if: ${{ env.FROSTBYTE_KEYSTORE_BASE64 != '' }}
+        run: md5sum out/FrostByteLauncher-release.apk > out/FrostByteLauncher-release.md5
+
+      - name: Upload Release APK
+        if: ${{ env.FROSTBYTE_KEYSTORE_BASE64 != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: FrostByteLauncher-release
+          path: out/FrostByteLauncher-release.apk
