@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Fade & Slide Down: the incoming screen fades in while gently settling downward into place,
+     replacing the earlier slide-from-the-right style. -->
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <translate
-        android:fromXDelta="18%"
-        android:toXDelta="0"
+        android:fromYDelta="-6%"
+        android:toYDelta="0"
         android:duration="320"
         android:interpolator="@android:anim/decelerate_interpolator" />
     <alpha
         android:fromAlpha="0.0"
         android:toAlpha="1.0"
-        android:duration="260"
+        android:duration="280"
         android:interpolator="@android:anim/decelerate_interpolator" />
 </set>

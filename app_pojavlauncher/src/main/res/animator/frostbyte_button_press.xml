@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Gives every button using this a small, snappy "press" feedback: it shrinks slightly while
+    held down and springs back on release, instead of only showing the default flat color-change
+    the system gives for free. Applied via android:stateListAnimator so no per-button touch
+    listener code is needed anywhere.
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="0.96"
+                android:valueType="floatType"
+                android:duration="100"
+                android:interpolator="@android:anim/decelerate_interpolator" />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="0.96"
+                android:valueType="floatType"
+                android:duration="100"
+                android:interpolator="@android:anim/decelerate_interpolator" />
+        </set>
+    </item>
+    <item>
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.0"
+                android:valueType="floatType"
+                android:duration="150"
+                android:interpolator="@android:anim/overshoot_interpolator" />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.0"
+                android:valueType="floatType"
+                android:duration="150"
+                android:interpolator="@android:anim/overshoot_interpolator" />
+        </set>
+    </item>
+</selector>

@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Back navigation mirrors forward: the returning screen fades + slides down into place too,
+     so the whole app uses one consistent "fade & slide down" language in both directions. -->
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <translate
-        android:fromXDelta="-6%"
-        android:toXDelta="0"
-        android:duration="320"
-        android:interpolator="@android:anim/decelerate_interpolator" />
-    <scale
-        android:fromXScale="0.94"
-        android:toXScale="1.0"
-        android:fromYScale="0.94"
-        android:toYScale="1.0"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:duration="320"
+        android:fromYDelta="-4%"
+        android:toYDelta="0"
+        android:duration="280"
         android:interpolator="@android:anim/decelerate_interpolator" />
     <alpha
         android:fromAlpha="0.0"
         android:toAlpha="1.0"
-        android:duration="320"
+        android:duration="280"
         android:interpolator="@android:anim/decelerate_interpolator" />
 </set>
