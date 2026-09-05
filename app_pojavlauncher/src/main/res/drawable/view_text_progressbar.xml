@@ -1,13 +1,27 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <!-- Track: a soft, slightly-transparent rounded pill instead of a flat rectangle, so the bar
+         reads as a distinct rounded component rather than a plain colored strip. -->
     <item android:id="@android:id/background">
-        <color android:color="@color/background_app"/>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/frostbyte_track_background"/>
+            <corners android:radius="8dp"/>
+        </shape>
     </item>
 
-
+    <!-- Fill: matches the same accent-to-violet gradient used on the Play button and other
+         primary actions, so the download bar reads as part of the same brand rather than a
+         generic system-default progress bar. -->
     <item android:id="@android:id/progress">
         <clip>
-             <color android:color='@color/minebutton_color'/>
+            <shape android:shape="rectangle">
+                <gradient
+                    android:angle="0"
+                    android:startColor="@color/frostbyte_accent"
+                    android:endColor="@color/frostbyte_violet"
+                    android:type="linear" />
+                <corners android:radius="8dp"/>
+            </shape>
         </clip>
     </item>
 

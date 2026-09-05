@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Plays once, when the whole Activity window first appears (cold app launch, or returning
+    from a fully separate Activity). This is distinct from the fragment-to-fragment transitions
+    in frostbyte_enter_forward.xml — those only fire on a FragmentTransaction, but the very
+    first screen on app launch is inflated directly as part of the window itself, so it needs
+    its own window-level animation to get any "smooth entrance" at all.
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:fromYDelta="-6%"
+        android:toYDelta="0"
+        android:duration="420"
+        android:interpolator="@android:anim/decelerate_interpolator" />
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="380"
+        android:interpolator="@android:anim/decelerate_interpolator" />
+</set>

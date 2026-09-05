@@ -20,6 +20,7 @@
     <color name="frostbyte_accent">#5AD1FF</color>
     <color name="frostbyte_accent_dark">#2E7FB8</color>
     <color name="frostbyte_accent_glow">#805AD1FF</color>
+    <color name="frostbyte_track_background">#332A3550</color>
 
     <!-- Secondary accent: violet, for gradients/highlights, matches the logo's swirl -->
     <color name="frostbyte_violet">#8C6BFF</color>

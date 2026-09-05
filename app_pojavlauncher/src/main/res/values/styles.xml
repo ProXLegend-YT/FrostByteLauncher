@@ -18,6 +18,12 @@
          with no wallpaper behind it during gameplay/loading. -->
     <style name="AppTheme.Launcher">
         <item name="android:windowBackground">@color/frostbyte_window_fallback</item>
+        <item name="android:windowAnimationStyle">@style/FrostByteWindowAnimation</item>
+    </style>
+
+    <style name="FrostByteWindowAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/frostbyte_window_enter</item>
+        <item name="android:windowExitAnimation">@anim/frostbyte_window_exit</item>
     </style>
 
     <style name="LauncherFragment_Divider">
