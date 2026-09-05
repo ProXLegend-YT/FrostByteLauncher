@@ -12,16 +12,20 @@ public class BackgroundTint {
     public static final int BACKGROUND_DEFAULT_TINT_ALPHA = 150;
     public static final int BACKGROUND_TOGGLE_TINT_ALPHA = 190;
 
+    // FrostByte's accent blue, matching the rest of the app's UI, instead of plain white — same
+    // alpha values as before are kept so button opacity/tap visibility in-game is unchanged.
+    private static final int FROSTBYTE_CONTROL_TINT = Color.parseColor("#5AD1FF");
+
     private static int lastTheme = System.identityHashCode(BackgroundTint.class);
 
     private static final int[][] sState = new int[][] {
             new int[] {android.R.attr.state_activated}
     };
     private static final int[] sDefaultTint = new int[] {
-            ColorUtils.setAlphaComponent(Color.WHITE, BACKGROUND_DEFAULT_TINT_ALPHA)
+            ColorUtils.setAlphaComponent(FROSTBYTE_CONTROL_TINT, BACKGROUND_DEFAULT_TINT_ALPHA)
     };
     private static final int[] sToggleableTint = new int[] {
-            ColorUtils.setAlphaComponent(Color.WHITE, BACKGROUND_TOGGLE_TINT_ALPHA)
+            ColorUtils.setAlphaComponent(FROSTBYTE_CONTROL_TINT, BACKGROUND_TOGGLE_TINT_ALPHA)
     };
 
     public static final ColorStateList DEFAULT_TINT_LIST = new ColorStateList(

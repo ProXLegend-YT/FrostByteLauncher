@@ -88,14 +88,19 @@ public class ControlButton extends TextView implements ControlInterface {
             mRectPaint.setColor(Color.WHITE);
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA);
             mRestAlpha = BackgroundTint.BACKGROUND_TOGGLE_TINT_ALPHA;
-            mBorderPaint.setColor(Color.WHITE);
-            mBorderPaint.setAlpha(0);
+            // Same visible accent border as the non-toggle branch below, for a consistent look
+            // across every control button regardless of whether it's a toggle.
+            mBorderPaint.setColor(Color.parseColor("#5AD1FF"));
+            mBorderPaint.setAlpha(140);
         } else {
             mRectPaint.setColor(Color.WHITE);
             mRectPaint.setAlpha(BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA);
             mRestAlpha = BackgroundTint.BACKGROUND_DEFAULT_TINT_ALPHA;
-            mBorderPaint.setColor(Color.WHITE);
-            mBorderPaint.setAlpha(0);
+            // A visible accent-colored outline instead of alpha=0 (invisible) — gives every
+            // control button a defined edge instead of a flat translucent blob, without
+            // changing the button's tap size, hit area, or fill opacity.
+            mBorderPaint.setColor(Color.parseColor("#5AD1FF"));
+            mBorderPaint.setAlpha(140);
         }
     }
 
