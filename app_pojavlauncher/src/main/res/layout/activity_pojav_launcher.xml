@@ -35,6 +35,7 @@
         android:dropDownWidth="@dimen/_250sdp"
         android:dropDownVerticalOffset="@dimen/_52sdp"
         android:paddingEnd="@dimen/_52sdp"
+        android:popupBackground="@drawable/frostbyte_dropdown_popup_background"
 
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlSymmetry" />
