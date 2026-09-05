@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Used as the window background for every AlertDialog in the app (Java Runtime picker,
+    Renderer picker, exit confirmation, etc.) via FrostByteAlertDialog in styles.xml. Separate
+    from frostbyte_dropdown_popup_background.xml (used for the account switcher's popup) since a
+    full dialog window needs its own inset padding so text/buttons don't touch the rounded
+    border edge-to-edge.
+-->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="4dp"
+    android:insetTop="4dp"
+    android:insetRight="4dp"
+    android:insetBottom="4dp">
+    <shape android:shape="rectangle">
+        <solid android:color="@color/frostbyte_dropdown_background"/>
+        <corners android:radius="18dp"/>
+        <stroke android:width="1dp" android:color="@color/frostbyte_accent_glow"/>
+        <padding
+            android:left="8dp"
+            android:top="8dp"
+            android:right="8dp"
+            android:bottom="8dp"/>
+    </shape>
+</inset>
