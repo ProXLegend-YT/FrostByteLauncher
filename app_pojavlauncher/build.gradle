@@ -18,16 +18,27 @@ static def getDateSeconds() {
     }
 }
 
+// Clean, user-facing version number — this is what shows up in Android's app info, ZArchiver,
+// Uptodown, etc. Bump this manually for each real release (semantic versioning: MAJOR.MINOR.PATCH).
+static def FROSTBYTE_VERSION = "1.0.0"
+
 def getVersionName = {
+    return FROSTBYTE_VERSION
+}
+
+// The old detailed build id (commit hash, branch, date) is still useful for debugging which
+// exact build someone is running, so it's kept as a separate string resource instead of being
+// the version users see — pull it up in an About screen or log line if needed.
+def getBuildIdentifier = {
     def currentBranch = grgit.branch.current()
     def latestCommit = grgit.log(maxCommits: 1)
     def dateToday = getDate()
     if(currentBranch == null || latestCommit == null) {
-        return "LOCAL-${dateToday}"
+        return "local-${dateToday}"
     }else {
         def branchName = currentBranch.getName()
         def commitAbbreviation = latestCommit.abbreviatedId
-        return "frostbyte-${dateToday}-${commitAbbreviation}-${branchName}"
+        return "${dateToday}-${commitAbbreviation}-${branchName}"
     }
 }
 
@@ -81,6 +92,7 @@ android {
         versionName getVersionName()
         multiDexEnabled false //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
+        resValue 'string', 'build_identifier', getBuildIdentifier()
         resValue 'string', 'group_id', 'com.frostbyte'
 
         externalNativeBuild {

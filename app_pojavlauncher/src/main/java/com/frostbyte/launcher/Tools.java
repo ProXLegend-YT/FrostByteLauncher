@@ -555,6 +555,7 @@ public final class Tools {
 
     public static void printLauncherInfo(String gameVersion, String javaArguments, String renderer, Context ctx) {
         Logger.appendToLog("Info: Launcher version: " + BuildConfig.VERSION_NAME);
+        Logger.appendToLog("Info: Build: " + ctx.getString(R.string.build_identifier));
         Logger.appendToLog("Info: Build type: " + BuildConfig.BUILD_TYPE);
         Logger.appendToLog("Info: Architecture: " + Architecture.archAsString(DEVICE_ARCHITECTURE));
         Logger.appendToLog("Info: Device model: " + Build.MANUFACTURER + " " +Build.MODEL);
