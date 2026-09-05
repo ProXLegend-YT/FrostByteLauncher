@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Replaces android.R.layout.simple_expandable_list_item_1 for the version picker's group
+    headers (Release, Snapshot, Old-alpha, Old-beta), matching the same dark/accent styling
+    used for the account switcher dropdown and dialogs elsewhere in the app.
+
+    Tint for the arrow_down_float drawable is applied programmatically in VersionListAdapter
+    instead of via android:drawableTint, since that XML attribute only works from API 23+ and
+    this project supports down to API 21.
+-->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_48sdp"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_16sdp"
+    android:background="@drawable/frostbyte_version_group_background"
+    android:textColor="@color/frostbyte_accent"
+    android:textStyle="bold"
+    android:textSize="@dimen/_15ssp"
+    android:drawableEnd="@android:drawable/arrow_down_float" />

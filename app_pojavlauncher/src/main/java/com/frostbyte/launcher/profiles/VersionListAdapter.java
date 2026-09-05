@@ -104,9 +104,15 @@ public class VersionListAdapter extends BaseExpandableListAdapter implements Exp
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if(convertView == null)
-            convertView = mLayoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.item_version_group, parent, false);
 
-        ((TextView) convertView).setText(mGroups[groupPosition]);
+        TextView textView = (TextView) convertView;
+        textView.setText(mGroups[groupPosition]);
+        // Applied here instead of android:drawableTint in the layout XML, since that attribute
+        // only works from API 23+ and this project supports down to API 21.
+        for (android.graphics.drawable.Drawable d : textView.getCompoundDrawables()) {
+            if (d != null) d.setColorFilter(textView.getCurrentTextColor(), android.graphics.PorterDuff.Mode.SRC_IN);
+        }
 
         return convertView;
     }
@@ -114,7 +120,7 @@ public class VersionListAdapter extends BaseExpandableListAdapter implements Exp
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if(convertView == null)
-            convertView = mLayoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.item_version_child, parent, false);
         ((TextView) convertView).setText(getChild(groupPosition, childPosition));
         return convertView;
     }
