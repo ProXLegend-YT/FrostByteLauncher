@@ -390,6 +390,40 @@ public class GameActivity extends BaseActivity implements ControlButtonMenuListe
         ContextExecutor.clearActivity();
     }
 
+    /**
+     * Real-time warning for a genuine gap: nothing in the app previously reacted to Android
+     * signaling that memory is critically low mid-game, so on a 4GB device the first sign of
+     * trouble was often the game (or the whole launcher) getting killed with no warning at all.
+     * TRIM_MEMORY_RUNNING_CRITICAL specifically means "still running, not yet killable, but
+     * about to become killable if nothing frees memory" — the correct moment to tell the person
+     * playing, while there's still time to act (close other apps, lower render distance) instead
+     * of finding out only after a crash.
+     */
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        if (level >= TRIM_MEMORY_RUNNING_CRITICAL) {
+            showLowMemoryWarning();
+        }
+    }
+
+    private long mLastLowMemoryWarningMs = 0;
+    private static final long LOW_MEMORY_WARNING_COOLDOWN_MS = 60_000;
+
+    private void showLowMemoryWarning() {
+        long now = System.currentTimeMillis();
+        // Memory pressure can fire repeatedly in quick succession once it starts — without a
+        // cooldown this would spam the same toast over and over instead of just informing once.
+        if (now - mLastLowMemoryWarningMs < LOW_MEMORY_WARNING_COOLDOWN_MS) return;
+        mLastLowMemoryWarningMs = now;
+
+        Tools.runOnUiThread(() -> Toast.makeText(
+                GameActivity.this,
+                R.string.low_memory_warning,
+                Toast.LENGTH_LONG
+        ).show());
+    }
+
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
