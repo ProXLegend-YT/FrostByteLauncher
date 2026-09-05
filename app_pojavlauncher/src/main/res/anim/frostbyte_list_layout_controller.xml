@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Applies frostbyte_list_item_in.xml to each RecyclerView/ListView item as it appears,
+    staggered slightly (delay = 8% of the animation's own duration, per item index) so a
+    freshly-populated list "cascades" in smoothly instead of the whole list just snapping
+    into place at once — the effect most people mean by "smooth list animations".
+
+    Usage: add android:layoutAnimation="@anim/frostbyte_list_layout_controller" to any
+    RecyclerView/ListView in a layout XML. No adapter code changes needed — the animation
+    triggers automatically whenever the view's data changes and it re-lays-out children,
+    as long as the adapter calls notifyDataSetChanged() (or similar) rather than only
+    notifyItemInserted() one at a time, which bypasses layout animation by design.
+-->
+<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
+    android:delay="8%"
+    android:animationOrder="normal"
+    android:animation="@anim/frostbyte_list_item_in" />

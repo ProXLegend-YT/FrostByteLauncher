@@ -65,6 +65,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gamepad_remapper_recycler"
+        android:layoutAnimation="@anim/frostbyte_list_layout_controller"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/padding_heavy"

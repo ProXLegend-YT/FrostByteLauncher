@@ -87,6 +87,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_mod_list"
+        android:layoutAnimation="@anim/frostbyte_list_layout_controller"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingTop="@dimen/_15sdp"

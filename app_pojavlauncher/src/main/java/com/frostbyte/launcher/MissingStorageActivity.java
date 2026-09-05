@@ -1,12 +1,10 @@
 package com.frostbyte.launcher;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.frostbyte.launcher.R;
 
-public class MissingStorageActivity extends AppCompatActivity {
+public class MissingStorageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
