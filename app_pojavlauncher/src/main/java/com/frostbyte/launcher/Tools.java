@@ -775,14 +775,21 @@ public final class Tools {
     public static void swapFragment(FragmentActivity fragmentActivity , Class<? extends Fragment> fragmentClass,
                                     @Nullable String fragmentTag, @Nullable Bundle bundle) {
         // When people tab out, it might happen
-        //TODO handle custom animations
         fragmentActivity.getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
+                .setCustomAnimations(
+                        R.anim.frostbyte_enter_forward,
+                        R.anim.frostbyte_exit_forward,
+                        R.anim.frostbyte_enter_back,
+                        R.anim.frostbyte_exit_back)
                 .addToBackStack(fragmentClass.getName())
                 .replace(R.id.container_fragment, fragmentClass, bundle, fragmentTag).commit();
     }
 
     public static void backToMainMenu(FragmentActivity fragmentActivity) {
+        // popBackStack() itself has no animation parameter — the animations set on the way IN via
+        // setCustomAnimations() above are also what plays in reverse automatically when popping,
+        // as long as setReorderingAllowed(true) was used on the forward transaction (it is, above).
         fragmentActivity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
     }
