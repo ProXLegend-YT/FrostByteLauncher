@@ -18,7 +18,12 @@
     </style>
 
     <style name="FrostByteAlertDialog" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:background">@drawable/frostbyte_dialog_background</item>
+        <!-- android:windowBackground (not android:background) is the correct attribute for a
+             dialog's outer window. Using android:background here was the bug behind the
+             "nested rings" look: that attribute also gets inherited by several separate internal
+             panels AlertDialog composes (title panel, button bar, content panel), so the same
+             bordered/rounded drawable was being drawn once per panel, stacking visually. -->
+        <item name="android:windowBackground">@drawable/frostbyte_dialog_background</item>
         <item name="android:textColorPrimary">@color/frostbyte_text_primary</item>
         <item name="android:textColor">@color/frostbyte_text_primary</item>
         <item name="colorAccent">@color/frostbyte_accent</item>
