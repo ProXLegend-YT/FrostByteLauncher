@@ -123,6 +123,27 @@
 			android:visibility="gone"
 			/>
 
+		<!-- FrostByte's own lightweight performance overlay: FPS + memory, toggled from the
+		     in-game context menu. Separate from Minecraft's own F3 debug screen — this is a
+		     capability the launcher itself provides, not the game, and stays visible even
+		     with F3 off. Positioned top-start so it doesn't collide with the top-right cog
+		     menu or the hotbar. -->
+		<TextView
+			android:id="@+id/frostbyte_perf_overlay"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="top|start"
+			android:layout_margin="@dimen/_8sdp"
+			android:background="@drawable/frostbyte_perf_overlay_bg"
+			android:paddingHorizontal="@dimen/_8sdp"
+			android:paddingVertical="@dimen/_4sdp"
+			android:fontFamily="monospace"
+			android:textColor="@color/frostbyte_accent"
+			android:textSize="11sp"
+			android:visibility="gone"
+			android:elevation="12dp"
+			tools:text="45 FPS · 612/1144 MB" />
+
 	</FrameLayout>
 
 	<ListView

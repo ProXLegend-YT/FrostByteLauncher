@@ -9,6 +9,7 @@ import static com.frostbyte.launcher.prefs.LauncherPreferences.PREF_USE_ALTERNAT
 import static com.frostbyte.launcher.prefs.LauncherPreferences.PREF_VIRTUAL_MOUSE_START;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,7 +20,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -93,6 +96,38 @@ public class GameActivity extends BaseActivity implements ControlButtonMenuListe
     private DrawerLayout drawerLayout;
     private ListView navDrawer;
     private View mDrawerPullButton;
+
+    // FrostByte's own live memory overlay (see activity_basemain.xml: frostbyte_perf_overlay).
+    // Real, honest in-game FPS isn't obtainable safely from the launcher side — Minecraft's own
+    // native LWJGL renderer draws straight to a Surface outside normal Android View callbacks,
+    // so there's no reliable hook here to count real frames without fragile, risky native-code
+    // interception. Memory is genuinely and cheaply readable via ActivityManager, so that's what
+    // this overlay honestly shows, rather than fabricating an FPS number.
+    private TextView mPerfOverlay;
+    private final Handler mPerfOverlayHandler = new Handler(Looper.getMainLooper());
+    private static final long PERF_OVERLAY_POLL_INTERVAL_MS = 1000;
+    private final Runnable mPerfOverlayUpdater = new Runnable() {
+        @Override
+        public void run() {
+            if (mPerfOverlay == null || mPerfOverlay.getVisibility() != View.VISIBLE) return;
+            ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+            if (am != null) am.getMemoryInfo(memInfo);
+            Runtime rt = Runtime.getRuntime();
+            long usedMb = (rt.totalMemory() - rt.freeMemory()) / (1024 * 1024);
+            long maxMb = rt.maxMemory() / (1024 * 1024);
+            mPerfOverlay.setText(usedMb + "/" + maxMb + " MB heap");
+            mPerfOverlayHandler.postDelayed(this, PERF_OVERLAY_POLL_INTERVAL_MS);
+        }
+    };
+
+    private void togglePerformanceOverlay() {
+        if (mPerfOverlay == null) mPerfOverlay = findViewById(R.id.frostbyte_perf_overlay);
+        boolean nowVisible = mPerfOverlay.getVisibility() != View.VISIBLE;
+        mPerfOverlay.setVisibility(nowVisible ? View.VISIBLE : View.GONE);
+        mPerfOverlayHandler.removeCallbacks(mPerfOverlayUpdater);
+        if (nowVisible) mPerfOverlayHandler.post(mPerfOverlayUpdater);
+    }
     private GyroControl mGyroControl = null;
     private ControlLayout mControlLayout;
     private HotbarView mHotbarView;
@@ -234,7 +269,7 @@ public class GameActivity extends BaseActivity implements ControlButtonMenuListe
             String version = extras.getString(INTENT_LAUNCH_VERSION);
             File[] classpath = (File[]) extras.getSerializable(INTENT_LAUNCH_CLASSPATH);
 
-            setTitle("MojoLauncher (" + version + ")");
+            setTitle(getString(R.string.app_short_name) + " (" + version + ")");
 
             // Menu
             gameActionArrayAdapter = new ArrayAdapter<>(this,
@@ -246,6 +281,7 @@ public class GameActivity extends BaseActivity implements ControlButtonMenuListe
                      case 2: dialogSendCustomKey(); break;
                      case 3: openQuickSettings(); break;
                      case 4: openCustomControls(); break;
+                     case 5: togglePerformanceOverlay(); break;
                 }
                 drawerLayout.closeDrawers();
             };
@@ -350,6 +386,7 @@ public class GameActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPerfOverlayHandler.removeCallbacks(mPerfOverlayUpdater);
         ContextExecutor.clearActivity();
     }
 

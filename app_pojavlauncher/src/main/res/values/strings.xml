@@ -46,6 +46,7 @@
 
     <string name="mcl_options">Options</string>
     <string name="mcl_option_customcontrol">Custom controls</string>
+    <string name="perf_overlay_toggle">Toggle performance overlay</string>
 
 
     <string name="mcl_setting_title_use_surface_view">Use alternate surface rendering</string>
