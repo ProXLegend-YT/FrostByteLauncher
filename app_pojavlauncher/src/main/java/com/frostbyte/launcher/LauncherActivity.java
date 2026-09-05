@@ -52,8 +52,33 @@ import com.frostbyte.launcher.utils.NotificationUtils;
 
 import com.frostbyte.launcher.R;
 
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends BaseActivity implements androidx.preference.PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     public static final String SETTING_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
+
+    /**
+     * Handles navigation into a settings sub-screen (Video and renderer, Control customization,
+     * etc.) declared via android:fragment="..." in pref_main.xml. PreferenceFragmentCompat calls
+     * this itself rather than going through Tools.swapFragment(), so without implementing this
+     * callback these screens fall back to Android's own default (unanimated) fragment swap —
+     * that's why the category screens specifically had no transition even after swapFragment()
+     * was fixed elsewhere.
+     */
+    @Override
+    public boolean onPreferenceStartFragment(@NonNull androidx.preference.PreferenceFragmentCompat caller, @NonNull androidx.preference.Preference pref) {
+        Fragment fragment = getSupportFragmentManager().getFragmentFactory().instantiate(getClassLoader(), pref.getFragment());
+        fragment.setArguments(pref.getExtras());
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .setCustomAnimations(
+                        R.anim.frostbyte_enter_forward,
+                        R.anim.frostbyte_exit_forward,
+                        R.anim.frostbyte_enter_back,
+                        R.anim.frostbyte_exit_back)
+                .replace(R.id.container_fragment, fragment)
+                .addToBackStack(fragment.getClass().getName())
+                .commit();
+        return true;
+    }
 
     private FragmentContainerView mFragmentView;
     private ImageButton mSettingsButton;
