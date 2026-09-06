@@ -79,8 +79,17 @@ public class MainMenuFragment extends Fragment {
         mScreenshotsButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), ScreenshotGalleryActivity.class)));
 
         mOpenDirectoryButton.setOnClickListener((v)-> openGameDirectory(v.getContext()));
-        mWorldBackupsButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), com.frostbyte.launcher.WorldBackupsActivity.class)));
-        mCrashHistoryButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), com.frostbyte.launcher.CrashHistoryActivity.class)));
+        // Defensive null checks specifically for these two: they were added to the portrait
+        // layout only in an earlier change and missed layout-land/fragment_launcher.xml (now
+        // fixed there too), which crashed the whole main menu on rotation to landscape. Guarding
+        // here means a future layout variant missing one of these buttons just silently omits
+        // that button instead of taking down the entire screen.
+        if (mWorldBackupsButton != null) {
+            mWorldBackupsButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), com.frostbyte.launcher.WorldBackupsActivity.class)));
+        }
+        if (mCrashHistoryButton != null) {
+            mCrashHistoryButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), com.frostbyte.launcher.CrashHistoryActivity.class)));
+        }
 
 
     }
