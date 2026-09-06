@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_app">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/_12sdp">
+
+        <ImageButton
+            android:id="@+id/backups_back_button"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_px_arrow_left"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:text="@string/world_backups_title"
+            android:textColor="@color/frostbyte_text_primary"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/frostbyte_accent_glow" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12sdp"
+        android:text="@string/world_backups_worlds_header"
+        android:textColor="@color/frostbyte_accent"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <ListView
+        android:id="@+id/backups_worlds_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/frostbyte_accent_glow"
+        android:dividerHeight="1dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12sdp"
+        android:text="@string/world_backups_existing_header"
+        android:textColor="@color/frostbyte_accent"
+        android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <ListView
+        android:id="@+id/backups_existing_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/frostbyte_accent_glow"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>

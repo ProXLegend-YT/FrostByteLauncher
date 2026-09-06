@@ -49,6 +49,22 @@
     <string name="perf_overlay_toggle">Toggle performance overlay</string>
     <string name="low_memory_warning">Device memory is critically low — consider closing background apps or lowering render distance</string>
 
+    <string name="world_backups_title">World Backups</string>
+    <string name="world_backups_worlds_header">Tap a world to back it up</string>
+    <string name="world_backups_existing_header">Backups (tap to restore or delete)</string>
+    <string name="world_backups_no_worlds">No worlds found</string>
+    <string name="world_backups_no_backups">No backups yet</string>
+    <string name="world_backups_confirm_title">Are you sure?</string>
+    <string name="world_backups_confirm_message">Back up \"%1$s\" now?</string>
+    <string name="world_backups_backup_success">Backup created</string>
+    <string name="world_backups_backup_failed">Backup failed: %1$s</string>
+    <string name="world_backups_action_restore">Restore</string>
+    <string name="world_backups_action_delete">Delete backup</string>
+    <string name="world_backups_restore_warning">This will overwrite the current \"%1$s\" world with this backup. This can\'t be undone. Continue?</string>
+    <string name="world_backups_restore_success">World restored</string>
+    <string name="world_backups_restore_failed">Restore failed: %1$s</string>
+    <string name="world_backups_delete_warning">Delete this backup of \"%1$s\"? This can\'t be undone.</string>
+
 
     <string name="mcl_setting_title_use_surface_view">Use alternate surface rendering</string>
     <string name="mcl_setting_subtitle_use_surface_view">May help performance in GPU bound scenarios.</string>
