@@ -1,73 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background_app">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="@dimen/_12sdp">
-
-        <ImageButton
-            android:id="@+id/backups_back_button"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_px_arrow_left"
-            android:contentDescription="@null" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:text="@string/world_backups_title"
-            android:textColor="@color/frostbyte_text_primary"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-medium" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/frostbyte_space_bg"
+        android:contentDescription="@null" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/frostbyte_accent_glow" />
+        android:layout_height="match_parent"
+        android:background="#33000000" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_12sdp"
-        android:text="@string/world_backups_worlds_header"
-        android:textColor="@color/frostbyte_accent"
-        android:textStyle="bold"
-        android:textSize="14sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/backups_worlds_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="@color/frostbyte_accent_glow"
-        android:dividerHeight="1dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_12sdp"
-        android:text="@string/world_backups_existing_header"
-        android:textColor="@color/frostbyte_accent"
-        android:textStyle="bold"
-        android:textSize="14sp" />
+            <ImageButton
+                android:id="@+id/backups_back_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="6dp"
+                android:background="@drawable/frostbyte_icon_button_bg"
+                android:src="@drawable/ic_frostbyte_back"
+                app:tint="@color/frostbyte_accent"
+                android:contentDescription="@null" />
 
-    <ListView
-        android:id="@+id/backups_existing_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="@color/frostbyte_accent_glow"
-        android:dividerHeight="1dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/world_backups_title"
+                android:textColor="@color/frostbyte_text_primary"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-medium" />
+        </LinearLayout>
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/world_backups_worlds_header"
+            android:textColor="@color/frostbyte_accent"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/backups_no_worlds_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:text="@string/world_backups_no_worlds"
+            android:textColor="@color/frostbyte_text_secondary"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/backups_worlds_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="12dp"
+            android:divider="@null"
+            android:dividerHeight="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/world_backups_existing_header"
+            android:textColor="@color/frostbyte_accent"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/backups_no_backups_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:text="@string/world_backups_no_backups"
+            android:textColor="@color/frostbyte_text_secondary"
+            android:textStyle="italic"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/backups_existing_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="12dp"
+            android:divider="@null"
+            android:dividerHeight="6dp" />
+
+    </LinearLayout>
+</FrameLayout>

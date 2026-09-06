@@ -33,6 +33,8 @@ public class WorldBackupsActivity extends BaseActivity {
     private WorldBackupManager mManager;
     private ListView mWorldsList;
     private ListView mBackupsList;
+    private View mNoWorldsText;
+    private View mNoBackupsText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class WorldBackupsActivity extends BaseActivity {
 
         mWorldsList = findViewById(R.id.backups_worlds_list);
         mBackupsList = findViewById(R.id.backups_existing_list);
+        mNoWorldsText = findViewById(R.id.backups_no_worlds_text);
+        mNoBackupsText = findViewById(R.id.backups_no_backups_text);
 
         refreshWorlds(savesDir);
         refreshBackups();
@@ -59,11 +63,11 @@ public class WorldBackupsActivity extends BaseActivity {
             for (File dir : worldDirs) names.add(dir.getName());
         }
 
-        if (names.isEmpty()) {
-            names.add(getString(R.string.world_backups_no_worlds));
-        }
+        boolean isEmpty = names.isEmpty();
+        mNoWorldsText.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        mWorldsList.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_world_backup_row, names);
         mWorldsList.setAdapter(adapter);
         if (worldDirs != null) {
             mWorldsList.setOnItemClickListener((parent, view, position, id) -> {
@@ -100,11 +104,12 @@ public class WorldBackupsActivity extends BaseActivity {
             String size = Formatter.formatShortFileSize(this, info.sizeBytes);
             labels.add(info.worldName + "  ·  " + date + "  ·  " + size);
         }
-        if (labels.isEmpty()) {
-            labels.add(getString(R.string.world_backups_no_backups));
-        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, labels);
+        boolean isEmpty = labels.isEmpty();
+        mNoBackupsText.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+        mBackupsList.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_world_backup_row, labels);
         mBackupsList.setAdapter(adapter);
         if (!backups.isEmpty()) {
             mBackupsList.setOnItemClickListener((parent, view, position, id) ->
