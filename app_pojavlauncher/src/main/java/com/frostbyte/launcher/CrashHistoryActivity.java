@@ -51,12 +51,33 @@ public class CrashHistoryActivity extends BaseActivity {
         return new File(Tools.DIR_GAME_HOME, "crash_history");
     }
 
+    /**
+     * Parses the timestamp out of "crash_yyyy-MM-dd_HH-mm-ss-SSS.txt" (the exact format
+     * PojavApplication's crash handler writes). Falls back to the file's own lastModified() if
+     * the name doesn't match — e.g. a file moved or renamed outside the app — so a single
+     * unexpected filename can't crash the whole list, just lose precise ordering for that entry.
+     */
+    private long parseCrashFileTimestamp(File file) {
+        String name = file.getName();
+        try {
+            String stamp = name.substring("crash_".length(), name.length() - ".txt".length());
+            java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS", java.util.Locale.US);
+            return format.parse(stamp).getTime();
+        } catch (Exception e) {
+            return file.lastModified();
+        }
+    }
+
     private void refresh() {
         File dir = historyDir();
         File[] files = dir.exists() ? dir.listFiles((d, name) -> name.endsWith(".txt")) : null;
         mReportFiles = files != null ? files : new File[0];
-        // Newest first, matching how the world backups list orders entries.
-        Arrays.sort(mReportFiles, Comparator.comparingLong(File::lastModified).reversed());
+        // Sort and display using the timestamp encoded in the filename (crash_yyyy-MM-dd_HH-mm-ss-SSS.txt,
+        // written in PojavApplication's crash handler) rather than File.lastModified() — several
+        // crashes in quick succession (e.g. a crash loop right after relaunching) can round to
+        // the same displayed minute under lastModified()'s coarser resolution, making genuinely
+        // different crashes look like duplicates in the list.
+        Arrays.sort(mReportFiles, Comparator.comparingLong(this::parseCrashFileTimestamp).reversed());
 
         boolean isEmpty = mReportFiles.length == 0;
         mEmptyText.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
@@ -64,8 +85,9 @@ public class CrashHistoryActivity extends BaseActivity {
 
         List<String> labels = new ArrayList<>();
         for (File f : mReportFiles) {
-            String time = DateFormat.getDateFormat(this).format(f.lastModified()) + " " +
-                    DateFormat.getTimeFormat(this).format(f.lastModified());
+            long timestamp = parseCrashFileTimestamp(f);
+            String time = DateFormat.getDateFormat(this).format(timestamp) + " " +
+                    DateFormat.getTimeFormat(this).format(timestamp);
             labels.add(time);
         }
 
