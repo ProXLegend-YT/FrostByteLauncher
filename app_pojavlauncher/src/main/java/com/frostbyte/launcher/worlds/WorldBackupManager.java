@@ -118,7 +118,7 @@ public class WorldBackupManager {
         }
 
         try (ZipFile zip = new ZipFile(backupFile)) {
-            List<ZipEntry> entries = Collections.list(zip.entries());
+            List<? extends ZipEntry> entries = Collections.list(zip.entries());
 
             String destCanonicalPath = destinationWorldDir.getCanonicalFile().getPath();
             for (ZipEntry entry : entries) {
