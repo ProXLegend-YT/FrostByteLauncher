@@ -58,6 +58,27 @@ public class PojavApplication extends Application {
 				crashStream.append(" - Crash stack trace:\n");
 				crashStream.append(Log.getStackTraceString(th));
 				crashStream.close();
+
+				// Also keep a timestamped copy in a history folder, alongside the existing
+				// single-slot latestcrash.txt above (left untouched) — a new crash previously
+				// silently overwrote the only saved report, so there was no way to look back at
+				// an earlier crash once a different one happened. This is wrapped in its own
+				// try/catch, separate from the block around it: a failure here must never stop
+				// the primary crash report (or FatalErrorActivity/exit below) from happening.
+				try {
+					File historyDir = new File(crashFile.getParentFile(), "crash_history");
+					FileUtils.ensureDirectory(historyDir);
+					SimpleDateFormat historyFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS", Locale.US);
+					File historyFile = new File(historyDir, "crash_" + historyFormat.format(new Date()) + ".txt");
+					try (java.io.InputStream in = new java.io.FileInputStream(crashFile);
+					     java.io.OutputStream out = new java.io.FileOutputStream(historyFile)) {
+						byte[] buffer = new byte[8192];
+						int read;
+						while ((read = in.read(buffer)) != -1) out.write(buffer, 0, read);
+					}
+				} catch (Throwable historyThrowable) {
+					Log.e(CRASH_REPORT_TAG, " - Exception saving crash history copy (latestcrash.txt was still saved normally):", historyThrowable);
+				}
 			} catch (Throwable throwable) {
 				Log.e(CRASH_REPORT_TAG, " - Exception attempt saving crash stack trace:", throwable);
 				Log.e(CRASH_REPORT_TAG, " - The crash stack trace was:", th);

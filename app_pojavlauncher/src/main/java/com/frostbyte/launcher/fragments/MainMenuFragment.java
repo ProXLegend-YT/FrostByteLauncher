@@ -58,6 +58,7 @@ public class MainMenuFragment extends Fragment {
         Button mScreenshotsButton = view.findViewById(R.id.screenshots_button);
         Button mOpenDirectoryButton = view.findViewById(R.id.open_files_button);
         Button mWorldBackupsButton = view.findViewById(R.id.world_backups_button);
+        Button mCrashHistoryButton = view.findViewById(R.id.crash_history_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -79,6 +80,7 @@ public class MainMenuFragment extends Fragment {
 
         mOpenDirectoryButton.setOnClickListener((v)-> openGameDirectory(v.getContext()));
         mWorldBackupsButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), com.frostbyte.launcher.WorldBackupsActivity.class)));
+        mCrashHistoryButton.setOnClickListener((v) -> startActivity(new Intent(requireContext(), com.frostbyte.launcher.CrashHistoryActivity.class)));
 
 
     }

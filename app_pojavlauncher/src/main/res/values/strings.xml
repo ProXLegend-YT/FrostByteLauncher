@@ -65,6 +65,15 @@
     <string name="world_backups_restore_failed">Restore failed: %1$s</string>
     <string name="world_backups_delete_warning">Delete this backup of \"%1$s\"? This can\'t be undone.</string>
 
+    <string name="crash_history_title">Crash History</string>
+    <string name="crash_history_empty">No crash reports yet</string>
+    <string name="crash_history_action_view">View</string>
+    <string name="crash_history_action_share">Share</string>
+    <string name="crash_history_action_delete">Delete</string>
+    <string name="crash_history_delete_warning">Delete this crash report? This can\'t be undone.</string>
+    <string name="crash_history_read_failed">Couldn\'t read report: %1$s</string>
+    <string name="crash_history_share_failed">Couldn\'t share report: %1$s</string>
+
 
     <string name="mcl_setting_title_use_surface_view">Use alternate surface rendering</string>
     <string name="mcl_setting_subtitle_use_surface_view">May help performance in GPU bound scenarios.</string>

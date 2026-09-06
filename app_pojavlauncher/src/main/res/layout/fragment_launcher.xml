@@ -95,6 +95,16 @@
 				android:drawablePadding="14dp"
 				android:text="@string/world_backups_title"
 				app:layout_constraintTop_toBottomOf="@id/open_files_button" />
+
+			<com.frostbyte.launcher.mcgui.LauncherMenuButton
+				android:id="@+id/crash_history_button"
+				style="@style/LauncherMenuButton.Universal"
+				android:layout_width="match_parent"
+				android:drawableStart="@drawable/ic_px_sharelog"
+				android:drawableTint="@color/frostbyte_accent"
+				android:drawablePadding="14dp"
+				android:text="@string/crash_history_title"
+				app:layout_constraintTop_toBottomOf="@id/world_backups_button" />
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</ScrollView>
 

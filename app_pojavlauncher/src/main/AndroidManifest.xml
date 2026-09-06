@@ -124,6 +124,11 @@
             android:exported="false"
             android:label="@string/world_backups_title" />
         <activity
+            android:name="com.frostbyte.launcher.CrashHistoryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
+            android:exported="false"
+            android:label="@string/crash_history_title" />
+        <activity
             android:name="com.frostbyte.launcher.ScreenshotGalleryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:exported="false"
