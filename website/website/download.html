@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Download — FrostByte Launcher</title>
+<meta name="description" content="Download the latest FrostByte Launcher APK for Android, straight from the official GitHub Releases." />
+<link rel="icon" href="assets/img/icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<link rel="stylesheet" href="assets/css/inner.css" />
+<link rel="stylesheet" href="assets/css/download.css" />
+</head>
+<body>
+<div class="fb-starfield" aria-hidden="true"></div>
+
+<header class="fb-nav">
+  <div class="fb-nav-inner">
+    <a class="fb-logo" href="index.html">
+      <img src="assets/img/icon.png" alt="" />
+      FrostByte
+    </a>
+    <nav>
+      <ul class="fb-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="download.html" aria-current="page">Download</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="fb-nav-cta" href="download.html">Get FrostByte</a>
+    <button class="fb-nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<main>
+
+  <section class="fb-page-hero">
+    <div class="fb-container" data-reveal>
+      <div class="fb-pill"><span class="fb-pill-dot"></span> Straight from GitHub Releases</div>
+      <h1>Download FrostByte Launcher</h1>
+      <p class="fb-page-hero-sub">Free, open source, and updated automatically on this page whenever a new version is published.</p>
+    </div>
+  </section>
+
+  <section class="fb-section">
+    <div class="fb-container">
+      <div class="fb-download-hero-card" data-download-widget data-reveal="scale">
+        <img class="fb-download-icon" src="assets/img/icon.png" alt="" />
+        <h2>FrostByte Launcher</h2>
+        <p class="fb-download-version-line">
+          Version <span data-download-version class="fb-mono">—</span>
+          <span data-download-date></span>
+        </p>
+        <a class="fb-btn fb-btn-primary fb-btn-large" data-download-button href="#" aria-disabled="true">
+          ⬇ Download APK <span data-download-size></span>
+        </a>
+        <p class="fb-download-fallback-note" data-download-fallback-note>
+          Loading the latest release from GitHub…
+        </p>
+      </div>
+
+      <div class="fb-install-steps" data-reveal-group>
+        <div class="fb-card fb-step">
+          <span class="fb-step-num">1</span>
+          <h3>Allow installs from this source</h3>
+          <p>Android will ask for permission the first time — this is normal for any app installed outside the Play Store.</p>
+        </div>
+        <div class="fb-card fb-step">
+          <span class="fb-step-num">2</span>
+          <h3>Open the downloaded APK</h3>
+          <p>Tap the file in your notifications or Downloads folder to begin installing.</p>
+        </div>
+        <div class="fb-card fb-step">
+          <span class="fb-step-num">3</span>
+          <h3>Launch and sign in</h3>
+          <p>Add a Microsoft, Ely.by, or offline account, pick a Minecraft version, and hit Play.</p>
+        </div>
+      </div>
+
+      <div class="fb-legit-note" data-reveal>
+        <h3>Is this legit?</h3>
+        <p>
+          FrostByte Launcher is free and open source. Every release is built automatically from
+          the public source code on GitHub via GitHub Actions — you can inspect exactly what's in
+          each build, verify the commit it came from, and build it yourself if you want to be
+          fully sure. This page only ever links to files published on
+          <a href="https://github.com/ProXLegend-YT/FrostByteLauncher/releases">this repository's official Releases page</a>,
+          never a third-party mirror.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="fb-footer">
+  <div class="fb-container">
+    <div class="fb-footer-grid">
+      <div>
+        <a class="fb-logo" href="index.html">
+          <img src="assets/img/icon.png" alt="" />
+          FrostByte
+        </a>
+        <p style="margin-top: 1rem;">Minecraft: Java Edition, built for Android — free and open source.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="explore.html">Explore</a></li>
+          <li><a href="download.html">Download</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="https://github.com/ProXLegend-YT/FrostByteLauncher">Source code</a></li>
+          <li><a href="https://github.com/ProXLegend-YT/FrostByteLauncher/issues">Report an issue</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/ProXLegend-YT/FrostByteLauncher">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fb-footer-bottom">
+      <span>© <span id="fb-year"></span> FrostByte Launcher. Not affiliated with Mojang or Microsoft.</span>
+      <span>Built on PojavLauncher / MojoLauncher.</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('fb-year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/site.js"></script>
+<script>
+  // Page-specific: swap the fallback note's wording once we know whether a release actually
+  // exists yet, since the shared site.js only sets data-state, not this page's specific copy.
+  document.addEventListener('DOMContentLoaded', () => {
+    const widget = document.querySelector('[data-download-widget]');
+    const note = document.querySelector('[data-download-fallback-note]');
+    if (!widget || !note) return;
+    const observer = new MutationObserver(() => {
+      const state = widget.getAttribute('data-state');
+      if (state === 'ready') {
+        note.textContent = 'Downloaded from GitHub Releases — the same build produced by this repository\'s public CI.';
+      } else if (state === 'no-release') {
+        note.textContent = 'No release has been published yet — this will link to the GitHub Releases page instead.';
+      } else if (state === 'error') {
+        note.textContent = 'Could not reach GitHub right now — try the Releases page directly.';
+      }
+    });
+    observer.observe(widget, { attributes: true, attributeFilter: ['data-state'] });
+  });
+</script>
+</body>
+</html>

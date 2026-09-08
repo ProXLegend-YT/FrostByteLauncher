@@ -1,0 +1,303 @@
+/* ============================================================
+   FrostByte Launcher — shared design tokens & base styles
+   ============================================================ */
+
+:root {
+  /* Color */
+  --fb-void:        #0A0B14;   /* page background — deep space */
+  --fb-surface:      #14162A;   /* card / panel surface, lifted off void */
+  --fb-surface-2:    #1C1F38;   /* secondary surface, hover states */
+  --fb-accent:      #5AD1FF;   /* FrostByte blue — matches app UI */
+  --fb-violet:      #8C6BFF;   /* FrostByte violet — matches app UI */
+  --fb-text:        #E8ECF7;   /* primary text */
+  --fb-text-dim:      #9AA3C0;   /* secondary text */
+  --fb-border:      #2A2E4D;   /* hairline borders */
+
+  --fb-gradient: linear-gradient(135deg, var(--fb-accent), var(--fb-violet));
+
+  /* Type */
+  --fb-font-display: "Space Grotesk", sans-serif;
+  --fb-font-body:    "Space Grotesk", sans-serif;
+  --fb-font-mono:    "JetBrains Mono", monospace;
+
+  /* Scale */
+  --fb-space-1: 0.5rem;
+  --fb-space-2: 1rem;
+  --fb-space-3: 1.5rem;
+  --fb-space-4: 2.5rem;
+  --fb-space-5: 4rem;
+  --fb-space-6: 7rem;
+
+  --fb-radius: 14px;
+  --fb-max-width: 1180px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--fb-void);
+  color: var(--fb-text);
+  font-family: var(--fb-font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Real FrostByte space wallpaper as the page backdrop, layered behind all content.
+   Deliberately NOT using background-attachment: fixed — it's a long-standing, still-unresolved
+   limitation on iOS Safari (doesn't work at all there) and is known to be janky on Android
+   Chrome specifically when paired with background-size: cover. Using position: fixed on this
+   dedicated element instead gets the same "stays put while scrolling" effect reliably
+   everywhere, since position:fixed itself is universally well supported. */
+.fb-starfield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--fb-void);
+  background-image:
+    linear-gradient(180deg, rgba(10,11,20,0.55) 0%, rgba(10,11,20,0.75) 55%, var(--fb-void) 100%),
+    url("assets/img/space-bg.webp");
+  background-repeat: no-repeat;
+  background-position: center 30%;
+  background-size: cover;
+}
+
+/* Landscape / wide viewports: the source image is portrait-shaped, so on a wide screen
+   "cover" would push most of the black hole out of frame to the sides. Re-anchor and zoom
+   out slightly so the black hole itself stays in view instead of being cropped. */
+@media (orientation: landscape) {
+  .fb-starfield {
+    background-position: center 20%;
+    background-size: auto 160%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .fb-starfield {
+    background-size: cover;
+    background-position: center 15%;
+  }
+}
+
+a { color: inherit; }
+
+img, svg { max-width: 100%; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--fb-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+p { margin: 0; color: var(--fb-text-dim); max-width: 62ch; }
+
+.fb-container {
+  max-width: var(--fb-max-width);
+  margin: 0 auto;
+  padding: 0 var(--fb-space-3);
+}
+
+/* ---------- Nav ---------- */
+.fb-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(14px);
+  background: rgba(10, 11, 20, 0.72);
+  border-bottom: 1px solid var(--fb-border);
+}
+
+.fb-nav-inner {
+  max-width: var(--fb-max-width);
+  margin: 0 auto;
+  padding: var(--fb-space-2) var(--fb-space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fb-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--fb-font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: var(--fb-text);
+}
+
+.fb-logo img { width: 30px; height: 30px; }
+
+.fb-nav-links {
+  display: flex;
+  gap: var(--fb-space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fb-nav-links a {
+  text-decoration: none;
+  color: var(--fb-text-dim);
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.fb-nav-links a:hover,
+.fb-nav-links a[aria-current="page"] { color: var(--fb-accent); }
+
+.fb-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  background: var(--fb-gradient);
+  color: #050611;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.fb-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--fb-text);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+/* ---------- Buttons ---------- */
+.fb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fb-btn-primary {
+  background: var(--fb-gradient);
+  color: #050611;
+  box-shadow: 0 0 0 rgba(90, 209, 255, 0);
+}
+
+.fb-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px rgba(90, 209, 255, 0.45);
+}
+
+.fb-btn-secondary {
+  background: var(--fb-surface);
+  border-color: var(--fb-border);
+  color: var(--fb-text);
+}
+
+.fb-btn-secondary:hover {
+  border-color: var(--fb-accent);
+  color: var(--fb-accent);
+}
+
+/* ---------- Footer ---------- */
+.fb-footer {
+  border-top: 1px solid var(--fb-border);
+  margin-top: var(--fb-space-6);
+  padding: var(--fb-space-4) 0 var(--fb-space-3);
+}
+
+.fb-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: var(--fb-space-3);
+}
+
+.fb-footer h4 {
+  font-family: var(--fb-font-body);
+  font-size: 0.85rem;
+  color: var(--fb-text);
+  margin-bottom: var(--fb-space-1);
+}
+
+.fb-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fb-footer a {
+  text-decoration: none;
+  color: var(--fb-text-dim);
+  font-size: 0.9rem;
+}
+
+.fb-footer a:hover { color: var(--fb-accent); }
+
+.fb-footer-bottom {
+  margin-top: var(--fb-space-4);
+  padding-top: var(--fb-space-2);
+  border-top: 1px solid var(--fb-border);
+  display: flex;
+  justify-content: space-between;
+  color: var(--fb-text-dim);
+  font-size: 0.85rem;
+  flex-wrap: wrap;
+  gap: var(--fb-space-1);
+}
+
+/* ---------- Utility ---------- */
+.fb-eyebrow-free { /* intentionally unused: avoiding tracked-out ALL-CAPS eyebrows per design guidance */ }
+
+.fb-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--fb-border);
+  background: var(--fb-surface);
+  font-size: 0.85rem;
+  color: var(--fb-text-dim);
+}
+
+.fb-pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ADE80;
+  box-shadow: 0 0 8px #4ADE80;
+}
+
+.fb-mono { font-family: var(--fb-font-mono); }
+
+@media (max-width: 860px) {
+  .fb-nav-links { display: none; }
+  .fb-nav-toggle { display: block; }
+  .fb-footer-grid { grid-template-columns: 1fr 1fr; }
+}
