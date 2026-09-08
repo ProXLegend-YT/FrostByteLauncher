@@ -1,0 +1,102 @@
+/* ============================================================
+   Download page
+   ============================================================ */
+
+.fb-download-hero-card {
+  max-width: 480px;
+  margin: 0 auto var(--fb-space-5);
+  text-align: center;
+  background: var(--fb-surface);
+  border: 1px solid var(--fb-border);
+  border-radius: 24px;
+  padding: var(--fb-space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.fb-download-hero-card::before {
+  content: "";
+  position: absolute;
+  inset: -30% -20% auto auto;
+  width: 320px;
+  height: 320px;
+  background: var(--fb-gradient);
+  filter: blur(100px);
+  opacity: 0.3;
+  border-radius: 50%;
+}
+
+.fb-download-icon {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto var(--fb-space-2);
+  border-radius: 20px;
+}
+
+.fb-download-hero-card h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+.fb-download-version-line {
+  color: var(--fb-text-dim);
+  margin-bottom: var(--fb-space-3);
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.fb-btn-large {
+  width: 100%;
+  justify-content: center;
+  font-size: 1.05rem;
+  padding: 1rem 1.6rem;
+}
+
+.fb-download-fallback-note {
+  margin-top: var(--fb-space-2);
+  font-size: 0.8rem;
+  color: var(--fb-text-dim);
+}
+
+/* ---------- Install steps ---------- */
+.fb-install-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--fb-space-3);
+  margin-bottom: var(--fb-space-5);
+}
+
+.fb-step { padding: var(--fb-space-3); position: relative; }
+
+.fb-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--fb-gradient);
+  color: #050611;
+  font-weight: 700;
+  font-family: var(--fb-font-display);
+  margin-bottom: var(--fb-space-2);
+}
+
+.fb-step h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+
+/* ---------- Legit note ---------- */
+.fb-legit-note {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--fb-space-3);
+  border-left: 3px solid var(--fb-accent);
+  background: var(--fb-surface);
+  border-radius: 0 var(--fb-radius) var(--fb-radius) 0;
+}
+
+.fb-legit-note h3 { margin-bottom: 0.5rem; font-size: 1.05rem; }
+
+.fb-legit-note a { color: var(--fb-accent); text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .fb-install-steps { grid-template-columns: 1fr; }
+}
