@@ -4,7 +4,7 @@
 
 .fb-screens-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--fb-space-3);
 }
 
@@ -18,6 +18,11 @@
   border: 1px solid var(--fb-border);
   background: var(--fb-surface);
   aspect-ratio: 9 / 19.5;
+}
+
+/* Real device screenshots captured in landscape — a 9:19.5 tall frame would crop them badly. */
+.fb-screen-wide .fb-screen-frame {
+  aspect-ratio: 20 / 9.7;
 }
 
 .fb-screen-frame img {
@@ -45,9 +50,5 @@
 }
 
 @media (max-width: 900px) {
-  .fb-screens-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 560px) {
-  .fb-screens-grid { grid-template-columns: 1fr 1fr; gap: var(--fb-space-2); }
+  .fb-screens-grid { grid-template-columns: 1fr; }
 }

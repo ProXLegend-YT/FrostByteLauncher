@@ -174,15 +174,35 @@
         const key = el.getAttribute("data-repo-stat");
         const value = data[key];
         if (typeof value === "number") {
+          // Update data-count-to for any future/replay use, but also drive the animation
+          // directly here rather than re-calling initCounters(): that function's
+          // IntersectionObserver may have already fired on page load (before this fetch
+          // resolved) using the placeholder "0", permanently unobserving the element —
+          // simply re-running initCounters() afterward is a no-op in that case, so the
+          // real number would silently never appear. Animating directly here works
+          // regardless of whether the element was already observed.
           el.setAttribute("data-count-to", String(value));
+          animateCount(el, value);
         } else if (typeof value === "string") {
           el.textContent = value;
         }
       });
-      initCounters();
     } catch (err) {
       console.warn("FrostByte site: could not fetch repo stats —", err.message);
     }
+  }
+
+  function animateCount(el, target) {
+    const suffix = el.getAttribute("data-count-suffix") || "";
+    const duration = 900;
+    const start = performance.now();
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
