@@ -1,0 +1,54 @@
+/* ============================================================
+   Explore / screenshots page
+   ============================================================ */
+
+.fb-screens-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--fb-space-3);
+}
+
+.fb-screen-card {
+  margin: 0;
+}
+
+.fb-screen-frame {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--fb-border);
+  background: var(--fb-surface);
+  aspect-ratio: 9 / 19.5;
+}
+
+/* Real device screenshots captured in landscape — a 9:19.5 tall frame would crop them badly. */
+.fb-screen-wide .fb-screen-frame {
+  aspect-ratio: 20 / 9.7;
+}
+
+.fb-screen-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fb-screen-card:hover .fb-screen-frame img {
+  transform: scale(1.04);
+}
+
+.fb-screen-card figcaption {
+  margin-top: var(--fb-space-1);
+  font-size: 0.9rem;
+  color: var(--fb-text-dim);
+  text-align: center;
+}
+
+.fb-screens-note {
+  text-align: center;
+  margin-top: var(--fb-space-4);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .fb-screens-grid { grid-template-columns: 1fr; }
+}

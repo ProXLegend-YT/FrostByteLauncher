@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FrostByte Launcher — Minecraft: Java Edition on Android</title>
+<meta name="description" content="FrostByte Launcher runs Minecraft: Java Edition on your Android phone — mod support, custom controls, and a renderer built for real devices, not just flagships." />
+<link rel="icon" href="assets/img/icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<link rel="stylesheet" href="assets/css/home.css" />
+</head>
+<body>
+<div class="fb-starfield" aria-hidden="true"></div>
+
+<header class="fb-nav">
+  <div class="fb-nav-inner">
+    <a class="fb-logo" href="index.html">
+      <img src="assets/img/icon.png" alt="" />
+      FrostByte
+    </a>
+    <nav>
+      <ul class="fb-nav-links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="download.html">Download</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="fb-nav-cta" href="download.html">Get FrostByte</a>
+    <button class="fb-nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span class="fb-nav-toggle-bar"></span></button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="fb-hero">
+    <div class="fb-container fb-hero-grid">
+      <div class="fb-hero-copy" data-reveal="left">
+        <div class="fb-pill"><span class="fb-pill-dot"></span> Actively developed, open source</div>
+        <h1 class="fb-hero-title">Minecraft: Java Edition.<br>In your pocket.</h1>
+        <p class="fb-hero-sub">
+          FrostByte is a free Android launcher for Minecraft: Java Edition — real mods, real
+          worlds, real controls, tuned to actually run well on the phone you already own.
+        </p>
+        <div class="fb-hero-actions">
+          <a class="fb-btn fb-btn-primary" href="download.html">Download for Android</a>
+          <a class="fb-btn fb-btn-secondary" href="explore.html">Explore the app</a>
+        </div>
+        <div class="fb-hero-stats" data-reveal-group>
+          <div class="fb-stat">
+            <span class="fb-stat-num fb-count" data-count-to="0" data-repo-stat="stargazers_count">0</span>
+            <span class="fb-stat-label">GitHub stars</span>
+          </div>
+          <div class="fb-stat">
+            <span class="fb-stat-num fb-count" data-count-to="0" data-repo-stat="forks_count">0</span>
+            <span class="fb-stat-label">Forks</span>
+          </div>
+          <div class="fb-stat">
+            <span class="fb-stat-num fb-mono">MIT/GPL</span>
+            <span class="fb-stat-label">Open source</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fb-hero-visual" data-reveal="scale">
+        <svg class="fb-blackhole-ring fb-float" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#5AD1FF" />
+              <stop offset="100%" stop-color="#8C6BFF" />
+            </linearGradient>
+          </defs>
+          <circle cx="200" cy="200" r="170" fill="none" stroke="url(#ringGrad)" stroke-width="2" stroke-dasharray="4 10" opacity="0.6"/>
+          <circle cx="200" cy="200" r="140" fill="none" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="2 14" opacity="0.4"/>
+        </svg>
+        <div class="fb-blackhole" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TECH STRIP ============ -->
+  <section class="fb-section-tight" data-reveal>
+    <div class="fb-container">
+      <p class="fb-strip-label">Built on real, working engineering</p>
+      <div class="fb-marquee">
+        <div class="fb-marquee-track fb-mono">
+          <span>LWJGL</span><span>GL4ES</span><span>LTW Renderer</span><span>OpenGL ES 3</span>
+          <span>Zink / Vulkan</span><span>Fabric</span><span>Forge</span><span>OptiFine</span>
+          <span>CurseForge API</span><span>Modrinth</span>
+          <span>LWJGL</span><span>GL4ES</span><span>LTW Renderer</span><span>OpenGL ES 3</span>
+          <span>Zink / Vulkan</span><span>Fabric</span><span>Forge</span><span>OptiFine</span>
+          <span>CurseForge API</span><span>Modrinth</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURE GRID ============ -->
+  <section class="fb-section">
+    <div class="fb-container">
+      <div class="fb-section-head" data-reveal>
+        <h2>Everything a real launcher needs</h2>
+        <p>Not a tech demo — a launcher built to actually be played on, day to day.</p>
+      </div>
+
+      <div class="fb-feature-grid" data-reveal-group>
+        <article class="fb-card fb-feature">
+          <div class="fb-feature-icon">🎮</div>
+          <h3>Custom controls</h3>
+          <p>Fully rebuildable on-screen controls: resize, reposition, rebind, and share your layout.</p>
+        </article>
+        <article class="fb-card fb-feature">
+          <div class="fb-feature-icon">🧩</div>
+          <h3>Real mod support</h3>
+          <p>Forge, Fabric, OptiFine and modpacks pulled straight from CurseForge and Modrinth.</p>
+        </article>
+        <article class="fb-card fb-feature">
+          <div class="fb-feature-icon">⚡</div>
+          <h3>Renderer choice</h3>
+          <p>GL4ES, Zink/Vulkan, or the newer LTW renderer — pick what actually runs best on your GPU.</p>
+        </article>
+        <article class="fb-card fb-feature">
+          <div class="fb-feature-icon">🗺️</div>
+          <h3>World backups</h3>
+          <p>One-tap zip backups of your worlds, restorable later, entirely offline.</p>
+        </article>
+        <article class="fb-card fb-feature">
+          <div class="fb-feature-icon">🛠️</div>
+          <h3>Crash history</h3>
+          <p>Every crash report kept, viewable and shareable — not just the most recent one.</p>
+        </article>
+        <article class="fb-card fb-feature">
+          <div class="fb-feature-icon">🔧</div>
+          <h3>JVM tuning</h3>
+          <p>RAM allocation, Java runtime selection, and custom arguments, tuned per device.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOAD CTA (auto-updating) ============ -->
+  <section class="fb-section" data-reveal>
+    <div class="fb-container">
+      <div class="fb-download-banner" data-download-widget>
+        <div>
+          <p class="fb-strip-label">Latest release</p>
+          <h2>Version <span data-download-version class="fb-mono">—</span></h2>
+          <p class="fb-download-meta">
+            <span data-download-size></span>
+            <span data-download-date></span>
+          </p>
+        </div>
+        <a class="fb-btn fb-btn-primary" data-download-button href="download.html" aria-disabled="true">
+          Download APK
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="fb-footer">
+  <div class="fb-container">
+    <div class="fb-footer-grid">
+      <div>
+        <a class="fb-logo" href="index.html">
+          <img src="assets/img/icon.png" alt="" />
+          FrostByte
+        </a>
+        <p style="margin-top: 1rem;">Minecraft: Java Edition, built for Android — free and open source.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="explore.html">Explore</a></li>
+          <li><a href="download.html">Download</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="https://github.com/ProXLegend-YT/FrostByteLauncher">Source code</a></li>
+          <li><a href="https://github.com/ProXLegend-YT/FrostByteLauncher/issues">Report an issue</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://github.com/ProXLegend-YT/FrostByteLauncher">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fb-footer-bottom">
+      <span>© <span id="fb-year"></span> FrostByte Launcher. Not affiliated with Mojang or Microsoft.</span>
+      <span>Built on PojavLauncher / MojoLauncher.</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('fb-year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
