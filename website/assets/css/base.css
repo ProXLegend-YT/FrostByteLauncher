@@ -49,7 +49,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--fb-void);
+  background: transparent;
   color: var(--fb-text);
   font-family: var(--fb-font-body);
   font-size: 17px;
