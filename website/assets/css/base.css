@@ -72,7 +72,7 @@ body {
     linear-gradient(180deg, rgba(10,11,20,0.55) 0%, rgba(10,11,20,0.75) 55%, var(--fb-void) 100%),
     url("assets/img/space-bg.jpg");
   background-repeat: no-repeat;
-  background-position: center 30%;
+  background-position: center 45%;
   background-size: cover;
 }
 
